@@ -2,11 +2,11 @@
 ## Adapted from ResearchMath-14K (arxiv:2605.28003) methodology
 
 paths:
-  data_root: /data/project/private/minstar/workspace/medical-research/data
-  raw_dir: /data/project/private/minstar/workspace/medical-research/data/raw
-  extracted_dir: /data/project/private/minstar/workspace/medical-research/data/extracted
-  refined_dir: /data/project/private/minstar/workspace/medical-research/data/refined
-  final_dir: /data/project/private/minstar/workspace/medical-research/data/final
+  data_root: /data/project/private/minstar/workspace/healthcare-research/data
+  raw_dir: /data/project/private/minstar/workspace/healthcare-research/data/raw
+  extracted_dir: /data/project/private/minstar/workspace/healthcare-research/data/extracted
+  refined_dir: /data/project/private/minstar/workspace/healthcare-research/data/refined
+  final_dir: /data/project/private/minstar/workspace/healthcare-research/data/final
 
 crawlers:
   pubmed:
