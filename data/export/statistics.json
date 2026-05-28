@@ -1,28 +1,55 @@
 {
-    "total_questions": 2023,
+    "total_questions": 2011,
     "question_types": {
-        "mechanism": 842,
-        "treatment": 681,
+        "mechanism": 839,
+        "treatment": 675,
         "methodology": 210,
         "diagnosis": 138,
-        "epidemiology": 56,
-        "prevention": 55,
-        "prognosis": 41
+        "epidemiology": 55,
+        "prevention": 54,
+        "prognosis": 40
+    },
+    "taxonomy_l1_distribution": {
+        "Clinical Medicine": 389,
+        "Neuroscience & Psychiatry": 360,
+        "Oncology": 295,
+        "Infectious Disease & Immunology": 196,
+        "Surgical Sciences": 134,
+        "Public Health & Epidemiology": 121,
+        "Cardiovascular Medicine": 121,
+        "Genomics & Precision Medicine": 120,
+        "Pharmacology & Drug Discovery": 98,
+        "Medical AI & Informatics": 69,
+        "Rare & Orphan Diseases": 41,
+        "": 30,
+        "Other": 26,
+        "Endocrinology": 3,
+        "Immunology": 3,
+        "Gastroenterology": 2,
+        "Endocrinology & Metabolism": 1,
+        "Reproductive Medicine": 1,
+        "Hematology & Oncology": 1
+    },
+    "open_status_distribution": {
+        "open": 1368,
+        "partially_answered": 576,
+        "unknown": 37,
+        "answered": 30
     },
     "top_30_clinical_domains": {
-        "Neurology": 275,
-        "Oncology": 264,
-        "Cardiology": 104,
+        "Neurology": 271,
+        "Oncology": 263,
+        "Cardiology": 103,
         "Infectious Disease": 87,
         "Psychiatry": 82,
-        "Genetics & Genomics": 78,
-        "Endocrinology": 74,
-        "Immunology": 68,
-        "Nephrology": 55,
+        "Genetics & Genomics": 77,
+        "Endocrinology": 72,
+        "Immunology": 67,
+        "Nephrology": 54,
         "Pharmacology": 54,
         "Obstetrics & Gynecology": 50,
         "Gastroenterology": 48,
-        "Rheumatology": 45,
+        "Rheumatology": 44,
         "Surgery": 44,
         "Hematology": 42,
         "Neuroscience": 39,
@@ -41,11 +68,39 @@
         "Internal Medicine": 21,
         "Addiction Medicine": 17
     },
-    "difficulty_distribution": {
-        "level_2": 87,
-        "level_3": 618,
-        "level_4": 1055,
-        "level_5": 263
+    "difficulty_clinical_knowledge": {
+        "level_1": 39,
+        "level_2": 188,
+        "level_3": 736,
+        "level_4": 980,
+        "level_5": 68
     },
-    "unique_clinical_domains": 51
+    "difficulty_research_depth": {
+        "level_1": 3,
+        "level_2": 41,
+        "level_3": 403,
+        "level_4": 1172,
+        "level_5": 392
+    },
+    "difficulty_multi_step_reasoning": {
+        "level_1": 10,
+        "level_2": 129,
+        "level_3": 544,
+        "level_4": 1039,
+        "level_5": 289
+    },
+    "relevant_mcp_tools_frequency": {
+        "pubmed": 1977,
+        "clinicaltrialsgov": 892,
+        "opentargets": 884,
+        "uniprot": 574,
+        "chembl": 508,
+        "ncbi-datasets": 475,
+        "kegg": 214,
+        "openfda": 107,
+        "pubchem": 105,
+        "biomcp": 83
+    },
+    "unique_clinical_domains": 51,
+    "unique_taxonomy_l1": 19
 }
