@@ -28,7 +28,7 @@ SYSTEM_PROMPT = """For each medical question below, generate a comprehensive gol
 - "key_citations": list of objects {"type": "PMID"|"NCT"|"DOI", "id": "...", "relevance": "one sentence"}. Include 3-8 real citations you are confident about.
 - "mcp_tool_plan": list of objects {"tool": "pubmed"|"clinicaltrialsgov"|etc, "query": "exact search query", "purpose": "what this retrieves"}. Include 2-5 tool queries that would help investigate this question.
 - "answer_summary": 2-4 paragraph synthesis of the best current understanding, written for a researcher.
-- "completeness": float 0.0-1.0 — how completely can this question be answered with current evidence?
+- "self_completeness": float 0.0-1.0 — model's self-assessed epistemic difficulty: how completely can this question be answered with current evidence?
 
 Output ONLY valid JSON objects, one per line (JSONL). No markdown, no explanations."""
 
@@ -222,7 +222,7 @@ def generate_gold_answers(batch_num: int):
             "key_citations": answer.get("key_citations", []),
             "mcp_tool_plan": answer.get("mcp_tool_plan", []),
             "answer_summary": answer.get("answer_summary", ""),
-            "completeness": answer.get("completeness", 0.0),
+            "self_completeness": answer.get("self_completeness", 0.0),
         }
         merged.append(doc)
 
@@ -240,7 +240,7 @@ def generate_gold_answers(batch_num: int):
         ua = len(a.get("unknown_aspects", ""))
         ans = len(a.get("answer_summary", ""))
         cites = len(a.get("key_citations", []))
-        comp = a.get("completeness", -1)
+        comp = a.get("self_completeness", -1)
         if ck >= 200 and ua >= 100 and ans >= 200 and cites >= 2 and 0.0 <= comp <= 1.0:
             quality_pass += 1
 

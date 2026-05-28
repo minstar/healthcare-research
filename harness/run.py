@@ -30,7 +30,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 from harness.task_loader import load_tasks
 from harness.mcp_tools import MCPToolRegistry
 from harness.completion_runner import run_tasks
-from harness.judge import judge_single
+from harness.judge import judge_single, EnsembleJudge
 from harness.metrics import compute_metrics, save_results
 
 logger = logging.getLogger("harness")
@@ -68,7 +68,12 @@ def parse_args() -> argparse.Namespace:
         "--judge",
         type=str,
         default="gemini/gemini-2.5-pro",
-        help="LiteLLM model string for the judge (default: gemini/gemini-2.5-pro)",
+        help=(
+            "LiteLLM model string(s) for the judge. Use comma-separated list for "
+            "multi-judge ensemble, e.g. 'gemini/gemini-2.5-pro,gpt-4o,claude-opus-4-20250514'. "
+            "Single model uses the standard judge; multiple models use EnsembleJudge. "
+            "(default: gemini/gemini-2.5-pro)"
+        ),
     )
     parser.add_argument(
         "--no-judge",
@@ -142,10 +147,22 @@ async def main_async(args: argparse.Namespace) -> None:
 
     # ---- 3. Judge (if gold answers available and not skipped) ----
     judge_results = None
+    ensemble_results = None
+    batch_kappa = None
     should_judge = not args.no_judge and n_with_gold > 0
 
+    # Parse judge models (comma-separated for ensemble)
+    judge_models = [m.strip() for m in args.judge.split(",") if m.strip()]
+    use_ensemble = len(judge_models) > 1
+
     if should_judge:
-        logger.info("Judging %d tasks with %s", n_with_gold, args.judge)
+        if use_ensemble:
+            logger.info(
+                "Ensemble judging %d tasks with %d judges: %s",
+                n_with_gold, len(judge_models), ", ".join(judge_models),
+            )
+        else:
+            logger.info("Judging %d tasks with %s", n_with_gold, judge_models[0])
 
         # Build judge inputs (only for tasks that have gold answers)
         task_map = {t.task_id: t for t in tasks}
@@ -169,25 +186,59 @@ async def main_async(args: argparse.Namespace) -> None:
             )
 
         if judge_inputs:
-            # Judge with bounded concurrency
-            semaphore = asyncio.Semaphore(args.judge_workers)
-            judge_results_list: list = [None] * len(judge_inputs)
+            if use_ensemble:
+                # Multi-judge ensemble
+                ensemble_judge = EnsembleJudge(
+                    judge_models=judge_models,
+                    pass_threshold=args.pass_threshold,
+                )
+                ensemble_results, batch_kappa = await ensemble_judge.score_batch(
+                    items=judge_inputs,
+                    workers=args.judge_workers,
+                )
+                # Also build judge_results from ensemble medians for
+                # backward-compatible metrics (JudgeResult per task).
+                from harness.judge import JudgeResult, _compute_weighted_total
 
-            async def _judge_worker(idx: int, item: dict) -> None:
-                async with semaphore:
-                    jr = await judge_single(
-                        task_id=item["task_id"],
-                        question=item["question"],
-                        gold_answer=item["gold_answer"],
-                        model_answer=item["model_answer"],
-                        tool_calls=item["tool_calls"],
-                        judge_model=args.judge,
+                judge_results = []
+                for er in ensemble_results:
+                    # Use the first individual result's task_id
+                    task_id = er.individual_results[0].task_id
+                    jr = JudgeResult(
+                        task_id=task_id,
+                        scores=dict(er.median_scores),
+                        weighted_total=er.main_score,
+                        reasoning=(
+                            f"Ensemble ({len(judge_models)} judges). "
+                            f"Kappa={er.cohens_kappa:.3f}. "
+                            + er.individual_results[0].reasoning[:300]
+                        ),
                     )
-                    judge_results_list[idx] = jr
+                    judge_results.append(jr)
+                logger.info(
+                    "Ensemble judged %d tasks (batch kappa=%.3f)",
+                    len(ensemble_results), batch_kappa,
+                )
+            else:
+                # Single judge (original path)
+                semaphore = asyncio.Semaphore(args.judge_workers)
+                judge_results_list: list = [None] * len(judge_inputs)
 
-            await asyncio.gather(*[_judge_worker(i, inp) for i, inp in enumerate(judge_inputs)])
-            judge_results = [jr for jr in judge_results_list if jr is not None]
-            logger.info("Judged %d tasks", len(judge_results))
+                async def _judge_worker(idx: int, item: dict) -> None:
+                    async with semaphore:
+                        jr = await judge_single(
+                            task_id=item["task_id"],
+                            question=item["question"],
+                            gold_answer=item["gold_answer"],
+                            model_answer=item["model_answer"],
+                            tool_calls=item["tool_calls"],
+                            judge_model=judge_models[0],
+                        )
+                        judge_results_list[idx] = jr
+
+                await asyncio.gather(*[_judge_worker(i, inp) for i, inp in enumerate(judge_inputs)])
+                judge_results = [jr for jr in judge_results_list if jr is not None]
+                logger.info("Judged %d tasks", len(judge_results))
     else:
         if args.no_judge:
             logger.info("Judging skipped (--no-judge flag)")

@@ -84,9 +84,9 @@ def main():
                     "key_citations",
                     "mcp_tool_plan",
                     "answer_summary",
-                    "completeness",
+                    "self_completeness",
                 ]:
-                    val = gold.get(field)
+                    val = gold.get(field, gold.get("completeness") if field == "self_completeness" else None)
                     is_present = bool(val) if not isinstance(val, (int, float)) else True
                     if not is_present:
                         missing_fields[field] = missing_fields.get(field, 0) + 1
@@ -133,15 +133,16 @@ def main():
             print(f"  {field}: {count} missing")
         print()
 
-    # Completeness distribution
+    # Self-completeness distribution
     completeness_vals = []
     for doc in unique_questions:
-        c = doc.get("gold_answer", {}).get("completeness")
+        gold = doc.get("gold_answer", {})
+        c = gold.get("self_completeness", gold.get("completeness"))
         if isinstance(c, (int, float)):
             completeness_vals.append(float(c))
     if completeness_vals:
         avg_c = sum(completeness_vals) / len(completeness_vals)
-        print(f"Avg completeness score:  {avg_c:.2f} (n={len(completeness_vals)})")
+        print(f"Avg self_completeness:   {avg_c:.2f} (n={len(completeness_vals)})")
 
     print()
     print(f"Output: {OUTPUT_FILE}")

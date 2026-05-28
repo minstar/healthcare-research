@@ -1,9 +1,12 @@
 """LLM-as-judge evaluation comparing model answer against gold answer."""
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
+import statistics
 from dataclasses import dataclass, field
+from itertools import combinations
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -71,6 +74,231 @@ class JudgeResult:
     scores: dict[str, float]
     weighted_total: float
     reasoning: str
+
+
+@dataclass
+class EnsembleResult:
+    """Result from multi-judge ensemble scoring."""
+
+    median_scores: dict[str, float]  # per-dimension median
+    main_score: float  # weighted median
+    individual_results: list[JudgeResult]  # each judge's full result
+    agreement: dict[str, float]  # per-dimension std dev (lower = more agreement)
+    cohens_kappa: float  # inter-judge agreement on pass/fail
+    passed: bool
+
+
+def _cohens_kappa_pairwise(
+    decisions_a: list[bool], decisions_b: list[bool]
+) -> float:
+    """Compute Cohen's kappa between two raters' binary decisions.
+
+    kappa = (p_o - p_e) / (1 - p_e)
+    where p_o = observed agreement, p_e = expected agreement by chance.
+    """
+    n = len(decisions_a)
+    if n == 0:
+        return 0.0
+
+    # Observed agreement
+    agree = sum(1 for a, b in zip(decisions_a, decisions_b) if a == b)
+    p_o = agree / n
+
+    # Expected agreement by chance
+    pos_a = sum(decisions_a) / n
+    pos_b = sum(decisions_b) / n
+    neg_a = 1 - pos_a
+    neg_b = 1 - pos_b
+    p_e = (pos_a * pos_b) + (neg_a * neg_b)
+
+    if p_e >= 1.0:
+        return 1.0 if p_o == 1.0 else 0.0
+
+    return (p_o - p_e) / (1 - p_e)
+
+
+def _compute_cohens_kappa(
+    judge_results_list: list[list[JudgeResult]],
+    pass_threshold: float = 0.60,
+) -> float:
+    """Compute average pairwise Cohen's kappa across all judge pairs.
+
+    Args:
+        judge_results_list: List of result-lists, one per judge. Each inner list
+            contains JudgeResult objects in the same task order.
+        pass_threshold: Score threshold for pass/fail classification.
+
+    Returns:
+        Average pairwise kappa. Returns 1.0 if only one judge.
+    """
+    n_judges = len(judge_results_list)
+    if n_judges < 2:
+        return 1.0
+
+    # Build per-judge decision vectors (pass=True, fail=False)
+    decision_vectors: list[list[bool]] = []
+    for results in judge_results_list:
+        decisions = [jr.weighted_total >= pass_threshold for jr in results]
+        decision_vectors.append(decisions)
+
+    # Average pairwise kappa
+    kappas = []
+    for i, j in combinations(range(n_judges), 2):
+        k = _cohens_kappa_pairwise(decision_vectors[i], decision_vectors[j])
+        kappas.append(k)
+
+    return sum(kappas) / len(kappas) if kappas else 1.0
+
+
+class EnsembleJudge:
+    """Multi-judge ensemble that runs several LLM judges and aggregates results.
+
+    Args:
+        judge_models: List of litellm model specs,
+            e.g. ["gemini/gemini-2.5-pro", "gpt-4o", "claude-opus-4-20250514"].
+        weights: Optional per-dimension weights. If None, uses the global DIMENSIONS.
+        pass_threshold: Score threshold for pass/fail classification (default: 0.60).
+    """
+
+    def __init__(
+        self,
+        judge_models: list[str],
+        weights: dict[str, float] | None = None,
+        pass_threshold: float = 0.60,
+    ):
+        if not judge_models:
+            raise ValueError("judge_models must contain at least one model")
+        self.judge_models = judge_models
+        self.weights = weights or DIMENSIONS
+        self.pass_threshold = pass_threshold
+
+    async def score(
+        self,
+        task_id: str,
+        question: str,
+        gold_answer: dict | str | None,
+        model_answer: str,
+        tool_calls: list[dict],
+    ) -> EnsembleResult:
+        """Run all judges in parallel and aggregate results.
+
+        Returns:
+            EnsembleResult with median scores, agreement stats, and kappa.
+        """
+        # Run all judges concurrently
+        coros = [
+            judge_single(
+                task_id=task_id,
+                question=question,
+                gold_answer=gold_answer,
+                model_answer=model_answer,
+                tool_calls=tool_calls,
+                judge_model=model,
+            )
+            for model in self.judge_models
+        ]
+        individual_results: list[JudgeResult] = await asyncio.gather(*coros)
+
+        # Compute per-dimension median and std dev
+        median_scores: dict[str, float] = {}
+        agreement: dict[str, float] = {}
+
+        for dim in DIMENSIONS:
+            dim_scores = [jr.scores.get(dim, 0.0) for jr in individual_results]
+            median_scores[dim] = round(statistics.median(dim_scores), 4)
+            if len(dim_scores) >= 2:
+                agreement[dim] = round(statistics.stdev(dim_scores), 4)
+            else:
+                agreement[dim] = 0.0
+
+        # Weighted median score using the per-dimension medians
+        main_score = 0.0
+        for dim, weight in self.weights.items():
+            main_score += median_scores.get(dim, 0.0) * weight
+        main_score = round(main_score, 4)
+
+        # Cohen's kappa: for a single task, each judge gives one pass/fail decision.
+        # We compute pairwise agreement on this single item. With one item
+        # kappa degenerates, so we use it mainly at batch level.
+        # Here we still compute it for consistency: perfect agreement = 1.0.
+        kappa = _compute_cohens_kappa(
+            [[jr] for jr in individual_results],
+            pass_threshold=self.pass_threshold,
+        )
+
+        passed = main_score >= self.pass_threshold
+
+        logger.info(
+            "Ensemble judged %s: main_score=%.3f, kappa=%.3f, judges=%d "
+            "(cov=%.2f evd=%.2f tool=%.2f reas=%.2f comp=%.2f)",
+            task_id,
+            main_score,
+            kappa,
+            len(individual_results),
+            median_scores.get("coverage", 0),
+            median_scores.get("evidence_quality", 0),
+            median_scores.get("tool_usage", 0),
+            median_scores.get("reasoning_quality", 0),
+            median_scores.get("completeness", 0),
+        )
+
+        return EnsembleResult(
+            median_scores=median_scores,
+            main_score=main_score,
+            individual_results=individual_results,
+            agreement=agreement,
+            cohens_kappa=kappa,
+            passed=passed,
+        )
+
+    async def score_batch(
+        self,
+        items: list[dict],
+        workers: int = 4,
+    ) -> tuple[list[EnsembleResult], float]:
+        """Score a batch of items with bounded concurrency.
+
+        Args:
+            items: List of dicts with keys: task_id, question, gold_answer,
+                   model_answer, tool_calls.
+            workers: Maximum concurrent ensemble scoring calls.
+
+        Returns:
+            Tuple of (list of EnsembleResult, batch-level Cohen's kappa).
+        """
+        semaphore = asyncio.Semaphore(workers)
+        ensemble_results: list[EnsembleResult | None] = [None] * len(items)
+
+        async def _worker(idx: int, item: dict) -> None:
+            async with semaphore:
+                er = await self.score(
+                    task_id=item["task_id"],
+                    question=item["question"],
+                    gold_answer=item.get("gold_answer"),
+                    model_answer=item["model_answer"],
+                    tool_calls=item.get("tool_calls", []),
+                )
+                ensemble_results[idx] = er
+
+        await asyncio.gather(*[_worker(i, item) for i, item in enumerate(items)])
+
+        results = [er for er in ensemble_results if er is not None]
+
+        # Compute batch-level Cohen's kappa across all tasks
+        if results and len(self.judge_models) >= 2:
+            # Reorganize: per-judge list of JudgeResults across all tasks
+            n_judges = len(self.judge_models)
+            per_judge_results: list[list[JudgeResult]] = [[] for _ in range(n_judges)]
+            for er in results:
+                for j_idx, jr in enumerate(er.individual_results):
+                    per_judge_results[j_idx].append(jr)
+            batch_kappa = _compute_cohens_kappa(
+                per_judge_results, pass_threshold=self.pass_threshold
+            )
+        else:
+            batch_kappa = 1.0
+
+        return results, batch_kappa
 
 
 def _compute_weighted_total(scores: dict[str, float]) -> float:

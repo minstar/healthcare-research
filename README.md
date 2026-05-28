@@ -90,15 +90,18 @@ Each question has a reference answer with the following structure:
     {"tool": "pubmed", "query": "search query", "purpose": "what this retrieves"}
   ],
   "answer_summary": "2-4 paragraph synthesis for a researcher",
-  "completeness": 0.45
+  "self_completeness": 0.45
 }
 ```
+
+> **Note**: `self_completeness` is the model's self-assessed epistemic difficulty score — how completely the question can be answered with current evidence. This is distinct from the judge's `completeness` dimension (which evaluates a model's response thoroughness). Values are useful for relative comparison between questions, not as absolute measures.
 
 ## Gold Answer Validation
 
 Post-generation validation runs automatically via `validate_gold_answers.py`:
 
-- **PMID verification**: Batch lookup against NCBI efetch
+### Structural Checks
+- **PMID verification**: Batch lookup against NCBI efetch (existence check)
 - **NCT verification**: ClinicalTrials.gov API check
 - **Completeness criteria**:
   - `current_knowledge` >= 200 chars
@@ -106,7 +109,17 @@ Post-generation validation runs automatically via `validate_gold_answers.py`:
   - `answer_summary` >= 200 chars
   - `key_citations` >= 2 entries
   - `mcp_tool_plan` >= 1 entry
-  - `completeness` in [0.0, 1.0]
+  - `self_completeness` in [0.0, 1.0]
+
+### Semantic Checks
+- **Type-Token Ratio (TTR)**: Flags answers with TTR < 0.3 (highly repetitive text)
+- **Question-Answer Entity Overlap**: Flags answers where < 20% of question entities appear in the answer
+- **Citation-Content Alignment**: Flags answers where < 50% of citations have keyword overlap with the answer text
+
+### Citation Relevance Verification (`--check-relevance`)
+- Fetches paper title/abstract from NCBI for each PMID
+- Computes Jaccard keyword similarity between citation `relevance` text and actual paper content
+- Flags citations with score < 0.1 as "weak citations"
 
 ```bash
 # Standalone validation
@@ -166,6 +179,13 @@ python harness/run.py \
 
 # Model spec format: backend::base_url::model_name
 # Backends: openai, litellm, claude
+
+# Multi-judge ensemble (comma-separated) — computes median scores + Cohen's kappa
+python harness/run.py \
+  --data data/export/mcp_benchmark_with_gold.jsonl \
+  --model "openai::http://localhost:8000/v1::my-model" \
+  --judge "gemini/gemini-2.5-pro,gpt-4o,claude-opus-4-20250514" \
+  --output results/
 ```
 
 ## Data Expansion

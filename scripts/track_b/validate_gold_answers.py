@@ -28,6 +28,7 @@ import os
 import sys
 import time
 import urllib.request
+import xml.etree.ElementTree as ET
 from collections import Counter
 from pathlib import Path
 
@@ -41,6 +42,18 @@ COMPLETENESS_CRITERIA = {
     "min_citations": 2,
     "min_tool_plans": 1,
 }
+
+STOPWORDS = frozenset({
+    "the", "a", "an", "is", "are", "was", "were", "in", "on", "of", "for",
+    "to", "and", "or", "with", "that", "this", "by", "from", "at", "as",
+    "it", "be", "has", "have", "had", "not", "but", "its", "can", "may",
+    "will", "would", "should", "could", "about", "into", "than", "also",
+    "been", "between", "through", "after", "before", "during",
+    "each", "more", "most", "other", "some", "such", "these", "those",
+    "over", "only", "both", "any", "all", "very", "no", "which", "who",
+    "whom", "their", "them", "they", "we", "our", "your", "he", "she",
+    "his", "her",
+})
 
 
 def verify_pmids(pmids: set[str], batch_size: int = 100) -> tuple[set[str], set[str]]:
@@ -96,6 +109,148 @@ def verify_nct_ids(nct_ids: set[str]) -> tuple[set[str], set[str]]:
     return valid, nct_ids - valid
 
 
+def _relevance_tokenize(text: str) -> set[str]:
+    """Lowercase, split on non-alpha, remove stopwords and tokens <= 2 chars."""
+    words = set()
+    for w in text.lower().split():
+        w = "".join(ch for ch in w if ch.isalpha())
+        if len(w) > 2 and w not in STOPWORDS:
+            words.add(w)
+    return words
+
+
+def _jaccard(a: set[str], b: set[str]) -> float:
+    """Jaccard similarity between two word sets."""
+    if not a or not b:
+        return 0.0
+    return len(a & b) / len(a | b)
+
+
+def _fetch_pmid_metadata(pmids: list[str], batch_size: int = 50) -> dict[str, dict[str, str]]:
+    """Fetch title and abstract for PMIDs via NCBI efetch XML.
+
+    Returns dict mapping PMID -> {"title": ..., "abstract": ...}.
+    Batches requests in groups of ``batch_size`` with 0.4s between batches.
+    """
+    result: dict[str, dict[str, str]] = {}
+
+    for i in range(0, len(pmids), batch_size):
+        batch = pmids[i : i + batch_size]
+        ids = ",".join(batch)
+        url = (
+            "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
+            f"?db=pubmed&id={ids}&rettype=abstract&retmode=xml"
+        )
+        try:
+            req = urllib.request.Request(url)
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                xml_data = resp.read()
+
+            root = ET.fromstring(xml_data)
+            for article_node in root.iter("PubmedArticle"):
+                # Extract PMID
+                pmid_elem = article_node.find(".//PMID")
+                if pmid_elem is None or pmid_elem.text is None:
+                    continue
+                pmid = pmid_elem.text.strip()
+
+                # Extract title
+                title_elem = article_node.find(".//ArticleTitle")
+                title = (title_elem.text or "") if title_elem is not None else ""
+
+                # Extract abstract (may have multiple AbstractText elements)
+                abstract_parts = []
+                for abs_elem in article_node.iter("AbstractText"):
+                    if abs_elem.text:
+                        abstract_parts.append(abs_elem.text)
+                abstract = " ".join(abstract_parts)
+
+                result[pmid] = {"title": title, "abstract": abstract}
+
+        except Exception as e:
+            print(f"  Metadata fetch batch {i // batch_size} error: {e}", file=sys.stderr)
+
+        # Rate limit: 0.4s between batches (skip delay after last batch)
+        if i + batch_size < len(pmids):
+            time.sleep(0.4)
+
+    return result
+
+
+def verify_citation_relevance(
+    records: list[tuple[str, dict]],
+    threshold: float = 0.1,
+) -> dict:
+    """Verify that each PMID citation's relevance text matches the paper's content.
+
+    For each PMID citation that has a ``relevance`` field, fetches the paper's
+    title + abstract from NCBI and computes Jaccard similarity of keyword sets
+    (excluding stopwords).  Citations with score < ``threshold`` are flagged as
+    weak.
+
+    Returns a dict with:
+      - total_checked: int
+      - weak_count: int
+      - weak_citations: list[dict] (file, source_id, pmid, score, relevance_snippet)
+      - avg_score: float
+    """
+    # Collect unique PMIDs that have a relevance field
+    pmid_to_citations: dict[str, list[tuple[str, str, str]]] = {}
+    for fname, rec in records:
+        source_id = rec.get("source_id", "")
+        for c in rec.get("key_citations", []):
+            if c.get("type") == "PMID" and c.get("relevance"):
+                pmid = c["id"]
+                if pmid not in pmid_to_citations:
+                    pmid_to_citations[pmid] = []
+                pmid_to_citations[pmid].append((fname, source_id, c["relevance"]))
+
+    unique_pmids = sorted(pmid_to_citations.keys())
+    if not unique_pmids:
+        return {"total_checked": 0, "weak_count": 0, "weak_citations": [], "avg_score": 0.0}
+
+    print(f"\nFetching metadata for {len(unique_pmids)} unique PMIDs (batches of 50)...")
+    metadata = _fetch_pmid_metadata(unique_pmids, batch_size=50)
+    print(f"  Retrieved metadata for {len(metadata)}/{len(unique_pmids)} PMIDs")
+
+    # Compute relevance scores
+    scores: list[float] = []
+    weak_citations: list[dict] = []
+    total_checked = 0
+
+    for pmid, citations in sorted(pmid_to_citations.items()):
+        if pmid not in metadata:
+            continue  # could not fetch metadata, skip
+
+        paper = metadata[pmid]
+        paper_text = f"{paper['title']} {paper['abstract']}"
+        paper_tokens = _relevance_tokenize(paper_text)
+
+        for fname, source_id, relevance in citations:
+            total_checked += 1
+            rel_tokens = _relevance_tokenize(relevance)
+            score = _jaccard(rel_tokens, paper_tokens)
+            scores.append(score)
+
+            if score < threshold:
+                weak_citations.append({
+                    "file": fname,
+                    "source_id": source_id,
+                    "pmid": pmid,
+                    "score": round(score, 4),
+                    "relevance_snippet": relevance[:120],
+                })
+
+    avg_score = sum(scores) / len(scores) if scores else 0.0
+
+    return {
+        "total_checked": total_checked,
+        "weak_count": len(weak_citations),
+        "weak_citations": weak_citations,
+        "avg_score": round(avg_score, 4),
+    }
+
+
 def check_completeness(answer: dict) -> list[str]:
     """Check a single gold answer against completeness criteria. Returns list of failures."""
     failures = []
@@ -130,11 +285,88 @@ def check_completeness(answer: dict) -> list[str]:
             f"too few tool plans ({len(tools)} < {COMPLETENESS_CRITERIA['min_tool_plans']})"
         )
 
-    comp = answer.get("completeness")
+    comp = answer.get("self_completeness", answer.get("completeness"))
     if not isinstance(comp, (int, float)) or not (0.0 <= comp <= 1.0):
-        failures.append(f"completeness out of range: {comp}")
+        failures.append(f"self_completeness out of range: {comp}")
 
     return failures
+
+
+def _tokenize(text: str) -> list[str]:
+    """Simple whitespace + punctuation tokenizer. Returns lowercased word tokens."""
+    import re
+    return re.findall(r"[a-zA-Z0-9]+", text.lower())
+
+
+def check_semantic_quality(question_text: str, answer: dict) -> list[str]:
+    """Run semantic quality checks on a gold answer. Returns list of warning strings.
+
+    These are soft warnings (not hard failures) that flag potentially low-quality content
+    even when length-based completeness criteria pass.
+
+    Checks:
+      1. Type-Token Ratio (TTR) on current_knowledge + answer_summary
+      2. Question-Answer entity overlap
+      3. Citation-Content alignment
+    """
+    warnings = []
+
+    ck = answer.get("current_knowledge", "")
+    ans = answer.get("answer_summary", "")
+    combined_text = f"{ck} {ans}"
+    combined_tokens = _tokenize(combined_text)
+
+    # --- 1. Type-Token Ratio ---
+    if len(combined_tokens) > 0:
+        unique_tokens = set(combined_tokens)
+        ttr = len(unique_tokens) / len(combined_tokens)
+        if ttr < 0.3:
+            warnings.append(
+                f"Low Type-Token Ratio: {ttr:.3f} < 0.3 "
+                f"({len(unique_tokens)} unique / {len(combined_tokens)} total words) "
+                f"— text may be highly repetitive"
+            )
+
+    # --- 2. Question-Answer Entity Overlap ---
+    if question_text.strip():
+        q_tokens = _tokenize(question_text)
+        q_entities = {w for w in q_tokens if len(w) >= 4 and w not in STOPWORDS}
+        if q_entities:
+            combined_tokens_set = set(combined_tokens)
+            overlap_count = sum(1 for e in q_entities if e in combined_tokens_set)
+            overlap_ratio = overlap_count / len(q_entities)
+            if overlap_ratio < 0.2:
+                warnings.append(
+                    f"Low question-answer entity overlap: {overlap_ratio:.3f} < 0.2 "
+                    f"({overlap_count}/{len(q_entities)} question entities found in answer) "
+                    f"— answer may not address the question"
+                )
+
+    # --- 3. Citation-Content Alignment ---
+    cites = answer.get("key_citations", [])
+    if cites:
+        aligned_count = 0
+        for c in cites:
+            relevance_text = c.get("relevance", "")
+            rel_tokens = _tokenize(relevance_text)
+            rel_keywords = {w for w in rel_tokens if len(w) >= 5 and w not in STOPWORDS}
+            if not rel_keywords:
+                # No extractable keywords in relevance text — count as aligned
+                aligned_count += 1
+                continue
+            combined_tokens_set = set(combined_tokens)
+            if any(kw in combined_tokens_set for kw in rel_keywords):
+                aligned_count += 1
+
+        alignment_ratio = aligned_count / len(cites)
+        if alignment_ratio < 0.5:
+            warnings.append(
+                f"Low citation-content alignment: {alignment_ratio:.3f} < 0.5 "
+                f"({aligned_count}/{len(cites)} citations have keyword overlap with answer) "
+                f"— citations may not support the answer content"
+            )
+
+    return warnings
 
 
 def load_gold_answers(gold_dir: Path) -> list[tuple[str, dict]]:
@@ -195,6 +427,12 @@ def main():
     parser.add_argument("--fix", action="store_true", help="Remove invalid citations in-place")
     parser.add_argument("--report", type=Path, default=None, help="Write JSON validation report to this file")
     parser.add_argument("--skip-network", action="store_true", help="Skip PMID/NCT network verification")
+    parser.add_argument(
+        "--check-relevance", action="store_true",
+        help="Verify citation relevance by fetching paper title/abstract from NCBI "
+             "and computing keyword overlap with the citation's relevance field "
+             "(slow: one API call per unique PMID batch of 50)",
+    )
     args = parser.parse_args()
 
     records = load_gold_answers(args.input)
@@ -248,6 +486,24 @@ def main():
     else:
         print("\n[Skipping network verification]")
 
+    # --- Citation relevance verification ---
+    relevance_result = None
+    if args.check_relevance and not args.skip_network:
+        print(f"\n{'='*60}")
+        print("Citation Relevance Verification")
+        print(f"{'='*60}")
+        relevance_result = verify_citation_relevance(records, threshold=0.1)
+        print(f"\n  Total citations checked:  {relevance_result['total_checked']}")
+        print(f"  Weak citations (< 0.1):   {relevance_result['weak_count']}")
+        print(f"  Average relevance score:  {relevance_result['avg_score']:.4f}")
+        if relevance_result["weak_citations"]:
+            print(f"\n  Weak citations detail:")
+            for wc in relevance_result["weak_citations"][:20]:
+                print(f"    PMID {wc['pmid']} (score={wc['score']:.4f}) in {wc['file']}")
+                print(f"      relevance: {wc['relevance_snippet']}...")
+            if len(relevance_result["weak_citations"]) > 20:
+                print(f"    ... and {len(relevance_result['weak_citations']) - 20} more")
+
     # --- Fix: remove invalid citations ---
     if args.fix and (invalid_pmids or invalid_ncts):
         removed = strip_invalid_citations(args.input, invalid_pmids, invalid_ncts)
@@ -295,7 +551,7 @@ def main():
             print(f"  {reason}: {count}")
 
     # --- Completeness score distribution ---
-    comp_vals = [rec.get("completeness", 0) for _, rec in records if isinstance(rec.get("completeness"), (int, float))]
+    comp_vals = [rec.get("self_completeness", rec.get("completeness", 0)) for _, rec in records if isinstance(rec.get("self_completeness", rec.get("completeness")), (int, float))]
     if comp_vals:
         avg = sum(comp_vals) / len(comp_vals)
         buckets = Counter()
@@ -314,6 +570,37 @@ def main():
             count = buckets.get(bucket, 0)
             print(f"  {bucket}: {count} ({100*count/len(comp_vals):.0f}%)")
 
+    # --- Semantic quality checks ---
+    print(f"\n{'='*60}")
+    print("Semantic Quality Check")
+    print(f"{'='*60}")
+
+    semantic_warning_counts = Counter()
+    records_with_warnings = 0
+    semantic_details = []
+
+    for fname, rec in records:
+        question = rec.get("self_contained_question", rec.get("original_question", ""))
+        warnings = check_semantic_quality(question, rec)
+        if warnings:
+            records_with_warnings += 1
+            for w in warnings:
+                semantic_warning_counts[w.split(":")[0].strip()] += 1
+            semantic_details.append({
+                "file": fname,
+                "source_id": rec.get("source_id", ""),
+                "warnings": warnings,
+            })
+
+    sem_clean = len(records) - records_with_warnings
+    print(f"\nClean:    {sem_clean}/{len(records)} ({100*sem_clean/max(len(records),1):.1f}%)")
+    print(f"Warnings: {records_with_warnings}/{len(records)} ({100*records_with_warnings/max(len(records),1):.1f}%)")
+
+    if semantic_warning_counts:
+        print(f"\nWarning breakdown:")
+        for reason, count in semantic_warning_counts.most_common():
+            print(f"  {reason}: {count}")
+
     # --- Summary ---
     total_citations = sum(citation_counts.values())
     total_invalid = len(invalid_pmids) + len(invalid_ncts)
@@ -325,6 +612,7 @@ def main():
     print(f"Total gold answers:      {len(records)}")
     print(f"Citation hallucination:  {total_invalid}/{total_citations} ({100*hallucination_rate:.1f}%)")
     print(f"Completeness pass rate:  {passed}/{len(records)} ({100*passed/max(len(records),1):.1f}%)")
+    print(f"Semantic clean rate:     {sem_clean}/{len(records)} ({100*sem_clean/max(len(records),1):.1f}%)")
 
     status = "PASS" if hallucination_rate < 0.05 and passed / max(len(records), 1) > 0.90 else "NEEDS_REVIEW"
     print(f"Overall status:          {status}")
@@ -343,13 +631,26 @@ def main():
                 "invalid_ncts": sorted(invalid_ncts),
                 "hallucination_rate": round(hallucination_rate, 4),
             },
-            "completeness": {
+            "structural_completeness": {
                 "criteria": COMPLETENESS_CRITERIA,
                 "passed": passed,
                 "failed": failed,
                 "pass_rate": round(passed / max(len(records), 1), 4),
-                "avg_score": round(avg, 4) if comp_vals else None,
+                "avg_self_completeness": round(avg, 4) if comp_vals else None,
                 "failed_records": failed_records[:50],
+            },
+            "citation_relevance": {
+                "total_checked": relevance_result["total_checked"],
+                "weak_count": relevance_result["weak_count"],
+                "avg_score": relevance_result["avg_score"],
+                "weak_citations": relevance_result["weak_citations"][:50],
+            } if relevance_result else None,
+            "semantic_quality": {
+                "clean": sem_clean,
+                "warnings": records_with_warnings,
+                "clean_rate": round(sem_clean / max(len(records), 1), 4),
+                "warning_breakdown": dict(semantic_warning_counts.most_common()),
+                "flagged_records": semantic_details[:50],
             },
             "status": status,
         }
