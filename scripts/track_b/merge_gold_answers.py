@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Merge all gold answer batch results into a single benchmark export file.
 
-Usage: python scripts/track_b/merge_gold_answers.py
+Usage: python scripts/track_b/merge_gold_answers.py [--skip-validation] [--fix-citations]
 
-Reads:  data/gold_answers/batch_NNN.jsonl (all available)
+Reads:  data/gold_answers/*.output.jsonl (chunk-based) or batch_NNN.jsonl
 Writes: data/export/mcp_benchmark_with_gold.jsonl
+        data/export/validation_report.json (from post-merge validation)
 
-Also prints coverage statistics.
+Pipeline: merge → validate citations (PMID/NCT) → check completeness → report
 """
 import glob
 import json
 import os
+import subprocess
 import sys
 
 BASE_DIR = "/data/project/private/minstar/workspace/healthcare-research"
@@ -20,7 +22,26 @@ OUTPUT_FILE = os.path.join(EXPORT_DIR, "mcp_benchmark_with_gold.jsonl")
 TOTAL_EXPECTED = 1969
 
 
+def run_validation(fix: bool = False):
+    """Run post-merge validation: PMID/NCT verification + completeness checks."""
+    validate_script = os.path.join(BASE_DIR, "scripts/track_b/validate_gold_answers.py")
+    report_file = os.path.join(EXPORT_DIR, "validation_report.json")
+
+    cmd = [sys.executable, validate_script, "--input", GOLD_DIR, "--report", report_file]
+    if fix:
+        cmd.append("--fix")
+
+    print(f"\n{'='*60}")
+    print("Running post-merge validation...")
+    print(f"{'='*60}\n")
+    result = subprocess.run(cmd, capture_output=False)
+    return result.returncode
+
+
 def main():
+    skip_validation = "--skip-validation" in sys.argv
+    fix_citations = "--fix-citations" in sys.argv
+
     batch_files = sorted(glob.glob(os.path.join(GOLD_DIR, "batch_*.jsonl")))
 
     if not batch_files:
@@ -133,6 +154,12 @@ def main():
             f"\nWarning: {missing} questions missing. Re-run failed batches.",
             file=sys.stderr,
         )
+
+    # Run validation unless skipped
+    if not skip_validation:
+        run_validation(fix=fix_citations)
+    else:
+        print("\n[Validation skipped]")
 
 
 if __name__ == "__main__":

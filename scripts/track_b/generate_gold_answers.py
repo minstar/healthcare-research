@@ -89,7 +89,7 @@ def generate_gold_answers(batch_num: int):
                     "claude",
                     "--print",
                     "--model",
-                    "sonnet",
+                    "opus",
                     "--system-prompt",
                     SYSTEM_PROMPT,
                 ],
@@ -232,7 +232,19 @@ def generate_gold_answers(batch_num: int):
             f.write(json.dumps(doc, ensure_ascii=False) + "\n")
 
     answered_count = sum(1 for a in gold_answers if a.get("current_knowledge"))
-    print(f"Batch {batch_num:03d}: {len(docs)} questions, {answered_count}/{len(gold_answers)} gold answers generated")
+
+    # Inline completeness check per answer
+    quality_pass = 0
+    for a in gold_answers:
+        ck = len(a.get("current_knowledge", ""))
+        ua = len(a.get("unknown_aspects", ""))
+        ans = len(a.get("answer_summary", ""))
+        cites = len(a.get("key_citations", []))
+        comp = a.get("completeness", -1)
+        if ck >= 200 and ua >= 100 and ans >= 200 and cites >= 2 and 0.0 <= comp <= 1.0:
+            quality_pass += 1
+
+    print(f"Batch {batch_num:03d}: {len(docs)} questions, {answered_count}/{len(gold_answers)} generated, {quality_pass}/{len(gold_answers)} pass quality")
 
 
 if __name__ == "__main__":
