@@ -1,0 +1,52 @@
+{
+    "total_questions": 2345,
+    "question_types": {
+        "mechanism": 994,
+        "treatment": 800,
+        "methodology": 233,
+        "diagnosis": 148,
+        "prevention": 60,
+        "epidemiology": 59,
+        "prognosis": 51
+    },
+    "top_30_clinical_domains": {
+        "Neurology": 310,
+        "Oncology": 289,
+        "Cardiology": 131,
+        "Psychiatry": 116,
+        "Infectious Disease": 102,
+        "Immunology": 89,
+        "Pharmacology": 84,
+        "Endocrinology": 81,
+        "Genetics & Genomics": 78,
+        "Gastroenterology": 67,
+        "Nephrology": 59,
+        "Other": 57,
+        "Obstetrics & Gynecology": 55,
+        "Dentistry": 52,
+        "Surgery": 51,
+        "Pulmonology": 47,
+        "Rheumatology": 45,
+        "Hematology": 45,
+        "Dermatology": 45,
+        "Neuroscience": 39,
+        "Hepatology": 38,
+        "Cell Biology": 35,
+        "Geriatrics": 33,
+        "Orthopedics": 30,
+        "Ophthalmology": 29,
+        "Pediatrics": 28,
+        "Public Health": 26,
+        "Internal Medicine": 26,
+        "Critical Care": 22,
+        "Otolaryngology": 21
+    },
+    "difficulty_distribution": {
+        "level_1": 16,
+        "level_2": 153,
+        "level_3": 741,
+        "level_4": 1120,
+        "level_5": 315
+    },
+    "unique_clinical_domains": 51
+}
