@@ -11,18 +11,28 @@ OpenAI-compatible model endpoints that back the benchmark harness
 ### DeepGEMM dependency (DSA)
 
 GLM-5.1 uses DeepSeek Sparse Attention (`glm_moe_dsa`); vLLM's sparse-attention
-indexer requires **DeepGEMM**, which is not in the `kimi` env by default. It is
-present in the `eval_sglang` env as an `abi3` wheel (Python-version-portable), so
-it was installed into `kimi` by copying the package:
+indexer + FP8-MoE weight post-processing require **DeepGEMM**, which is not in the
+`kimi` env by default.
+
+> ⚠️ Copying the prebuilt `deep_gemm` from `eval_sglang` does NOT work: although its
+> `.so` is Python-`abi3` (loads under py3.11), it was built against torch 2.9.1 while
+> `kimi` has torch 2.10.0. The **torch C++ ABI is not stable across versions**, so
+> the custom op crashes at load with
+> `RuntimeError: Cannot access data pointer of Tensor that doesn't have storage`.
+
+DeepGEMM must be **built from source against the kimi env's torch 2.10**:
 
 ```bash
-cp -r /data/project/private/minstar/miniconda3/envs/eval_sglang/lib/python3.12/site-packages/deep_gemm \
-      /data/project/private/minstar/miniconda3/envs/kimi/lib/python3.11/site-packages/deep_gemm
-# verify: python -c "import deep_gemm"   (abi3 .so loads under py3.11)
+conda activate kimi
+export CUDA_HOME=/usr/local/cuda            # toolkit 13.0 on the nodes
+export PATH="$CUDA_HOME/bin:$PATH" TORCH_CUDA_ARCH_LIST="9.0a"   # H200 = sm90a
+git clone --recursive https://github.com/deepseek-ai/DeepGEMM.git
+cd DeepGEMM && ./install.sh                 # builds deep_gemm._C vs torch 2.10 → wheel → pip install
+# verify (outside the source dir): python -c "import deep_gemm; print(deep_gemm.__version__)"  # 2.5.0
 ```
 
-DeepGEMM JIT-compiles kernels at runtime, so the serve script exports
-`CUDA_HOME=/usr/local/cuda` (toolkit 13.0 on the nodes) and puts `nvcc` on PATH.
+The C++ core is small (GEMM kernels JIT-compile at runtime); the serve script also
+exports `CUDA_HOME` so that runtime JIT finds `nvcc`.
 
 ### Run
 
