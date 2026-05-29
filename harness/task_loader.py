@@ -28,11 +28,12 @@ def _parse_task(raw: dict) -> Task:
     Handles both the original mcp_benchmark.jsonl schema and the
     gold-augmented mcp_benchmark_with_gold.jsonl schema.
     """
-    # Task ID
-    task_id = raw.get("id") or raw.get("task_id", "")
+    # Task ID (current exports use source_id)
+    task_id = raw.get("id") or raw.get("task_id") or raw.get("source_id", "")
 
-    # Question text
-    question = raw.get("question") or raw.get("task_description", "")
+    # Question text (current exports use self_contained_question)
+    question = (raw.get("question") or raw.get("self_contained_question")
+                or raw.get("original_question") or raw.get("task_description", ""))
 
     # Gold answer (may be absent)
     gold_answer = raw.get("gold_answer", None)
@@ -58,9 +59,9 @@ def _parse_task(raw: dict) -> Task:
         taxonomy = raw["taxonomy"]
     else:
         taxonomy = {
-            "l1": raw.get("category") or raw.get("taxonomy_level_1", ""),
-            "l2": raw.get("subcategory") or raw.get("taxonomy_level_2", ""),
-            "l3": raw.get("topic") or raw.get("taxonomy_level_3", ""),
+            "l1": raw.get("category") or raw.get("taxonomy_l1") or raw.get("taxonomy_level_1", ""),
+            "l2": raw.get("subcategory") or raw.get("taxonomy_l2") or raw.get("taxonomy_level_2", ""),
+            "l3": raw.get("topic") or raw.get("taxonomy_l3") or raw.get("taxonomy_level_3", ""),
         }
 
     # Source
@@ -68,7 +69,8 @@ def _parse_task(raw: dict) -> Task:
 
     # Metadata — collect remaining informational fields
     metadata = raw.get("metadata", {})
-    for extra_key in ("open_status", "status_reasoning", "verification_venues"):
+    for extra_key in ("open_status", "status_reasoning", "verification_venues",
+                      "corpus_track", "status_method", "audit_flag", "why_open"):
         if extra_key in raw:
             metadata[extra_key] = raw[extra_key]
 
