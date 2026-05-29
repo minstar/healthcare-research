@@ -115,8 +115,8 @@ class MCPTool(ABC):
 class PubMedTool(MCPTool):
     name = "pubmed"
     description = (
-        "Search PubMed for biomedical literature using NCBI E-Utilities "
-        "(esearch + efetch). Returns titles, abstracts, and PMIDs."
+        "Search PubMed/MEDLINE biomedical literature (via Europe PMC). "
+        "Returns titles, abstracts, and PMIDs."
     )
     parameters_schema = {
         "type": "object",
@@ -132,54 +132,23 @@ class PubMedTool(MCPTool):
     }
 
     def _execute(self, *, query: str, max_results: int = 5) -> Any:
-        # Step 1: esearch
-        search_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
-        params = {
-            "db": "pubmed",
-            "term": query,
-            "retmax": max_results,
-            "retmode": "json",
-        }
-        resp = requests.get(search_url, params=params, timeout=_TIMEOUT)
+        # Europe PMC search: single call returns title + abstract; far more tolerant
+        # of concurrency than NCBI E-utils (which 429s under parallel load without a key).
+        resp = requests.get(
+            "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+            params={"query": query, "format": "json", "resultType": "core",
+                    "pageSize": max_results},
+            timeout=_TIMEOUT,
+        )
         resp.raise_for_status()
-        id_list = resp.json().get("esearchresult", {}).get("idlist", [])
-        if not id_list:
-            return []
-
-        # Step 2: efetch
-        fetch_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
-        params = {
-            "db": "pubmed",
-            "id": ",".join(id_list),
-            "retmode": "xml",
-            "rettype": "abstract",
-        }
-        resp = requests.get(fetch_url, params=params, timeout=_TIMEOUT)
-        resp.raise_for_status()
-
-        # Parse a simplified version (return raw XML snippet per article)
-        import xml.etree.ElementTree as ET
-
+        results = resp.json().get("resultList", {}).get("result", [])
         articles = []
-        try:
-            root = ET.fromstring(resp.text)
-            for article in root.findall(".//PubmedArticle"):
-                pmid_el = article.find(".//PMID")
-                title_el = article.find(".//ArticleTitle")
-                abstract_el = article.find(".//AbstractText")
-                articles.append(
-                    {
-                        "pmid": pmid_el.text if pmid_el is not None else "",
-                        "title": title_el.text if title_el is not None else "",
-                        "abstract": (
-                            abstract_el.text[:1000] if abstract_el is not None and abstract_el.text else ""
-                        ),
-                    }
-                )
-        except ET.ParseError:
-            body, _ = _truncate(resp.text)
-            articles = [{"raw_xml": body}]
-
+        for r in results[:max_results]:
+            articles.append({
+                "pmid": r.get("pmid") or r.get("id", ""),
+                "title": r.get("title", ""),
+                "abstract": (r.get("abstractText") or "")[:1000],
+            })
         return articles
 
 
