@@ -39,5 +39,5 @@ exec vllm serve "${MODEL}" \
     --gpu-memory-utilization 0.90 \
     --trust-remote-code \
     --enable-auto-tool-choice \
-    --tool-call-parser hermes \
+    --tool-call-parser qwen3_xml \
     --reasoning-parser qwen3
