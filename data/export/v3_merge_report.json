@@ -1,0 +1,39 @@
+{
+  "merged_total": 12553,
+  "exact_dups_dropped": 5,
+  "by_corpus_track": {
+    "expert_consensus": 5905,
+    "retrieval_verified": 6648
+  },
+  "by_source": {
+    "jla": 3759,
+    "nice": 2146,
+    "pubmed": 6400,
+    "trial": 149,
+    "other": 99
+  },
+  "by_open_status": {
+    "open": 10337,
+    "partially_answered": 2179,
+    "answered": 37
+  },
+  "by_status_method": {
+    "expert_consensus": 5905,
+    "retrieval": 6549,
+    "none": 99
+  },
+  "by_taxonomy_l1": {
+    "Clinical Medicine": 3027,
+    "Neuroscience & Psychiatry": 1551,
+    "Public Health & Epidemiology": 1521,
+    "Oncology": 1451,
+    "Surgical Sciences": 1129,
+    "Infectious Disease & Immunology": 1081,
+    "Cardiovascular Medicine": 888,
+    "Pharmacology & Drug Discovery": 723,
+    "Genomics & Precision Medicine": 516,
+    "Medical AI & Informatics": 319,
+    "Rare & Orphan Diseases": 261,
+    "Other": 86
+  }
+}
