@@ -369,20 +369,51 @@ def check_semantic_quality(question_text: str, answer: dict) -> list[str]:
     return warnings
 
 
-def load_gold_answers(gold_dir: Path) -> list[tuple[str, dict]]:
-    """Load all gold answer records. Returns list of (filename, record)."""
+def load_gold_answers(input_path: Path) -> list[tuple[str, dict]]:
+    """Load gold answer records from a directory of output files or a single JSONL.
+
+    If input_path is a directory, reads *.output.jsonl files.
+    If input_path is a file, reads it as merged JSONL (with nested gold_answer key).
+    Returns list of (filename, gold_answer_dict) where gold_answer_dict has the 7 fields.
+    """
     records = []
-    for f in sorted(glob.glob(str(gold_dir / "*.output.jsonl"))):
-        with open(f) as fh:
+
+    if input_path.is_file():
+        with open(input_path) as fh:
             for line in fh:
                 line = line.strip()
                 if not line:
                     continue
                 try:
                     obj = json.loads(line)
-                    records.append((os.path.basename(f), obj))
+                    gold = obj.get("gold_answer", {})
+                    if gold:
+                        gold["source_id"] = obj.get("source_id", "")
+                        gold["self_contained_question"] = obj.get("self_contained_question", "")
+                        gold["original_question"] = obj.get("original_question", "")
+                    records.append((input_path.name, gold))
                 except json.JSONDecodeError:
                     continue
+    else:
+        for f in sorted(glob.glob(str(input_path / "*.output.jsonl"))):
+            with open(f) as fh:
+                for line in fh:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        obj = json.loads(line)
+                        # Handle both formats: nested gold_answer or top-level fields
+                        if "gold_answer" in obj and isinstance(obj["gold_answer"], dict):
+                            gold = obj["gold_answer"]
+                            gold["source_id"] = obj.get("source_id", "")
+                            gold["self_contained_question"] = obj.get("self_contained_question", "")
+                            gold["original_question"] = obj.get("original_question", "")
+                        else:
+                            gold = obj
+                        records.append((os.path.basename(f), gold))
+                    except json.JSONDecodeError:
+                        continue
     return records
 
 

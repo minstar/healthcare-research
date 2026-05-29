@@ -3,7 +3,8 @@
 
 Usage: python scripts/track_b/merge_gold_answers.py [--skip-validation] [--fix-citations]
 
-Reads:  data/gold_answers/*.output.jsonl (chunk-based) or batch_NNN.jsonl
+Reads:  data/gold_answers/chunk_*.input.jsonl  (questions)
+        data/gold_answers/chunk_*.output.jsonl (gold answers, top-level fields)
 Writes: data/export/mcp_benchmark_with_gold.jsonl
         data/export/validation_report.json (from post-merge validation)
 
@@ -21,13 +22,23 @@ EXPORT_DIR = os.path.join(BASE_DIR, "data/export")
 OUTPUT_FILE = os.path.join(EXPORT_DIR, "mcp_benchmark_with_gold.jsonl")
 TOTAL_EXPECTED = 1969
 
+GOLD_FIELDS = [
+    "current_knowledge",
+    "unknown_aspects",
+    "evidence_landscape",
+    "key_citations",
+    "mcp_tool_plan",
+    "answer_summary",
+    "self_completeness",
+]
+
 
 def run_validation(fix: bool = False):
     """Run post-merge validation: PMID/NCT verification + completeness checks."""
     validate_script = os.path.join(BASE_DIR, "scripts/track_b/validate_gold_answers.py")
     report_file = os.path.join(EXPORT_DIR, "validation_report.json")
 
-    cmd = [sys.executable, validate_script, "--input", GOLD_DIR, "--report", report_file]
+    cmd = [sys.executable, validate_script, "--input", OUTPUT_FILE, "--report", report_file]
     if fix:
         cmd.append("--fix")
 
@@ -38,60 +49,88 @@ def run_validation(fix: bool = False):
     return result.returncode
 
 
+def load_chunk_pair(input_file: str, output_file: str):
+    """Load input questions and output gold answers, merge by line index."""
+    questions = []
+    with open(input_file) as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                questions.append(json.loads(line))
+
+    gold_answers = []
+    with open(output_file) as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                gold_answers.append(json.loads(line))
+
+    merged = []
+    for i, q in enumerate(questions):
+        gold = {}
+        if i < len(gold_answers):
+            ga = gold_answers[i]
+            # Handle both formats: top-level fields or nested under "gold_answer"
+            source = ga.get("gold_answer", ga) if isinstance(ga.get("gold_answer"), dict) else ga
+            for field in GOLD_FIELDS:
+                if field in source:
+                    gold[field] = source[field]
+
+        doc = dict(q)
+        doc["gold_answer"] = gold
+        merged.append(doc)
+
+    return merged
+
+
 def main():
     skip_validation = "--skip-validation" in sys.argv
     fix_citations = "--fix-citations" in sys.argv
 
-    batch_files = sorted(glob.glob(os.path.join(GOLD_DIR, "batch_*.jsonl")))
-
-    if not batch_files:
-        print(f"No batch files found in {GOLD_DIR}", file=sys.stderr)
+    input_files = sorted(glob.glob(os.path.join(GOLD_DIR, "chunk_*.input.jsonl")))
+    if not input_files:
+        print(f"No chunk input files found in {GOLD_DIR}", file=sys.stderr)
         sys.exit(1)
-
-    # Exclude debug files
-    batch_files = [f for f in batch_files if not f.endswith(".debug.txt")]
 
     all_questions = []
     has_gold = 0
     empty_gold = 0
     missing_fields = {}
+    chunks_processed = 0
+    chunks_missing_output = []
 
-    for bf in batch_files:
-        with open(bf) as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    doc = json.loads(line)
-                except json.JSONDecodeError:
-                    print(f"  Warning: skipping malformed line in {bf}", file=sys.stderr)
-                    continue
+    for input_file in input_files:
+        output_file = input_file.replace(".input.jsonl", ".output.jsonl")
+        if not os.path.exists(output_file):
+            chunks_missing_output.append(os.path.basename(input_file))
+            with open(input_file) as f:
+                for line in f:
+                    line = line.strip()
+                    if line:
+                        doc = json.loads(line)
+                        doc["gold_answer"] = {}
+                        all_questions.append(doc)
+                        empty_gold += 1
+            continue
 
-                all_questions.append(doc)
+        merged = load_chunk_pair(input_file, output_file)
+        chunks_processed += 1
 
-                gold = doc.get("gold_answer", {})
-                if gold and gold.get("current_knowledge"):
-                    has_gold += 1
-                else:
-                    empty_gold += 1
+        for doc in merged:
+            all_questions.append(doc)
+            gold = doc.get("gold_answer", {})
+            if gold and gold.get("current_knowledge"):
+                has_gold += 1
+            else:
+                empty_gold += 1
 
-                # Track field coverage
-                for field in [
-                    "current_knowledge",
-                    "unknown_aspects",
-                    "evidence_landscape",
-                    "key_citations",
-                    "mcp_tool_plan",
-                    "answer_summary",
-                    "self_completeness",
-                ]:
-                    val = gold.get(field, gold.get("completeness") if field == "self_completeness" else None)
-                    is_present = bool(val) if not isinstance(val, (int, float)) else True
-                    if not is_present:
-                        missing_fields[field] = missing_fields.get(field, 0) + 1
+            for field in GOLD_FIELDS:
+                val = gold.get(field)
+                is_present = bool(val) if not isinstance(val, (int, float)) else val is not None
+                if not is_present:
+                    missing_fields[field] = missing_fields.get(field, 0) + 1
 
-    # Deduplicate by source_id + question (in case of overlapping batches)
+    # Deduplicate by source_id + question
     seen = set()
     unique_questions = []
     duplicates = 0
@@ -111,11 +150,10 @@ def main():
         for doc in unique_questions:
             f.write(json.dumps(doc, ensure_ascii=False) + "\n")
 
-    # Print statistics
     print("=" * 60)
     print("Gold Answer Merge Report")
     print("=" * 60)
-    print(f"Batch files processed:   {len(batch_files)}")
+    print(f"Chunk pairs processed:   {chunks_processed}")
     print(f"Total questions loaded:  {len(all_questions)}")
     print(f"Duplicates removed:      {duplicates}")
     print(f"Unique questions:        {len(unique_questions)}")
@@ -133,11 +171,17 @@ def main():
             print(f"  {field}: {count} missing")
         print()
 
+    if chunks_missing_output:
+        print(f"Chunks without output ({len(chunks_missing_output)}):")
+        for name in chunks_missing_output:
+            print(f"  {name}")
+        print()
+
     # Self-completeness distribution
     completeness_vals = []
     for doc in unique_questions:
         gold = doc.get("gold_answer", {})
-        c = gold.get("self_completeness", gold.get("completeness"))
+        c = gold.get("self_completeness")
         if isinstance(c, (int, float)):
             completeness_vals.append(float(c))
     if completeness_vals:
@@ -148,7 +192,6 @@ def main():
     print(f"Output: {OUTPUT_FILE}")
     print("=" * 60)
 
-    # Exit with warning if coverage is incomplete
     if len(unique_questions) < TOTAL_EXPECTED:
         missing = TOTAL_EXPECTED - len(unique_questions)
         print(
@@ -156,7 +199,6 @@ def main():
             file=sys.stderr,
         )
 
-    # Run validation unless skipped
     if not skip_validation:
         run_validation(fix=fix_citations)
     else:
