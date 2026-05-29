@@ -36,8 +36,11 @@ conda activate "${ENV}"
 # Its JIT compiler needs a CUDA toolkit on PATH.
 export CUDA_HOME=/usr/local/cuda
 export PATH="${CUDA_HOME}/bin:${PATH}"
+# deep_gemm v2.1.1 (built from source vs torch 2.10) links libc10.so → needs torch/lib on the loader path
+TORCH_LIB="$(python -c 'import torch,os;print(os.path.join(os.path.dirname(torch.__file__),"lib"))')"
+export LD_LIBRARY_PATH="${TORCH_LIB}:${LD_LIBRARY_PATH:-}"
 echo "nvcc: $(command -v nvcc) | $(nvcc --version 2>/dev/null | grep -oE 'release [0-9.]+')"
-python -c "import deep_gemm; print('[ok] deep_gemm importable')"
+python -c "import deep_gemm; print('[ok] deep_gemm', deep_gemm.__version__)"
 
 echo "=== node: $(hostname) | port: ${PORT} | model: ${MODEL} ==="
 nvidia-smi --query-gpu=index,memory.total --format=csv,noheader
