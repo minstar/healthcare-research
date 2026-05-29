@@ -414,7 +414,7 @@ async def judge_single(
                 {"role": "user", "content": user_content},
             ],
             temperature=0.1,
-            max_tokens=2048,
+            max_tokens=4096,  # reasoning judges (GLM/Qwen) spend ~1.5-2k tokens thinking before the JSON
             response_format={"type": "json_object"},
         )
         raw_output = resp.choices[0].message.content or ""
