@@ -32,6 +32,13 @@ mkdir -p /data/project/private/minstar/workspace/healthcare-research/serving/log
 source "${CONDA}/etc/profile.d/conda.sh"
 conda activate "${ENV}"
 
+# GLM-5.1 DSA needs DeepGEMM (copied into the kimi env from eval_sglang, abi3).
+# Its JIT compiler needs a CUDA toolkit on PATH.
+export CUDA_HOME=/usr/local/cuda
+export PATH="${CUDA_HOME}/bin:${PATH}"
+echo "nvcc: $(command -v nvcc) | $(nvcc --version 2>/dev/null | grep -oE 'release [0-9.]+')"
+python -c "import deep_gemm; print('[ok] deep_gemm importable')"
+
 echo "=== node: $(hostname) | port: ${PORT} | model: ${MODEL} ==="
 nvidia-smi --query-gpu=index,memory.total --format=csv,noheader
 
