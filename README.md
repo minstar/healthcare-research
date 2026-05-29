@@ -7,9 +7,11 @@ A pipeline for systematically collecting, curating, and benchmarking unsolved me
 1. **Crawl** — Harvest documents from PubMed, MedRxiv, arXiv, Cochrane, Nature, OpenFDA, and biomedical APIs
 2. **Extract** — LLM-based extraction of open research questions from harvested documents
 3. **Filter** — 15-rule quality filter removing garbled text, templates, non-questions, and answered items
-4. **Refine** — Taxonomy classification, difficulty scoring (3-axis), MCP tool mapping, open-status verification
-5. **Gold Answers** — Reference answer generation with citation verification
-6. **Benchmark Harness** — Standalone evaluation framework with 10 medical MCP tool wrappers and LLM-as-judge
+4. **Refine** — Taxonomy classification, difficulty scoring (3-axis), MCP tool mapping
+5. **Status Verification** — *Retrieval-grounded* open/answered judgment: gather real follow-up evidence (citing papers, trial results) per source, then judge status from that evidence (not model memory)
+6. **Contamination Audit** — Full-corpus scan that flags synthetic templates, dead/completed trials, and mislabeled items against real evidence
+7. **Gold Answers** — Reference answer generation with citation verification
+8. **Benchmark Harness** — Standalone evaluation framework with 10 medical MCP tool wrappers and LLM-as-judge
 
 ## Dataset Statistics
 
@@ -38,10 +40,13 @@ A pipeline for systematically collecting, curating, and benchmarking unsolved me
 │   ├── extractor.py           #   LLM question extraction
 │   ├── dedup.py               #   Embedding-based deduplication (MiniLM, cosine ≥ 0.90)
 │   ├── refiner.py             #   Taxonomy & metadata refinement
+│   ├── status_verifier.py     #   Retrieval-grounded evidence gathering (Europe PMC / CT.gov / S2)
 │   └── taxonomy.py            #   12-category taxonomy definitions
 │
 ├── scripts/
 │   ├── filter_quality.py      # 15-rule quality filter
+│   ├── audit_contamination.py # Full-corpus retrieval-grounded contamination audit (no LLM)
+│   ├── cleanup_v2.py          # Deterministic cleanup: normalize labels, quarantine, relabel
 │   ├── refine_batch.py        # Batch refinement via Claude CLI
 │   ├── track_a/               # Data expansion
 │   │   ├── pubmed_mesh_expansion.py   # 112 MeSH terms × 3 query templates
@@ -132,6 +137,65 @@ python scripts/track_b/validate_gold_answers.py --fix
 python scripts/track_b/merge_gold_answers.py
 python scripts/track_b/merge_gold_answers.py --fix-citations   # merge + fix
 python scripts/track_b/merge_gold_answers.py --skip-validation  # merge only
+```
+
+## Status Verification & Contamination Audit
+
+The original refiner assigned `open_status` from a single tool-less LLM call, so labels were
+ungrounded (the corpus had **zero** `answered`/`unknown` items — confirmation bias toward the
+source's framing). The verification stage replaces this with retrieval-grounded evidence,
+mirroring ResearchMath-14K's refiner (which reads up to 10 citing papers to determine status).
+
+### Stage 1 — Evidence gathering (`pipeline/status_verifier.py`, no LLM)
+
+Dispatched by source type; all calls are free REST endpoints:
+
+| Source | Evidence | Resolution signal |
+|--------|----------|-------------------|
+| PubMed (PMID) | Europe PMC citations API → citing papers + abstracts (NCBI elink as fallback) | Later papers that resolve the question |
+| Trial (NCT) | ClinicalTrials.gov v2 → `OverallStatus`, completion date, results posted | COMPLETED + results ⇒ no longer open |
+| arXiv | Semantic Scholar citations | Follow-up work |
+| KEGG/UniProt | none | Flagged `synthetic` (templated, not literature-extracted) |
+
+> NCBI `elink` citedin proved unreliable (intermittent empty/500 responses); Europe PMC's
+> citation index is used as the primary follow-up source for PMIDs.
+
+### Stage 2 — Grounded judgment (LLM, evidence-constrained)
+
+The LLM judges `open_status` **only** from the gathered evidence and must cite evidence IDs
+that exist in the bundle (`status_evidence_ids ⊆ retrieved IDs`); hallucinated citations are
+rejected and the item falls back to `unknown`. `answered`/`unknown` are now reachable.
+
+### Contamination Audit (`scripts/audit_contamination.py`)
+
+Runs the fast, LLM-free `screen()` over the full corpus and categorizes each item:
+
+```bash
+python scripts/audit_contamination.py \
+  --data data/expanded/all_questions_combined.jsonl \
+  --out data/audit_full --workers 12
+```
+
+Flags: `trial_resolved_but_open`, `trial_dead` (terminated/withdrawn), `trial_completed`,
+`synthetic_template`, `heavy_followup_recheck` (re-judge candidate), `no_followup_evidence`.
+
+### Deterministic Cleanup → v2 (`scripts/cleanup_v2.py`)
+
+Applies auditable, non-judgment fixes (nothing deleted in place — removals are quarantined):
+
+1. **Label normalization** — 11 observed `open_status` strings (`partially_resolved`,
+   `mostly_resolved`, `partially resolved`, `closed`, …) → 4 canonical
+   (`open`, `partially_answered`, `answered`, `unknown`)
+2. **Quarantine** — synthetic templates + dead trials → `data/export/quarantine_v2.jsonl`
+3. **Relabel** — completed-with-results trials labeled `open` → `partially_answered`
+4. **Provenance** — attach `status_method`, `audit_flag`, `n_followups`, `src_year`
+
+```bash
+python scripts/cleanup_v2.py \
+  --data data/expanded/all_questions_combined.jsonl \
+  --audit data/audit_full/audit_per_item.jsonl \
+  --out-dir data/export
+# → data/export/mcp_benchmark_v2.jsonl + quarantine_v2.jsonl + cleanup_v2_report.json
 ```
 
 ## Benchmark Harness
