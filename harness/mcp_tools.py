@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 _TIMEOUT = 30  # seconds per request
 _MAX_RESULT_CHARS = 12000  # truncate response body to this length (fits ~6-8 pubmed abstracts)
-_RATE_LIMIT_SEC = 1.0  # minimum interval between consecutive calls
+_RATE_LIMIT_SEC = 0.34  # ~3 req/s = NCBI keyless ceiling (was 1.0; 3x faster for scale runs)
 
 # Module-level rate-limiter state
 _last_call_ts: float = 0.0
