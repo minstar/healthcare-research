@@ -1,0 +1,83 @@
+# Declarative pipeline DAG for the open-medical-questions benchmark.
+# The orchestrator runs ready stages (deps satisfied), verifies outputs, and
+# auto-updates state.json + PLAN.md. Stages with `cost: high` are only run when
+# explicitly requested (--only / --include-costly), so the watch loop stays safe.
+
+meta:
+  name: open-medical-questions
+  description: Crawl -> integrate -> audit -> cleanup -> re-judge -> merge benchmark corpus
+
+stages:
+  - id: crawl_jla
+    desc: Crawl James Lind Alliance PSP Top-10 unanswered questions
+    cmd: python3 crawlers/jla_crawler.py --out data/raw/jla/jla_questions.jsonl
+    deps: []
+    cost: medium
+    outputs: [data/raw/jla/jla_questions.jsonl]
+    verify:
+      - {check: min_lines, path: data/raw/jla/jla_questions.jsonl, n: 3000}
+      - {check: jsonl_keys, path: data/raw/jla/jla_questions.jsonl, keys: [source_id, self_contained_question, why_open]}
+
+  - id: crawl_nice
+    desc: Crawl NICE research recommendations (declared evidence gaps)
+    cmd: python3 crawlers/nice_crawler.py --out data/raw/nice/nice_questions.jsonl
+    deps: []
+    cost: low
+    outputs: [data/raw/nice/nice_questions.jsonl]
+    verify:
+      - {check: min_lines, path: data/raw/nice/nice_questions.jsonl, n: 1500}
+      - {check: jsonl_keys, path: data/raw/nice/nice_questions.jsonl, keys: [source_id, self_contained_question]}
+
+  - id: integrate_curated
+    desc: Integrate JLA+NICE into v2 schema (open fixed, batched taxonomy/difficulty)
+    cmd: python3 scripts/integrate_curated.py --inputs data/raw/jla/jla_questions.jsonl data/raw/nice/nice_questions.jsonl --out data/curated/curated_integrated.jsonl --batch-size 25 --workers 6 --model haiku
+    deps: [crawl_jla, crawl_nice]
+    cost: high
+    outputs: [data/curated/curated_integrated.jsonl]
+    verify:
+      - {check: min_lines, path: data/curated/curated_integrated.jsonl, n: 5000}
+      - {check: metric, path: data/curated/curated_integrated.jsonl,
+         stat: taxonomy_filled, assert: "filled / total > 0.95"}
+
+  - id: audit_full
+    desc: Retrieval-grounded contamination audit over the combined corpus
+    cmd: python3 scripts/audit_contamination.py --data data/expanded/all_questions_combined.jsonl --workers 12 --min-interval 0.07 --out data/audit_full
+    deps: []
+    cost: medium
+    outputs: [data/audit_full/audit_per_item.jsonl, data/audit_full/audit_summary.json]
+    verify:
+      - {check: file_exists, path: data/audit_full/audit_summary.json}
+      - {check: metric, path: data/audit_full/audit_per_item.jsonl,
+         stat: line_count, assert: "total > 6000"}
+
+  - id: cleanup_v2
+    desc: Deterministic cleanup -> mcp_benchmark_v2 (normalize labels, quarantine, relabel)
+    cmd: python3 scripts/cleanup_v2.py --data data/expanded/all_questions_combined.jsonl --audit data/audit_full/audit_per_item.jsonl --out-dir data/export
+    deps: [audit_full]
+    cost: low
+    outputs: [data/export/mcp_benchmark_v2.jsonl, data/export/cleanup_v2_report.json]
+    verify:
+      - {check: min_lines, path: data/export/mcp_benchmark_v2.jsonl, n: 6000}
+      - {check: metric, path: data/export/mcp_benchmark_v2.jsonl,
+         stat: status_vocab, assert: "n_distinct <= 4"}
+
+  - id: stage2_full
+    desc: Retrieval-grounded open_status re-judgment over all candidates (LLM)
+    cmd: python3 scripts/stage2_judge.py --data data/export/mcp_benchmark_v2.jsonl --sample 100000 --model sonnet --workers 6 --out data/stage2_full
+    deps: [cleanup_v2]
+    cost: high
+    outputs: [data/stage2_full/stage2_sample.jsonl, data/stage2_full/stage2_summary.json]
+    verify:
+      - {check: file_exists, path: data/stage2_full/stage2_summary.json}
+      - {check: metric, path: data/stage2_full/stage2_sample.jsonl,
+         stat: stage2_guardrail, assert: "hallucinated == 0"}
+
+  - id: merge_v3
+    desc: Merge retrieval-verified + expert-consensus tracks into corpus v3
+    cmd: python3 scripts/merge_corpus.py --v2 data/export/mcp_benchmark_v2.jsonl --curated data/curated/curated_integrated.jsonl --out data/export/mcp_benchmark_v3.jsonl
+    deps: [cleanup_v2, integrate_curated]
+    cost: low
+    outputs: [data/export/mcp_benchmark_v3.jsonl, data/export/v3_merge_report.json]
+    verify:
+      - {check: min_lines, path: data/export/mcp_benchmark_v3.jsonl, n: 12000}
+      - {check: jsonl_keys, path: data/export/mcp_benchmark_v3.jsonl, keys: [corpus_track, open_status, status_method]}
