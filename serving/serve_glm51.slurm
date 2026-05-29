@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=serve-glm51
-#SBATCH --partition=preemptible
+#SBATCH --partition=normal
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:8
 #SBATCH --cpus-per-task=64
@@ -51,5 +51,4 @@ exec vllm serve "${MODEL}" \
     --trust-remote-code \
     --enable-auto-tool-choice \
     --tool-call-parser glm47 \
-    --reasoning-parser glm45 \
-    --disable-log-requests
+    --reasoning-parser glm45
