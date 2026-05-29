@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 # Constants
 # ---------------------------------------------------------------------------
 _TIMEOUT = 30  # seconds per request
-_MAX_RESULT_CHARS = 4000  # truncate response body to this length
+_MAX_RESULT_CHARS = 12000  # truncate response body to this length (fits ~6-8 pubmed abstracts)
 _RATE_LIMIT_SEC = 1.0  # minimum interval between consecutive calls
 
 # Module-level rate-limiter state
@@ -79,7 +79,14 @@ class MCPTool(ABC):
         raw = _json.dumps(results, ensure_ascii=False, default=str)
         truncated_str, was_truncated = _truncate(raw)
         if was_truncated:
-            results = _json.loads(truncated_str.split("\n... [truncated]")[0] + "}")
+            # The truncated JSON usually can't be repaired by appending "}" (truncation
+            # can land mid-string/array → "Unterminated string"). Try, but fall back to
+            # the truncated text so a long tool result never crashes the task.
+            body = truncated_str.split("\n... [truncated]")[0]
+            try:
+                results = _json.loads(body + "}")
+            except _json.JSONDecodeError:
+                results = {"truncated_text": body, "note": "result truncated; partial text only"}
 
         return {
             "tool": self.name,
