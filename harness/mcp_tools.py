@@ -700,9 +700,17 @@ class MCPToolRegistry:
             Standard result dict with keys: tool, query, results, truncated.
         """
         norm_name = tool_name.replace("-", "_")
-        # Some models (DeepSeek-V4) double-wrap args as {"arguments": {...}}; unwrap.
-        if isinstance(arguments, dict) and isinstance(arguments.get("arguments"), dict):
-            arguments = arguments["arguments"]
+        # Some models (DeepSeek-V4) double-wrap args as {"arguments": {...}} or
+        # {"arguments": "<json string>"}; unwrap (and JSON-decode if stringified).
+        if isinstance(arguments, dict) and "arguments" in arguments and len(arguments) == 1:
+            inner = arguments["arguments"]
+            if isinstance(inner, str):
+                import json as _j
+                try:
+                    inner = _j.loads(inner)
+                except Exception:
+                    inner = {}
+            arguments = inner if isinstance(inner, dict) else {}
         if not isinstance(arguments, dict):
             arguments = {}
         tool = self._tools.get(norm_name)
