@@ -63,6 +63,12 @@ class MCPTool(ABC):
 
     def execute(self, **kwargs: Any) -> dict:
         """Public entry: rate-limit, call _execute, wrap result."""
+        # Some models (e.g. DeepSeek-V4) emit numeric args as strings ("10"); coerce
+        # so downstream slicing/limits don't raise "slice indices must be integers".
+        for k in ("max_results", "retmax", "page_size", "pageSize", "limit", "top_k"):
+            v = kwargs.get(k)
+            if isinstance(v, str) and v.strip().lstrip("-").isdigit():
+                kwargs[k] = int(v)
         _rate_limit()
         try:
             results = self._execute(**kwargs)
