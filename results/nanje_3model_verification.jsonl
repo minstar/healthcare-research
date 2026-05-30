@@ -1,0 +1,288 @@
+{"task_id": "P19532", "taxonomy_l1": "Oncology", "glm": 0.333, "qwen": 0.361, "deepseek_v4": 0.361, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:25994217", "taxonomy_l1": "Oncology", "glm": 0.325, "qwen": 0.35, "deepseek_v4": 0.4, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36799262", "taxonomy_l1": "Surgical Sciences", "glm": 0.324, "qwen": 0.176, "deepseek_v4": 0.529, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:32311414", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.306, "qwen": 0.528, "deepseek_v4": 0.306, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:36355455", "taxonomy_l1": "Clinical Medicine", "glm": 0.2, "qwen": 0.1, "deepseek_v4": 0.5, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT04007562", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.176, "qwen": 0.176, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:35378557", "taxonomy_l1": "Oncology", "glm": 0.306, "qwen": 0.444, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:16142829", "taxonomy_l1": "Surgical Sciences", "glm": 0.7, "qwen": 0.7, "deepseek_v4": 0.833, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:31972425", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.324, "qwen": 0.324, "deepseek_v4": 0.441, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:35761104", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.368, "qwen": 0.053, "deepseek_v4": 0.211, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:25158828", "taxonomy_l1": "Oncology", "glm": 0.5, "qwen": 0.471, "deepseek_v4": 0.5, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "1705.02315v5", "taxonomy_l1": "Clinical Medicine", "glm": 0.294, "qwen": 0.118, "deepseek_v4": 0.235, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "hsa04723", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.559, "qwen": 0.176, "deepseek_v4": 0.559, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:33320308", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.3, "qwen": 0.1, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:29436899", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.167, "qwen": 0.306, "deepseek_v4": 0.556, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:36465154", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.472, "qwen": 0.556, "deepseek_v4": 0.667, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:35534623", "taxonomy_l1": "Oncology", "glm": 0.333, "qwen": 0.528, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT06903923", "taxonomy_l1": "Clinical Medicine", "glm": 0.706, "qwen": 0.676, "deepseek_v4": 0.176, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "NCT04508530", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.571, "qwen": 0.214, "deepseek_v4": 0.714, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:34724404", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.381, "qwen": 0.452, "deepseek_v4": 0.524, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:37523477", "taxonomy_l1": "Clinical Medicine", "glm": 0.6, "qwen": 0.2, "deepseek_v4": 0.767, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:33871055", "taxonomy_l1": "Clinical Medicine", "glm": 0.2, "qwen": 0.267, "deepseek_v4": 0.3, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "2501.04017v1", "taxonomy_l1": "Rare & Orphan Diseases", "glm": 0.25, "qwen": 0.278, "deepseek_v4": 0.5, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:26811699", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.529, "qwen": 0.529, "deepseek_v4": 0.647, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:19298854", "taxonomy_l1": "Oncology", "glm": 0.429, "qwen": 0.214, "deepseek_v4": 0.464, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37857825", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.306, "qwen": 0.167, "deepseek_v4": 0.306, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:26040994", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.5, "qwen": 0.472, "deepseek_v4": 0.5, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38733922", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.643, "qwen": 0.571, "deepseek_v4": 0.643, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:32060896", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.385, "qwen": 0.154, "deepseek_v4": 0.231, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "NCT02604706", "taxonomy_l1": "Clinical Medicine", "glm": 0.633, "qwen": 0.433, "deepseek_v4": 0.367, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:36707729", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.333, "qwen": 0.333, "deepseek_v4": 0.25, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:27493633", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.353, "qwen": 0.235, "deepseek_v4": 0.353, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:29678496", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.5, "qwen": 0.447, "deepseek_v4": 0.474, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:39258519", "taxonomy_l1": "Clinical Medicine", "glm": 0.2, "qwen": 0.2, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "NCT05652179", "taxonomy_l1": "Surgical Sciences", "glm": 0.469, "qwen": 0.344, "deepseek_v4": 0.219, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:30659311", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.533, "qwen": 0.4, "deepseek_v4": 0.3, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT04130243", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.467, "qwen": 0.6, "deepseek_v4": 0.2, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "B6A8C7", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.1, "qwen": 0.1, "deepseek_v4": 0.0, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "2403.15405v3", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.344, "qwen": 0.219, "deepseek_v4": 0.219, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:32274757", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.381, "qwen": 0.381, "deepseek_v4": 0.31, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:32712962", "taxonomy_l1": "Surgical Sciences", "glm": 0.15, "qwen": 0.15, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37284928", "taxonomy_l1": "Surgical Sciences", "glm": 0.286, "qwen": 0.036, "deepseek_v4": 0.321, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33142986", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.588, "qwen": 0.441, "deepseek_v4": 0.676, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:32882245", "taxonomy_l1": "Surgical Sciences", "glm": 0.353, "qwen": 0.529, "deepseek_v4": 0.176, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "P04198", "taxonomy_l1": "Oncology", "glm": 0.167, "qwen": 0.19, "deepseek_v4": 0.143, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:40644549", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.528, "qwen": 0.167, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:27027952", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.4, "qwen": 0.425, "deepseek_v4": 0.45, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "NCT03971097", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.286, "qwen": 0.214, "deepseek_v4": 0.357, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:40611398", "taxonomy_l1": "Rare & Orphan Diseases", "glm": 0.344, "qwen": 0.344, "deepseek_v4": 0.25, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:39121857", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.444, "qwen": 0.167, "deepseek_v4": 0.5, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:39070897", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.176, "qwen": 0.706, "deepseek_v4": 0.176, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT05909098", "taxonomy_l1": "Oncology", "glm": 0.333, "qwen": 0.167, "deepseek_v4": 0.278, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:22676281", "taxonomy_l1": "Surgical Sciences", "glm": 0.433, "qwen": 0.333, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:28710848", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.361, "qwen": 0.306, "deepseek_v4": 0.472, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "NCT03988790", "taxonomy_l1": "Clinical Medicine", "glm": 0.233, "qwen": 0.2, "deepseek_v4": 0.667, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:38579683", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.438, "qwen": 0.5, "deepseek_v4": 0.562, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:33780647", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.382, "qwen": 0.206, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:31012954", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.143, "qwen": 0.179, "deepseek_v4": 0.214, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36004796", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.5, "qwen": 0.594, "deepseek_v4": 0.406, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:39556335", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.083, "qwen": 0.167, "deepseek_v4": 0.306, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36949522", "taxonomy_l1": "Clinical Medicine", "glm": 0.5, "qwen": 0.233, "deepseek_v4": 0.667, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:39624081", "taxonomy_l1": "Oncology", "glm": 0.594, "qwen": 0.062, "deepseek_v4": 0.062, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:32649576", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.412, "qwen": 0.294, "deepseek_v4": 0.294, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:40087523", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.45, "qwen": 0.45, "deepseek_v4": 0.15, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37407818", "taxonomy_l1": "Oncology", "glm": 0.235, "qwen": 0.206, "deepseek_v4": 0.647, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT03935594", "taxonomy_l1": "Surgical Sciences", "glm": 0.474, "qwen": 0.368, "deepseek_v4": 0.447, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:3324702", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.553, "qwen": 0.447, "deepseek_v4": 0.553, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:31431710", "taxonomy_l1": "Oncology", "glm": 0.167, "qwen": 0.333, "deepseek_v4": 0.0, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:41000472", "taxonomy_l1": "Surgical Sciences", "glm": 0.467, "qwen": 0.4, "deepseek_v4": 0.6, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:35726097", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.5, "qwen": 0.267, "deepseek_v4": 0.367, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:38060191", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.206, "qwen": 0.176, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36357681", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.382, "qwen": 0.176, "deepseek_v4": 0.5, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:40464151", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.533, "qwen": 0.267, "deepseek_v4": 0.533, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38159067", "taxonomy_l1": "Clinical Medicine", "glm": 0.471, "qwen": 0.176, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:30572739", "taxonomy_l1": "Clinical Medicine", "glm": 0.5, "qwen": 0.094, "deepseek_v4": 0.281, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:24102271", "taxonomy_l1": "Oncology", "glm": 0.361, "qwen": 0.444, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:19553813", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.441, "qwen": 0.176, "deepseek_v4": 0.559, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:28166685", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.45, "qwen": 0.15, "deepseek_v4": 0.3, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:32003705", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.611, "qwen": 0.167, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:27693548", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.667, "qwen": 0.472, "deepseek_v4": 0.583, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38656686", "taxonomy_l1": "Oncology", "glm": 0.471, "qwen": 0.471, "deepseek_v4": 0.412, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:28211341", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.611, "qwen": 0.278, "deepseek_v4": 0.444, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:37541186", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.133, "qwen": 0.3, "deepseek_v4": 0.067, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:30277568", "taxonomy_l1": "Surgical Sciences", "glm": 0.464, "qwen": 0.321, "deepseek_v4": 0.214, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:18646115", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.2, "qwen": 0.2, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:31500113", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.417, "qwen": 0.333, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "2502.03938v1", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.5, "qwen": 0.188, "deepseek_v4": 0.188, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:30880916", "taxonomy_l1": "Oncology", "glm": 0.667, "qwen": 0.667, "deepseek_v4": 0.667, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:30540575", "taxonomy_l1": "Clinical Medicine", "glm": 0.5, "qwen": 0.361, "deepseek_v4": 0.694, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:25725245", "taxonomy_l1": "Clinical Medicine", "glm": 0.433, "qwen": 0.6, "deepseek_v4": 0.267, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:34693994", "taxonomy_l1": "Clinical Medicine", "glm": 0.0, "qwen": 0.0, "deepseek_v4": 0.0, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:39550175", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.5, "qwen": 0.471, "deepseek_v4": 0.529, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:32145185", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.471, "qwen": 0.382, "deepseek_v4": 0.382, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33374338", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.306, "qwen": 0.278, "deepseek_v4": 0.333, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:40742400", "taxonomy_l1": "Clinical Medicine", "glm": 0.176, "qwen": 0.353, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:34995762", "taxonomy_l1": "Clinical Medicine", "glm": 0.15, "qwen": 0.15, "deepseek_v4": 0.275, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "Q8NFG4", "taxonomy_l1": "Oncology", "glm": 0.312, "qwen": 0.406, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37414304", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.278, "qwen": 0.278, "deepseek_v4": 0.278, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:10353294", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.4, "qwen": 0.2, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:39488768", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.368, "qwen": 0.395, "deepseek_v4": 0.526, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT04668846", "taxonomy_l1": "Clinical Medicine", "glm": 0.059, "qwen": 0.147, "deepseek_v4": 0.118, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "2402.17317v2", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.5, "qwen": 0.375, "deepseek_v4": 0.281, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:29876867", "taxonomy_l1": "Clinical Medicine", "glm": 0.618, "qwen": 0.647, "deepseek_v4": 0.647, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:39348691", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.176, "qwen": 0.353, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:30291906", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.278, "qwen": 0.556, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT04153682", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.294, "qwen": 0.118, "deepseek_v4": 0.294, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "activities_prioritizing-diseases-for-research-and-development-in-emergency-contexts", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.389, "qwen": 0.611, "deepseek_v4": 0.556, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:26438269", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.438, "qwen": 0.562, "deepseek_v4": 0.656, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "Q99497", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.111, "qwen": 0.556, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:39930168", "taxonomy_l1": "Clinical Medicine", "glm": 0.533, "qwen": 0.5, "deepseek_v4": 0.567, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:33782623", "taxonomy_l1": "Oncology", "glm": 0.167, "qwen": 0.333, "deepseek_v4": 0.278, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:25912581", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.35, "qwen": 0.45, "deepseek_v4": 0.375, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:21988214", "taxonomy_l1": "Clinical Medicine", "glm": 0.444, "qwen": 0.389, "deepseek_v4": 0.444, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:21674822", "taxonomy_l1": "Surgical Sciences", "glm": 0.235, "qwen": 0.353, "deepseek_v4": 0.324, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:20425278", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.611, "qwen": 0.167, "deepseek_v4": 0.611, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:27323655", "taxonomy_l1": "Clinical Medicine", "glm": 0.583, "qwen": 0.389, "deepseek_v4": 0.667, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:26592954", "taxonomy_l1": "Surgical Sciences", "glm": 0.361, "qwen": 0.306, "deepseek_v4": 0.444, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:18664969", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.538, "qwen": 0.231, "deepseek_v4": 0.231, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:36283946", "taxonomy_l1": "Clinical Medicine", "glm": 0.556, "qwen": 0.444, "deepseek_v4": 0.5, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:23474420", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.5, "qwen": 0.118, "deepseek_v4": 0.176, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:38010498", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.25, "qwen": 0.167, "deepseek_v4": 0.361, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33625036", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.059, "qwen": 0.176, "deepseek_v4": 0.118, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "NCT03918850", "taxonomy_l1": "Clinical Medicine", "glm": 0.25, "qwen": 0.188, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "1607.04039v1", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.5, "qwen": 0.2, "deepseek_v4": 0.3, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:40335884", "taxonomy_l1": "Oncology", "glm": 0.389, "qwen": 0.167, "deepseek_v4": 0.472, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:41135523", "taxonomy_l1": "Clinical Medicine", "glm": 0.265, "qwen": 0.206, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:20724852", "taxonomy_l1": "Rare & Orphan Diseases", "glm": 0.5, "qwen": 0.214, "deepseek_v4": 0.286, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:16235404", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.531, "qwen": 0.531, "deepseek_v4": 0.438, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "NCT02870218", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.083, "qwen": 0.139, "deepseek_v4": 0.083, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37324632", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.312, "qwen": 0.219, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:41027242", "taxonomy_l1": "Rare & Orphan Diseases", "glm": 0.382, "qwen": 0.441, "deepseek_v4": 0.382, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:8726279", "taxonomy_l1": "Clinical Medicine", "glm": 0.25, "qwen": 0.156, "deepseek_v4": 0.094, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36765164", "taxonomy_l1": "Other", "glm": 0.444, "qwen": 0.444, "deepseek_v4": 0.528, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:28689331", "taxonomy_l1": "Clinical Medicine", "glm": 0.324, "qwen": 0.559, "deepseek_v4": 0.412, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT00640991", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.611, "qwen": 0.417, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:36464877", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.438, "qwen": 0.375, "deepseek_v4": 0.375, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37338236", "taxonomy_l1": "Clinical Medicine", "glm": 0.067, "qwen": 0.0, "deepseek_v4": 0.067, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:10676070", "taxonomy_l1": "Oncology", "glm": 0.605, "qwen": 0.158, "deepseek_v4": 0.158, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT07053488", "taxonomy_l1": "Surgical Sciences", "glm": 0.5, "qwen": 0.188, "deepseek_v4": 0.5, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38272305", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.344, "qwen": 0.281, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36352432", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.278, "qwen": 0.306, "deepseek_v4": 0.361, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "1506.01863v1", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.324, "qwen": 0.294, "deepseek_v4": 0.412, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:30846383", "taxonomy_l1": "Other", "glm": 0.607, "qwen": 0.464, "deepseek_v4": 0.607, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "2009.09087v1", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.633, "qwen": 0.2, "deepseek_v4": 0.433, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:20091556", "taxonomy_l1": "Clinical Medicine", "glm": 0.294, "qwen": 0.235, "deepseek_v4": 0.294, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33098194", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.412, "qwen": 0.382, "deepseek_v4": 0.529, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:29554350", "taxonomy_l1": "Oncology", "glm": 0.556, "qwen": 0.167, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:37382948", "taxonomy_l1": "Oncology", "glm": 0.375, "qwen": 0.188, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37592831", "taxonomy_l1": "Clinical Medicine", "glm": 0.5, "qwen": 0.176, "deepseek_v4": 0.353, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:37885505", "taxonomy_l1": "Clinical Medicine", "glm": 0.688, "qwen": 0.188, "deepseek_v4": 0.688, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:37031496", "taxonomy_l1": "Oncology", "glm": 0.464, "qwen": 0.536, "deepseek_v4": 0.464, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:35883776", "taxonomy_l1": "Clinical Medicine", "glm": 0.469, "qwen": 0.469, "deepseek_v4": 0.469, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:38593118", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.156, "qwen": 0.125, "deepseek_v4": 0.656, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT02837588", "taxonomy_l1": "Surgical Sciences", "glm": 0.214, "qwen": 0.214, "deepseek_v4": 0.214, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:20091619", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.167, "qwen": 0.111, "deepseek_v4": 0.389, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:40630651", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.367, "qwen": 0.3, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:38233851", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.5, "qwen": 0.118, "deepseek_v4": 0.176, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:40425830", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.059, "qwen": 0.059, "deepseek_v4": 0.059, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:27750340", "taxonomy_l1": "Clinical Medicine", "glm": 0.429, "qwen": 0.214, "deepseek_v4": 0.214, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:35477331", "taxonomy_l1": "Oncology", "glm": 0.471, "qwen": 0.529, "deepseek_v4": 0.588, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38886139", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.472, "qwen": 0.167, "deepseek_v4": 0.528, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "2207.06096v2", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.5, "qwen": 0.3, "deepseek_v4": 0.5, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:39546829", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.531, "qwen": 0.594, "deepseek_v4": 0.531, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "hsa05340", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.417, "qwen": 0.444, "deepseek_v4": 0.417, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:38996387", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.611, "qwen": 0.5, "deepseek_v4": 0.472, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:39653824", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.5, "qwen": 0.824, "deepseek_v4": 0.176, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:41779722", "taxonomy_l1": "Oncology", "glm": 0.556, "qwen": 0.667, "deepseek_v4": 0.167, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:35505248", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.25, "qwen": 0.094, "deepseek_v4": 0.25, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:26175143", "taxonomy_l1": "Clinical Medicine", "glm": 0.5, "qwen": 0.158, "deepseek_v4": 0.158, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:36168375", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.139, "qwen": 0.25, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36819340", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.45, "qwen": 0.425, "deepseek_v4": 0.475, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:34973469", "taxonomy_l1": "Clinical Medicine", "glm": 0.667, "qwen": 0.7, "deepseek_v4": 0.3, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:37488315", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.312, "qwen": 0.188, "deepseek_v4": 0.062, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:34023496", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.531, "qwen": 0.188, "deepseek_v4": 0.25, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:39232666", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.133, "qwen": 0.133, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33119150", "taxonomy_l1": "Clinical Medicine", "glm": 0.5, "qwen": 0.472, "deepseek_v4": 0.639, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38722020", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.526, "qwen": 0.158, "deepseek_v4": 0.263, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:40404827", "taxonomy_l1": "Oncology", "glm": 0.35, "qwen": 0.25, "deepseek_v4": 0.25, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:31450719", "taxonomy_l1": "Clinical Medicine", "glm": 0.3, "qwen": 0.2, "deepseek_v4": 0.4, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:38351187", "taxonomy_l1": "Oncology", "glm": 0.425, "qwen": 0.15, "deepseek_v4": 0.15, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:26677426", "taxonomy_l1": "Clinical Medicine", "glm": 0.471, "qwen": 0.412, "deepseek_v4": 0.441, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36156126", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.235, "qwen": 0.265, "deepseek_v4": 0.206, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:31648041", "taxonomy_l1": "Clinical Medicine", "glm": 0.531, "qwen": 0.562, "deepseek_v4": 0.719, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "2503.21992v1", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.278, "qwen": 0.222, "deepseek_v4": 0.222, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:40307460", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.472, "qwen": 0.556, "deepseek_v4": 0.556, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:35723942", "taxonomy_l1": "Oncology", "glm": 0.471, "qwen": 0.324, "deepseek_v4": 0.382, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37068095", "taxonomy_l1": "Oncology", "glm": 0.2, "qwen": 0.1, "deepseek_v4": 0.267, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:24842458", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.211, "qwen": 0.0, "deepseek_v4": 0.158, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:27659301", "taxonomy_l1": "Other", "glm": 0.471, "qwen": 0.441, "deepseek_v4": 0.382, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:30931707", "taxonomy_l1": "Clinical Medicine", "glm": 0.588, "qwen": 0.5, "deepseek_v4": 0.618, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:28977451", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.4, "qwen": 0.4, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36983246", "taxonomy_l1": "Clinical Medicine", "glm": 0.222, "qwen": 0.194, "deepseek_v4": 0.194, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:39196113", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.688, "qwen": 0.5, "deepseek_v4": 0.469, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:22487688", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.5, "qwen": 0.267, "deepseek_v4": 0.333, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "2410.05552v3", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.375, "qwen": 0.0, "deepseek_v4": 0.15, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "1412.0897v1", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.667, "qwen": 0.667, "deepseek_v4": 0.567, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:36090489", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.611, "qwen": 0.167, "deepseek_v4": 0.194, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:32735848", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.235, "qwen": 0.235, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:38622584", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.214, "qwen": 0.429, "deepseek_v4": 0.214, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "NCT04569188", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.588, "qwen": 0.176, "deepseek_v4": 0.588, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:32692051", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.4, "qwen": 0.467, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:35371880", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.281, "qwen": 0.281, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37854319", "taxonomy_l1": "Clinical Medicine", "glm": 0.306, "qwen": 0.306, "deepseek_v4": 0.556, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT00837486", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.472, "qwen": 0.5, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:15051286", "taxonomy_l1": "Oncology", "glm": 0.333, "qwen": 0.4, "deepseek_v4": 0.367, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:25929235", "taxonomy_l1": "Clinical Medicine", "glm": 0.206, "qwen": 0.206, "deepseek_v4": 0.206, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:38004652", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.412, "qwen": 0.471, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:35731672", "taxonomy_l1": "Rare & Orphan Diseases", "glm": 0.464, "qwen": 0.0, "deepseek_v4": 0.214, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:11060768", "taxonomy_l1": "Clinical Medicine", "glm": 0.188, "qwen": 0.25, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:39283851", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.529, "qwen": 0.647, "deepseek_v4": 0.618, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:33583005", "taxonomy_l1": "Oncology", "glm": 0.5, "qwen": 0.361, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:34973131", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.5, "qwen": 0.375, "deepseek_v4": 0.594, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38797149", "taxonomy_l1": "Other", "glm": 0.469, "qwen": 0.531, "deepseek_v4": 0.188, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:39304375", "taxonomy_l1": "Clinical Medicine", "glm": 0.2, "qwen": 0.067, "deepseek_v4": 0.667, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:19520658", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.559, "qwen": 0.471, "deepseek_v4": 0.559, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:37253507", "taxonomy_l1": "Oncology", "glm": 0.441, "qwen": 0.471, "deepseek_v4": 0.265, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:26506367", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.333, "qwen": 0.472, "deepseek_v4": 0.444, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:32266483", "taxonomy_l1": "Oncology", "glm": 0.611, "qwen": 0.722, "deepseek_v4": 0.556, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:36240281", "taxonomy_l1": "Oncology", "glm": 0.611, "qwen": 0.5, "deepseek_v4": 0.667, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:26166239", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.438, "qwen": 0.094, "deepseek_v4": 0.281, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:38648090", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.688, "qwen": 0.531, "deepseek_v4": 0.656, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:28282721", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.583, "qwen": 0.361, "deepseek_v4": 0.806, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:42034005", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.333, "qwen": 0.467, "deepseek_v4": 0.333, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:25892859", "taxonomy_l1": "Oncology", "glm": 0.133, "qwen": 0.233, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33347838", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.6, "qwen": 0.3, "deepseek_v4": 0.433, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:25993103", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.471, "qwen": 0.412, "deepseek_v4": 0.441, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "2506.08258v1", "taxonomy_l1": "Surgical Sciences", "glm": 0.167, "qwen": 0.25, "deepseek_v4": 0.306, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:34629058", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.533, "qwen": 0.2, "deepseek_v4": 0.2, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:38185705", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.342, "qwen": 0.5, "deepseek_v4": 0.158, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "hsa05034", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.444, "qwen": 0.444, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:26439354", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.25, "qwen": 0.2, "deepseek_v4": 0.275, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:28176333", "taxonomy_l1": "Clinical Medicine", "glm": 0.556, "qwen": 0.222, "deepseek_v4": 0.167, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:27814965", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.433, "qwen": 0.367, "deepseek_v4": 0.4, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:36536241", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.235, "qwen": 0.176, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "2511.21075v3", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.528, "qwen": 0.389, "deepseek_v4": 0.472, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:38932991", "taxonomy_l1": "Rare & Orphan Diseases", "glm": 0.219, "qwen": 0.438, "deepseek_v4": 0.312, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:23929628", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.5, "qwen": 0.367, "deepseek_v4": 0.267, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "1908.07048v1", "taxonomy_l1": "Oncology", "glm": 0.188, "qwen": 0.188, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33385325", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.556, "qwen": 0.389, "deepseek_v4": 0.306, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:6987108", "taxonomy_l1": "Clinical Medicine", "glm": 0.567, "qwen": 0.2, "deepseek_v4": 0.5, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "2508.13217v1", "taxonomy_l1": "Medical AI & Informatics", "glm": 0.556, "qwen": 0.278, "deepseek_v4": 0.417, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:28752910", "taxonomy_l1": "Clinical Medicine", "glm": 0.567, "qwen": 0.3, "deepseek_v4": 0.5, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38934628", "taxonomy_l1": "Oncology", "glm": 0.35, "qwen": 0.425, "deepseek_v4": 0.35, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33458578", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.389, "qwen": 0.306, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37582363", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.444, "qwen": 0.167, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "2410.06585v1", "taxonomy_l1": "Pharmacology & Drug Discovery", "glm": 0.5, "qwen": 0.333, "deepseek_v4": 0.361, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "1709.03828v1", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.562, "qwen": 0.438, "deepseek_v4": 0.25, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:28024135", "taxonomy_l1": "Oncology", "glm": 0.342, "qwen": 0.684, "deepseek_v4": 0.553, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "NCT05143320", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.6, "qwen": 0.433, "deepseek_v4": 0.367, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:40418526", "taxonomy_l1": "Clinical Medicine", "glm": 0.471, "qwen": 0.353, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:17367420", "taxonomy_l1": "Clinical Medicine", "glm": 0.5, "qwen": 0.5, "deepseek_v4": 0.382, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "NCT05801913", "taxonomy_l1": "Oncology", "glm": 0.533, "qwen": 0.433, "deepseek_v4": 0.633, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:26092033", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.8, "qwen": 0.333, "deepseek_v4": 0.433, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:33871295", "taxonomy_l1": "Public Health & Epidemiology", "glm": 0.188, "qwen": 0.344, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:38913933", "taxonomy_l1": "Oncology", "glm": 0.281, "qwen": 0.438, "deepseek_v4": 0.188, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33745636", "taxonomy_l1": "Clinical Medicine", "glm": 0.75, "qwen": 0.469, "deepseek_v4": 0.188, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:39115047", "taxonomy_l1": "Clinical Medicine", "glm": 0.444, "qwen": 0.333, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37202496", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.367, "qwen": 0.333, "deepseek_v4": 0.2, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:34488219", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.706, "qwen": 0.5, "deepseek_v4": 0.559, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "P49815", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.3, "qwen": 0.3, "deepseek_v4": 0.3, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "2012.00683v2", "taxonomy_l1": "Oncology", "glm": 0.5, "qwen": 0.353, "deepseek_v4": 0.176, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT07490990", "taxonomy_l1": "Oncology", "glm": 0.533, "qwen": 0.6, "deepseek_v4": 0.467, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38530545", "taxonomy_l1": "Oncology", "glm": 0.474, "qwen": 0.5, "deepseek_v4": 0.447, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:34088660", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.425, "qwen": 0.15, "deepseek_v4": 0.475, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:40205044", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.167, "qwen": 0.3, "deepseek_v4": 0.167, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "NCT00978367", "taxonomy_l1": "Surgical Sciences", "glm": 0.412, "qwen": 0.176, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "NCT07271381", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.353, "qwen": 0.235, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "P50749", "taxonomy_l1": "Oncology", "glm": 0.35, "qwen": 0.175, "deepseek_v4": 0.125, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:33077422", "taxonomy_l1": "Clinical Medicine", "glm": 0.306, "qwen": 0.194, "deepseek_v4": 0.278, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:38242126", "taxonomy_l1": "Oncology", "glm": 0.45, "qwen": 0.425, "deepseek_v4": 0.4, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:37172874", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.441, "qwen": 0.588, "deepseek_v4": 0.294, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:29794677", "taxonomy_l1": "Clinical Medicine", "glm": 0.737, "qwen": 0.421, "deepseek_v4": 0.605, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:38391684", "taxonomy_l1": "Surgical Sciences", "glm": 0.357, "qwen": 0.238, "deepseek_v4": 0.381, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:31080045", "taxonomy_l1": "Clinical Medicine", "glm": 0.361, "qwen": 0.5, "deepseek_v4": 0.5, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "NCT01449240", "taxonomy_l1": "Rare & Orphan Diseases", "glm": 0.781, "qwen": 0.188, "deepseek_v4": 0.312, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "NCT01182883", "taxonomy_l1": "Oncology", "glm": 0.567, "qwen": 0.2, "deepseek_v4": 0.2, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "2108.06684v1", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.316, "qwen": 0.474, "deepseek_v4": 0.316, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:28980761", "taxonomy_l1": "Clinical Medicine", "glm": 0.444, "qwen": 0.417, "deepseek_v4": 0.528, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:38280375", "taxonomy_l1": "Clinical Medicine", "glm": 0.176, "qwen": 0.176, "deepseek_v4": 0.176, "n_models_fail": 3, "bucket": "all3_fail"}
+{"task_id": "PMID:30218025", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.417, "qwen": 0.583, "deepseek_v4": 0.667, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:32330676", "taxonomy_l1": "Surgical Sciences", "glm": 0.7, "qwen": 0.2, "deepseek_v4": 0.733, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "2507.18602v1", "taxonomy_l1": "Genomics & Precision Medicine", "glm": 0.471, "qwen": 0.529, "deepseek_v4": 0.471, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:36271779", "taxonomy_l1": "Surgical Sciences", "glm": 0.471, "qwen": 0.412, "deepseek_v4": 0.5, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:34532856", "taxonomy_l1": "Neuroscience & Psychiatry", "glm": 0.389, "qwen": 0.556, "deepseek_v4": 0.417, "n_models_fail": 2, "bucket": "split"}
+{"task_id": "PMID:35802350", "taxonomy_l1": "Clinical Medicine", "glm": 0.531, "qwen": 0.625, "deepseek_v4": 0.656, "n_models_fail": 0, "bucket": "all3_pass"}
+{"task_id": "PMID:33330129", "taxonomy_l1": "Clinical Medicine", "glm": 0.553, "qwen": 0.316, "deepseek_v4": 0.605, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "PMID:1626073", "taxonomy_l1": "Infectious Disease & Immunology", "glm": 0.5, "qwen": 0.167, "deepseek_v4": 0.5, "n_models_fail": 1, "bucket": "split"}
+{"task_id": "hsa05410", "taxonomy_l1": "Cardiovascular Medicine", "glm": 0.219, "qwen": 0.188, "deepseek_v4": 0.281, "n_models_fail": 3, "bucket": "all3_fail"}
