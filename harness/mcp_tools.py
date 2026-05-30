@@ -700,6 +700,11 @@ class MCPToolRegistry:
             Standard result dict with keys: tool, query, results, truncated.
         """
         norm_name = tool_name.replace("-", "_")
+        # Some models (DeepSeek-V4) double-wrap args as {"arguments": {...}}; unwrap.
+        if isinstance(arguments, dict) and isinstance(arguments.get("arguments"), dict):
+            arguments = arguments["arguments"]
+        if not isinstance(arguments, dict):
+            arguments = {}
         tool = self._tools.get(norm_name)
         if tool is None:
             return {
