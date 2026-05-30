@@ -726,4 +726,10 @@ class MCPToolRegistry:
                 "results": {"error": f"Unknown tool: {tool_name}"},
                 "truncated": False,
             }
-        return tool.execute(**arguments)
+        try:
+            return tool.execute(**arguments)
+        except TypeError as e:
+            # malformed/incomplete args (e.g. missing required 'query') must not crash
+            # the whole task — return an error result the model can react to.
+            return {"tool": tool_name, "query": arguments,
+                    "results": {"error": f"bad arguments: {e}"}, "truncated": False}
