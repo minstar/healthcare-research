@@ -1,0 +1,151 @@
+{
+  "n_tasks": 300,
+  "n_completed": 300,
+  "n_judged": 0,
+  "pass_threshold": 0.6,
+  "overall_weighted_score": null,
+  "pass_rate": null,
+  "passed": 0,
+  "per_dimension_averages": {
+    "coverage": 0.0,
+    "evidence_quality": 0.0,
+    "tool_usage": 0.0,
+    "reasoning_quality": 0.0,
+    "completeness": 0.0
+  },
+  "taxonomy_breakdown": {
+    "Cardiovascular Medicine": {
+      "count": 19,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Clinical Medicine": {
+      "count": 61,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Genomics & Precision Medicine": {
+      "count": 18,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Infectious Disease & Immunology": {
+      "count": 29,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Medical AI & Informatics": {
+      "count": 10,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Neuroscience & Psychiatry": {
+      "count": 54,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Oncology": {
+      "count": 45,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Other": {
+      "count": 5,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Pharmacology & Drug Discovery": {
+      "count": 15,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Public Health & Epidemiology": {
+      "count": 18,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Rare & Orphan Diseases": {
+      "count": 7,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "Surgical Sciences": {
+      "count": 19,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    }
+  },
+  "difficulty_breakdown": {
+    "easy": {
+      "count": 6,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "medium": {
+      "count": 82,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    },
+    "hard": {
+      "count": 212,
+      "judged": 0,
+      "avg_weighted": null,
+      "pass_rate": null
+    }
+  },
+  "tool_stats": {
+    "total_tool_calls": 4223,
+    "avg_calls_per_task": 14.08,
+    "tool_frequency": {
+      "pubmed": 3873,
+      "clinicaltrialsgov": 137,
+      "kegg": 63,
+      "uniprot": 60,
+      "opentargets": 41,
+      "openfda": 18,
+      "chembl": 15,
+      "biomcp": 9,
+      "pubchem": 4,
+      "ncbi_datasets": 3
+    },
+    "avg_suggested_tool_overlap": 0.6089
+  },
+  "timing_stats": {
+    "total_wall_time": 82691.71,
+    "avg_wall_time": 275.64,
+    "max_wall_time": 505.96,
+    "total_prompt_tokens": 24478703,
+    "total_completion_tokens": 879126
+  },
+  "run_metadata": {
+    "data_path": "data/eval_samples/gold_strat_300.jsonl",
+    "model": "openai::http://c36f-g07-1-gpu133:8000/v1::deepseek-v4-flash",
+    "judge_model": null,
+    "filters": {
+      "taxonomy_filter": null,
+      "difficulty_min": null,
+      "difficulty_max": null,
+      "open_status": null,
+      "required_tools": null
+    },
+    "limit": 300,
+    "seed": 42,
+    "workers": 12,
+    "pass_threshold": 0.6,
+    "total_wall_time": 6980.16
+  }
+}

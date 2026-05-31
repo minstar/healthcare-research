@@ -1,0 +1,28 @@
+taxonomy_l1,difficulty,n_tasks,n_judged,avg_weighted,pass_rate
+Cardiovascular Medicine,easy,1,1,0.3575,0.0
+Cardiovascular Medicine,hard,2,2,0.0,0.0
+Cardiovascular Medicine,medium,2,2,0.2425,0.0
+Clinical Medicine,hard,4,4,0.4531,0.5
+Clinical Medicine,medium,2,2,0.2137,0.0
+Genomics & Precision Medicine,hard,3,3,0.6415,1.0
+Infectious Disease & Immunology,hard,3,3,0.3742,0.0
+Infectious Disease & Immunology,medium,2,2,0.5663,0.5
+Medical AI & Informatics,hard,2,2,0.4688,0.0
+Medical AI & Informatics,medium,3,3,0.5142,0.3333
+Neuroscience & Psychiatry,hard,2,2,0.555,0.0
+Neuroscience & Psychiatry,medium,3,3,0.4842,0.3333
+Oncology,hard,1,1,0.0,0.0
+Oncology,medium,4,4,0.4144,0.25
+Other,easy,2,2,0.5487,0.0
+Other,hard,3,3,0.5583,0.3333
+Other,medium,1,1,0.44,0.0
+Pharmacology & Drug Discovery,hard,1,1,0.0,0.0
+Pharmacology & Drug Discovery,medium,2,2,0.64,0.5
+Public Health & Epidemiology,easy,1,1,0.27,0.0
+Public Health & Epidemiology,hard,3,3,0.2292,0.3333
+Public Health & Epidemiology,medium,2,2,0.3037,0.0
+Rare & Orphan Diseases,hard,2,2,0.0187,0.0
+Rare & Orphan Diseases,medium,3,3,0.3892,0.3333
+Surgical Sciences,easy,1,1,0.0,0.0
+Surgical Sciences,hard,2,2,0.5625,0.0
+Surgical Sciences,medium,3,3,0.4478,0.3333

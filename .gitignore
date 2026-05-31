@@ -14,3 +14,6 @@ data/final/
 
 .checkpoints/
 .build/
+results/*.log
+results/_qwen_check/
+results/baseline_*_smoke/
