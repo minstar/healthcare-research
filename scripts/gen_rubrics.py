@@ -30,7 +30,23 @@ Criterion types:
 - must_avoid: something that should NOT happen (fabricating a definitive answer to an open question; \
 falsely claiming tools failed/returned nothing; unsupported or invented claims)
 Write 5-8 concrete, checkable, question-specific criteria. weight 3=critical, 2=important, 1=minor. \
-Include at least one must_acknowledge and one must_avoid."""
+Include at least one must_acknowledge and one must_avoid.
+
+GOOD vs BAD criteria (accept/reject):
+- GOOD (specific, checkable): "Identifies AQP4 depolarization as a leading mechanistic hypothesis"
+- BAD (vague, ungradeable): "Discusses the mechanism well" — reject; not binary-checkable.
+- GOOD must_avoid: "Does NOT claim a definitive cause when the question is unresolved"
+- BAD: "Is accurate" — too broad.
+
+WORKED EXAMPLE.
+Question: "What are the mechanistic underpinnings of why glymphatic function is suppressed in Alzheimer's?"
+{"criteria":[
+ {"text":"Identifies AQP4 depolarization/mislocalization as a candidate mechanism","type":"must_mention","weight":3},
+ {"text":"Notes the role of sleep / slow-wave activity in glymphatic clearance","type":"must_mention","weight":2},
+ {"text":"Explicitly states the causal hierarchy (cause vs consequence) remains UNRESOLVED","type":"must_acknowledge","weight":3},
+ {"text":"Cites real primary evidence (PMID) for mechanistic claims","type":"must_ground","weight":2},
+ {"text":"Does NOT assert a single definitive mechanism as settled","type":"must_avoid","weight":3},
+ {"text":"Does NOT fabricate citations or claim tools returned nothing when they did","type":"must_avoid","weight":2}]}"""
 
 
 def gold_blurb(gold) -> str:

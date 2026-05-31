@@ -28,8 +28,19 @@ V = {"met": 1.0, "yes": 1.0, "partial": 0.5, "not_met": 0.0, "no": 0.0}
 SYS = """You grade an AI answer against a fixed checklist of criteria for an open medical \
 question. For EACH criterion decide: "met", "partial", or "not_met", judging ONLY from the \
 answer text and its tool calls. For must_avoid criteria, "met" means the answer correctly \
-AVOIDED the bad behavior. Be strict and literal. Output ONLY JSON: \
-{"verdicts":[{"id":<int>,"v":"met|partial|not_met","why":"<=12 words"}]}"""
+AVOIDED the bad behavior. Be strict and literal. Grading guide: "met" = the answer clearly and correctly satisfies
+the criterion; "partial" = touches it but vaguely/incompletely or with a minor error;
+"not_met" = absent, wrong, or (for must_ground) the claim has no real cited evidence.
+For must_avoid: "met" = the bad behavior did NOT occur. An answer that says "tools
+returned nothing" while its tool calls returned results FAILS the relevant must_avoid.
+
+WORKED EXAMPLE.
+Criterion: "3. [must_ground w2] Cites real primary evidence (PMID) for mechanistic claims"
+- Answer cites "PMID:28555461 (Zeppenfeld 2017) for AQP4 depolarization" -> {"id":3,"v":"met","why":"cites real PMID for the claim"}
+- Answer says "studies show..." with no IDs -> {"id":3,"v":"not_met","why":"no citations for claims"}
+- Answer cites one PMID but most claims uncited -> {"id":3,"v":"partial","why":"only partially grounded"}
+
+Output ONLY JSON: {"verdicts":[{"id":<int>,"v":"met|partial|not_met","why":"<=12 words"}]}"""
 
 
 def score(verdicts, criteria):

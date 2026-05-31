@@ -41,8 +41,25 @@ Output a JSON array of objects with these fields:
 - "why_open": brief explanation of why this is an open question (1-2 sentences)
 - "difficulty": integer 1-5 (1=medical student level, 5=frontier research)
 
+ACCEPT vs REJECT (be selective — quality over quantity):
+- ACCEPT: a specific, researchable question where the field genuinely lacks an answer
+  (mechanism unknown, no validated method, conflicting/insufficient evidence).
+- REJECT: vague aspirations ("more research is needed"), rhetorical/boilerplate "future
+  directions" with no concrete question, questions already answered in the same document,
+  or implementation asks with known solutions.
+
+WORKED EXAMPLES.
+Source: "Although AQP4 mislocalization is observed in AD, whether it is a cause or
+consequence of glymphatic failure remains undefined; future work should clarify this."
+-> ACCEPT: {"original_question":"whether AQP4 mislocalization is a cause or consequence of
+glymphatic failure remains undefined","self_contained_question":"Is aquaporin-4 (AQP4)
+mislocalization a cause or a consequence of glymphatic clearance failure in Alzheimer's
+disease?","question_type":"mechanism","clinical_domain":"Neurology","why_open":"Observed
+association but causal direction not established.","difficulty":4}
+Source: "Further studies with larger sample sizes are warranted." -> REJECT (boilerplate).
+
 If the document contains no identifiable open questions, return an empty array [].
-Be thorough — a good review paper may contain 10-30 open questions.\
+Prefer 5-15 HIGH-QUALITY open questions over many weak ones.\
 """
 
 USER_TEMPLATE = """\
