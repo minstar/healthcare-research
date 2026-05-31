@@ -1,0 +1,500 @@
+{"task_id": "NICE:CG117/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:anaesthesia-and-perioperative-care#16", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "specifies type of surgery and patient population"}
+{"task_id": "NICE:DG51/02", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "undefined abbreviations EAG, PDQ-39; dangling section references 3.10, 3.6, 3.3,"}
+{"task_id": "NICE:NG191/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:foot-health#12", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:cleft-lip-and-palate#9", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:15380783", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36373727", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:juvenile-idiopathic-arthritis#19", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "JIA abbreviation not defined (Juvenile Idiopathic Arthritis)"}
+{"task_id": "PMID:27651939", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:25994217", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:palliative-and-end-of-life-care#23", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "specific patient condition/population"}
+{"task_id": "NICE:NG6/5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30218025", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:34173307", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:rare-musculoskeletal-diseases-in-adulthood#21", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:autism#20", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:hypertension-canada#15", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG114/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:inflammatory-bowel-disease#6", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of IBD"}
+{"task_id": "PMID:38742450", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:19827683", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38233851", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "Source of 88% statistic undefined; WHO abbreviation not defined"}
+{"task_id": "PMID:27470071", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:34794438", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:healthcare-associated-infections#8", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:childrens-cancer#12", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:31352986", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:26635616", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:psoriatic-arthritis#7", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG18/01", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG208/10", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35409832", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:midwifery-practice-and-maternity-care#13", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:managing-chronic-conditions-in-irish-primary-care#18", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:first-time-soft-tissue-knee-injuries#21", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG547/1", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "NICE abbreviation undefined; reads as guidance not a clear research question"}
+{"task_id": "NICE:CG189/07", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:39083264", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:40609533", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:39979075", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:complex-fractures#10", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:broken-bones-of-the-upper-limb#17", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29562513", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:sickle-cell-genomics#7", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29145397", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "Definition of PKDL abbreviation"}
+{"task_id": "PMID:30580483", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG25/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29885021", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:32989481", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:adult-social-work#13", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG144/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:26162691", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38522483", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:TA218/1", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Which Committee is referenced is undefined"}
+{"task_id": "PMID:10479841", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:bleeding-disorders#22", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:12417388", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG734/01", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "Definition of special arrangements from NICE page"}
+{"task_id": "JLA:rare-musculoskeletal-diseases-in-adulthood#5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG178/5", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "PTSD and CBT abbreviations not defined on first use"}
+{"task_id": "NICE:CG156/5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG116/5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36894027", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36345851", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:19716766", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35757394", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:19474508", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:32638966", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30652978", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:surgery-for-common-shoulder-problems#5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG538/1", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of NICE, context for 'the guidance'"}
+{"task_id": "PMID:32482326", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36090489", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:palliative-and-end-of-life-care#19", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:21828026", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:15685217", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:12134630", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:40441298", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:1930930", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:DG21/3", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "NICE undefined; no clear open question posed, just a recommendation statement"}
+{"task_id": "JLA:stillbirth#5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37063843", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37488315", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:39948437", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:psoriatic-arthritis#9", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38719949", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:DG49/01", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Dangling references to sections 3.7 and 3.15"}
+{"task_id": "JLA:vision-loss-australia#15", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:34599375", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:23094605", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29408771", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:34313123", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38224423", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:22983913", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:41432471", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG224/03", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:rare-inherited-anaemias#24", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:18664969", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:31279849", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:15882232", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:progressive-pulmonary-fibrosis#5", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "definition of abbreviation PPF"}
+{"task_id": "PMID:24182715", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:16475941", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:40265101", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:34685579", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG131/7", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:coeliac-disease#13", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:24675533", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:sickle-cell-genomics#3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:39258519", "track": "retrieval_verified", "self_contained": "no", "score": 0.0, "missing": "topic/condition referenced by 'current evidence', dangling 'Therefore'"}
+{"task_id": "JLA:neuro-oncology#25", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:foot-and-ankle-surgery#5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG623/1", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "definition of NICE"}
+{"task_id": "JLA:inflammatory-bowel-disease-australia#10", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of abbreviation IBD"}
+{"task_id": "PMID:41057250", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG140/2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:40943400", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "2404.00464v1", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33332007", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:preterm-birth#24", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:quality-use-of-medicines-in-people-living-with-dementia-australia#14", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NCT06903923", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "GLP-1RA abbreviation definition"}
+{"task_id": "PMID:25307224", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:gorton-community#13", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:31972598", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29145397", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG129/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:7806096", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30521882", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:28000636", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33693620", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:41496344", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:27255114", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "PFO definition"}
+{"task_id": "NICE:IPG520/1", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of NICE"}
+{"task_id": "PMID:35773407", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "Condition/cancer type and CMS definition"}
+{"task_id": "NICE:CG120/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:developmental-childhood-stammering#8", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:19785059", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:6348681", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:obesity-care-in-canada#1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38300621", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG96/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG633/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:DG44/01", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "specific condition/patient population for SeHCAT testing not stated"}
+{"task_id": "PMID:24033795", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:7775531", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37877662", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:34931965", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:cardiac-arrest#9", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:paediatric-hospital-care-canada#10", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:cellulitis#19", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:hair-loss#6", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:34398972", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:lung-transplant-canada#1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:ear-nose-and-throat-aspects-of-balance#9", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Which specific home-based exercises; 'the' implies a referenced program"}
+{"task_id": "PMID:12000600", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:7577256", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:PH35/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29435340", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:15336959", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:17869584", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:lung-transplant-canada#11", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG136/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:bipolar#29", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33114040", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:mitochondrial-disease#18", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:problematic-hip-replacement#15", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG198/7", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29847328", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:lgbtqia-perinatal-care#20", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:frailty-canada#14", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33625036", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG12/01", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG75/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:depression#19", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29678496", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:28651452", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35303270", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:23846340", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:pulmonary-hypertension-canada#4", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "PH abbreviation not defined (pulmonary hypertension)"}
+{"task_id": "NICE:PH56/5", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "Definition of 'the local system'"}
+{"task_id": "PMID:41650281", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:26890567", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:41496067", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "Definition of mHealth"}
+{"task_id": "JLA:sickle-cell-genomics#17", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:congenital-diaphragmatic-hernia-australia#16", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG223/11", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35708182", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:hip-and-knee-replacement-for-osteoarthritis#15", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:foot-health#15", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:seniors-health-in-alberta#8", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35786076", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:kidney-transplant#11", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Type of transplantation unspecified (organ, stem cell, etc.)"}
+{"task_id": "JLA:degenerative-cervical-myelopathy#24", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "Specific surgery or medical condition/population"}
+{"task_id": "PMID:24763464", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33476831", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:eating-disorders-netherlands#21", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38298326", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:20460902", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:25994217", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:cardiomyopathy#2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:inflammatory-bowel-disease-australia#7", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of IBD abbreviation"}
+{"task_id": "NICE:CG113/6", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "definition of CCBT"}
+{"task_id": "PMID:38835707", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG22/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:16944064", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36373727", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "ALD and HSCT abbreviations not defined on first use"}
+{"task_id": "PMID:29029984", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:39227871", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33559127", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:27878827", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:pancreatitis#9", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33324997", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:MTG31/2", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "NICE undefined; no clear open question posed"}
+{"task_id": "JLA:perianal-crohns-disease-global#5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:41436432", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37253507", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:15241528", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:obesity-care-in-canada#15", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38594752", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:28539008", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:32287170", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:anaesthesia-canada#18", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "specific surgical procedure or patient population"}
+{"task_id": "NICE:DG33/1", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "reference to guidance sections 5.12-5.16 is a dangling citation"}
+{"task_id": "NICE:CG147/6", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:25906643", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:advanced-heart-failure#20", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:22421754", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:PH37/2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG94/17", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Dangling reference to external evidence review on escalation measures"}
+{"task_id": "PMID:37747922", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG104/5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:australian-child-and-adolescent-cancer#5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG124/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30043128", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:14505264", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:digital-health-for-heart-health#17", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG30/3", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "LARC undefined; no clear open question posed"}
+{"task_id": "JLA:cystic-fibrosis#20", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "specific condition/population receiving IV antibiotics"}
+{"task_id": "JLA:pancreatitis#1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:polycystic-ovary-syndrome#23", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "PCOS undefined; specific medication unspecified"}
+{"task_id": "NICE:NG80/7", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of ICS"}
+{"task_id": "JLA:preterm-birth#11", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:cardiac-arrest#4", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "TXA abbreviation undefined (tranexamic acid)"}
+{"task_id": "PMID:38981444", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG152/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:mild-to-moderate-hearing-loss#16", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30277521", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29144160", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38416171", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35672188", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:21463240", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36682437", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:foot-health#25", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:electronic-cigarettes#3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:32767925", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:15641499", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:32023142", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:12931789", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:11293836", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:cavernoma#23", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37393461", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:PH51/5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:DG11/1", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "definition of 'these conditions'"}
+{"task_id": "NICE:DG16/3", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definitions for NICE and 5-FU"}
+{"task_id": "PMID:38656686", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG203/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:22399012", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:early-hip-and-knee-osteoarthritis#4", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "definition of OA"}
+{"task_id": "PMID:37895255", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG155/11", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:21557808", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:DG11/2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:TA245/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33444088", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:20706972", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:pregnancy-and-childbirth-uganda#4", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Context for 'so many' (e.g., specific country, hospital, or rate)"}
+{"task_id": "NICE:NG223/10", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30659311", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:social-care-research-wales-family-support-services#1", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "specifies what type of families or context (e.g., with disabled children, in cri"}
+{"task_id": "NICE:IPG572/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:epilepsy#9", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "2502.03938v1", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:mitochondrial-disease#8", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG766", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "condition, procedure, and population are unspecified"}
+{"task_id": "JLA:obstructive-sleep-apnea#2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:digital-technology-for-mental-health#6", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:polycystic-ovary-syndrome#4", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of PCOS"}
+{"task_id": "JLA:blood-transfusion-and-blood-donation#1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:eating-disorders-netherlands#16", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:19280942", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37763685", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:39631242", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:39417770", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:23947678", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36435256", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG203/10", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of CKD; context for dangling header prefix."}
+{"task_id": "PMID:23025438", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:mental-health-and-the-body-clock#16", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:complex-fractures#9", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:surgery-for-common-shoulder-problems#6", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38416171", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:lgbtqia-perinatal-care#3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:17969346", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30517929", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35708182", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG773", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "dangling reference 'further research', no topic or context specified"}
+{"task_id": "PMID:40024433", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:15782793", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36422758", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG614/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG32/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33020660", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:28375864", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:emergency-medicine#2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:28608597", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:32331358", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NCT04791397", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:19220072", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG38/2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37419192", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38022603", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:31450719", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:retention-in-randomised-trials#6", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "specific type of trial, condition, or technology"}
+{"task_id": "PMID:25220101", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG145/2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG135/5", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of SEND"}
+{"task_id": "JLA:dementia-canada#13", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG450/1", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of abbreviation NICE"}
+{"task_id": "NICE:CG155/3", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "definition of CBT"}
+{"task_id": "NICE:NG74/5", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Target population/condition for reablement"}
+{"task_id": "PMID:32340435", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG115/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:lgbtqia-perinatal-care#16", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:15051286", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:1101733", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:26885404", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:emergency-medicine-refresh#17", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:7643942", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:palliative-and-end-of-life-care-refresh#2", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "definition of NHS"}
+{"task_id": "NICE:CG128/2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG27/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37819402", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:eating-disorders-canada#2", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "condition/population 'recovered individuals' recovered from what is unspecified"}
+{"task_id": "PMID:19440747", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30540575", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG444/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG95/2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:anaesthesia-canada#21", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG171/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36494595", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:foot-and-ankle-surgery#10", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:25307224", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "tPA definition"}
+{"task_id": "JLA:fibromyalgia-canada#16", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:10479841", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:27509685", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:27999432", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30543547", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:broken-bones-in-older-people#12", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:copd-exacerbation#11", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:psoriatic-arthritis#6", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:pulmonary-hypertension-canada#10", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of abbreviation PH"}
+{"task_id": "PMID:38390834", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:25793473", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37453679", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:25874378", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:23846340", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:major-trauma-international#17", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:18079297", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35499633", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG23/13", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of HRT"}
+{"task_id": "PMID:35710643", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "COPD abbreviation not defined"}
+{"task_id": "JLA:parkinsons#12", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:essential-tremor#10", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG35/3", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of FISH"}
+{"task_id": "PMID:37759279", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33380936", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:faecal-incontinence-in-adults#5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG58/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:cardiomyopathy#19", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:7643942", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:12417388", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:digital-technology-for-mental-health#15", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:safe-care-for-adults-with-complex-health-needs#6", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NCT05969873", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:41043596", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33306308", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:iih#11", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "definition of IIH"}
+{"task_id": "NICE:CG116/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:21619507", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:bipolar#19", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG34/2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:outpatient-service-delivery#15", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:quality-use-of-medicines-in-people-living-with-dementia-australia#12", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:26465940", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:hyperacusis#9", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:11485295", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:40322882", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:2499728", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33569996", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:anaesthesia-and-perioperative-care#20", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:3068631", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG157/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:28694138", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:25734971", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:dystrophic-epidermolysis-bullosa-spain#5", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "DEB abbreviation undefined"}
+{"task_id": "PMID:22323772", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:hidradenitis-suppurativa#10", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:depression#2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:19007775", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:21171977", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG509/1", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "Specific condition, population, and intervention; definition of NICE."}
+{"task_id": "NICE:NG242/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG210/13", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG228/07", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NCT03932825", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:cleft-lip-and-palate#23", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:20943636", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29408771", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:34627698", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:28536354", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:critical-care-asia-and-africa#13", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:veterans-health#24", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:DG46/01", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "Source context for 'Further research is recommended' and 'these points'"}
+{"task_id": "PMID:35371880", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:chronic-and-recurrent-urinary-tract-infection-uti#24", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:diverticular-disease#8", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:25832469", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30203180", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG195/10", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30332889", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29270736", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG34/4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG243/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:palliative-and-end-of-life-care#22", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:24291868", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:learning-difficulties-scotland#24", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NCT02870218", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36961370", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:pernicious-anaemia#8", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:TA316/2", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of NICE; lacks an actual research question"}
+{"task_id": "PMID:10353294", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:multiple-sclerosis#1", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "definition of abbreviation MS"}
+{"task_id": "PMID:39424414", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:26907828", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG61/3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:27538503", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35534623", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:23344019", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:19632303", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:electronic-cigarettes#18", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:18001491", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG617/1", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:paediatric-hospital-care-canada#3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:34256353", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:cardiomyopathy#15", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:37988561", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:sexual-violence#2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:greener-operations-sustainable-perioperative-practice#4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG85/2", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:11485295", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:neuro-oncology#4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:6343261", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35090632", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38997728", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:29889707", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG63/2", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Target population or setting for the programmes"}
+{"task_id": "PMID:10051179", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:15368079", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:40266437", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG140/6", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:30159610", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:mental-health-and-the-body-clock#4", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33149024", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:27189851", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:38318178", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:35815856", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:23292814", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:1930930", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:39585672", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:40660199", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "Definition of ANA"}
+{"task_id": "PMID:15824875", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:coeliac-disease#9", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:IPG708/01", "track": "expert_consensus", "self_contained": "no", "score": 0.0, "missing": "Undefined abbreviation (NICE), directive to consult external page"}
+{"task_id": "JLA:bipolar#21", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:25169067", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:18209969", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:foot-health#20", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "JLA:alcohol-related-liver-disease#3", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:33418092", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:36289450", "track": "retrieval_verified", "self_contained": "partial", "score": 0.5, "missing": "definition of TexKLR"}
+{"task_id": "JLA:childhood-neurological-conditions#6", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:32309600", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:40943400", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:23759736", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "PMID:26982646", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:NG19/5", "track": "expert_consensus", "self_contained": "yes", "score": 1.0, "missing": "none"}
+{"task_id": "NICE:CG113/2", "track": "expert_consensus", "self_contained": "partial", "score": 0.5, "missing": "Definition of CCBT"}
+{"task_id": "PMID:30043128", "track": "retrieval_verified", "self_contained": "yes", "score": 1.0, "missing": "none"}
