@@ -1,0 +1,13 @@
+{
+  "dsv4_300": {
+    "traces": 300,
+    "traces_with_citations": 8,
+    "traces_with_ungrounded_cite": 8,
+    "pct_traces_ungrounded": 100.0,
+    "total_citations": 25,
+    "ungrounded_citations": 25,
+    "pct_mentions_ungrounded": 100.0,
+    "avg_citations_per_trace": 0.08,
+    "avg_retrieved_pmids_per_trace": 0.1
+  }
+}

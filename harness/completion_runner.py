@@ -15,23 +15,14 @@ logger = logging.getLogger(__name__)
 
 _MAX_TOOL_ROUNDS = 10
 
-# P0 agent prompt (prompts/agent_system.md): open-question epistemics + tool persistence
-# + graded grounding + known/unknown structure. Replaces the old 3-sentence prompt that
-# drove ~70% parametric-fallback (non-attempt) trajectories.
+# NOTE: the verbose "P0" prompt (prompts/agent_system.md) FAILED A/B validation — it
+# regressed DeepSeek-V4 tool use catastrophically (0-tool-call traces 2% -> 91%, answers
+# truncated mid-plan), likely because its long structured framing made the thinking model
+# plan-in-prose instead of emitting parseable tool calls within the round budget. Reverted
+# to the proven minimal prompt (tools keep firing). P0 needs a tool-preserving redesign.
 AGENT_SYSTEM_PROMPT = (
-    "You are a biomedical research agent answering an OPEN research question — one the "
-    "field has NOT fully resolved. Do not fabricate a definitive answer; produce an "
-    "evidence-grounded synthesis of what is known, what remains unknown, and why.\n\n"
-    "TOOLS: use the provided search/database tools as your PRIMARY evidence source. Issue "
-    "multiple varied queries (broad then narrow). If a query returns nothing, REFORMULATE "
-    "(synonyms, broader terms, related entities) — never conclude 'no evidence exists' from "
-    "one empty result, and never claim the tools failed if other queries returned results.\n\n"
-    "GROUNDING: back every substantive claim with a retrieved source, cited by identifier "
-    "(e.g. PMID:12345678, NCT01234567). Do not present unsupported claims or cite IDs you "
-    "did not retrieve.\n\n"
-    "ANSWER: (1) current knowledge with citations; (2) the precise open gap and why; "
-    "(3) evidence quality/level; (4) a calibrated bottom line that states uncertainty plainly "
-    "when the question is genuinely unresolved. Be specific and grounded, not a memory essay."
+    "You are a medical research assistant. Answer the question thoroughly using the "
+    "provided tools to gather evidence. Cite sources. Acknowledge uncertainty where appropriate."
 )
 
 
