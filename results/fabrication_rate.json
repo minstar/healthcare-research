@@ -1,0 +1,35 @@
+{
+  "glm": {
+    "traces": 300,
+    "traces_with_citations": 0,
+    "traces_with_ungrounded_cite": 0,
+    "pct_traces_ungrounded": 0.0,
+    "total_citations": 0,
+    "ungrounded_citations": 0,
+    "pct_mentions_ungrounded": 0.0,
+    "avg_citations_per_trace": 0.0,
+    "avg_retrieved_pmids_per_trace": 1.09
+  },
+  "qwen": {
+    "traces": 300,
+    "traces_with_citations": 9,
+    "traces_with_ungrounded_cite": 9,
+    "pct_traces_ungrounded": 100.0,
+    "total_citations": 17,
+    "ungrounded_citations": 17,
+    "pct_mentions_ungrounded": 100.0,
+    "avg_citations_per_trace": 0.06,
+    "avg_retrieved_pmids_per_trace": 0.47
+  },
+  "dsv4": {
+    "traces": 300,
+    "traces_with_citations": 11,
+    "traces_with_ungrounded_cite": 7,
+    "pct_traces_ungrounded": 63.6,
+    "total_citations": 19,
+    "ungrounded_citations": 14,
+    "pct_mentions_ungrounded": 73.7,
+    "avg_citations_per_trace": 0.06,
+    "avg_retrieved_pmids_per_trace": 1.11
+  }
+}
