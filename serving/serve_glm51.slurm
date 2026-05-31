@@ -36,6 +36,10 @@ conda activate "${ENV}"
 # Its JIT compiler needs a CUDA toolkit on PATH.
 export CUDA_HOME=/usr/local/cuda
 export PATH="${CUDA_HOME}/bin:${PATH}"
+# Isolated, writable JIT cache — the shared /home/minstar/.cache/flashinfer got polluted
+# by another venv's stale path, breaking the fmha ninja build (job 23019).
+export XDG_CACHE_HOME="/data/project/private/minstar/.cache/glm_serve"
+mkdir -p "$XDG_CACHE_HOME"
 # deep_gemm v2.1.1 (built from source vs torch 2.10) links libc10.so → needs torch/lib on the loader path
 TORCH_LIB="$(python -c 'import torch,os;print(os.path.join(os.path.dirname(torch.__file__),"lib"))')"
 export LD_LIBRARY_PATH="${TORCH_LIB}:${LD_LIBRARY_PATH:-}"
