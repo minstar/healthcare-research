@@ -23,3 +23,24 @@ Endpoints: GLM serving/.serving_node, Qwen serving/.qwen_node.
 - empty tool results / parser issues already fixed. NCBI rate 0.34s.
 - if an endpoint died (job preempted/OOM), check squeue; GLM=21737 Qwen=21831. Resubmit serving/serve_*.slurm, update .serving_node/.qwen_node, recompute affected step.
 - checklist judge needs litellm? No — uses openai client directly. judge max_tokens 4096 (thinking).
+
+## FINAL PHASE (when comprehensive monitor bui4ygs1g fires: all 7 tracks done)
+1. Aggregate 7-point report: (1) priority 581-doc new-question count + final corpus size,
+   (2) P0 retention (vs old 6%) + P0 fabrication rate, (3) 1969 3-model difficulty buckets
+   + empirical coverage (2.2%->~16%), (4) Stage2 open_status distribution (answered/unknown),
+   (5) verification (self-cont 85% / citation 74% mismatch / contamination 10.7%),
+   (6) paper applications, (7) v3 recalibration -> v3.2.
+2. Build SFT trajectories from P0 + 1969 traces; run fabrication_rate on P0 traces.
+3. GPU: run any remaining useful GPU work; if none, SCANCEL ONLY my serving jobs by EXPLICIT ID:
+   scancel 23035 23020 23021   (GLM / Qwen / V4)
+   DO NOT touch 21567_* / 21568_* (pt2-minstar-tau3 training — NOT mine; they also match 'glm51').
+   NEVER scancel by name/pattern.
+
+## STAGE2 RE-RUN (caught: 98% llm_fail from GLM contention)
+Stage2 at-scale FAILED (4553/4646 llm_fail = GLM judge timeouts under 4-job node load).
+In FINAL PHASE, BEFORE scancel, RE-RUN Stage2 once the GLM node is freed (other GLM
+tracks done) with a higher timeout:
+  - edit scripts/stage2_judge.py call_claude timeout 120->300, OR run when GLM idle.
+  python scripts/stage2_judge.py --data data/export/mcp_benchmark_v2.jsonl --sample 100000 \
+    --model glm-5.1 --workers 4 --out data/stage2_full
+This is legitimate "remaining GPU work" to do before cancelling serving jobs.

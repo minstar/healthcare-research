@@ -55,7 +55,7 @@ from the evidence above that justify your label; [] if none
 """
 
 
-def call_claude(model: str, system: str, user: str, timeout: int = 120) -> dict | None:
+def call_claude(model: str, system: str, user: str, timeout: int = 300) -> dict | None:
     try:
         r = subprocess.run(
             ["claude", "--print", "--model", model, "--system-prompt", system],

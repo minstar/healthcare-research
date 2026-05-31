@@ -1,0 +1,21 @@
+{
+  "judged": 4646,
+  "changed": 93,
+  "new_status_dist": {
+    "open": 3007,
+    "partially_answered": 1530,
+    "unknown": 93,
+    "answered": 16
+  },
+  "transitions": {
+    "open -> open": 3007,
+    "partially_answered -> partially_answered": 1530,
+    "partially_answered -> unknown": 23,
+    "open -> unknown": 70,
+    "answered -> answered": 16
+  },
+  "guardrail_triggers": {
+    "llm_fail": 4553,
+    "no_evidence": 93
+  }
+}
