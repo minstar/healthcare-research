@@ -22,7 +22,8 @@ A pipeline for systematically collecting, curating, and benchmarking unsolved me
 | Unique clinical domains | 200+ |
 | Difficulty distribution | 96% at level 3-5 |
 | Gold answer coverage | 150 (expanding) |
-| PMID hallucination rate | 0.0% (verified via NCBI) |
+| PMID existence (gold citations) | 100% real IDs / 0.0% invalid (NCBI) |
+| PMID correctness (gold citations) | ⚠️ ~74% point to the WRONG paper (LLM-judge, n=360; 12/12 sampled mismatches verified) — existence ≠ correctness; gold PMIDs are NOT used as ground truth |
 
 ## Project Structure
 
