@@ -1,0 +1,24 @@
+{
+  "qwen": {
+    "traces": 1969,
+    "traces_with_citations": 85,
+    "traces_with_ungrounded_cite": 81,
+    "pct_traces_ungrounded": 95.3,
+    "total_citations": 140,
+    "ungrounded_citations": 136,
+    "pct_mentions_ungrounded": 97.1,
+    "avg_citations_per_trace": 0.07,
+    "avg_retrieved_pmids_per_trace": 0.4
+  },
+  "dsv4": {
+    "traces": 1969,
+    "traces_with_citations": 59,
+    "traces_with_ungrounded_cite": 50,
+    "pct_traces_ungrounded": 84.7,
+    "total_citations": 85,
+    "ungrounded_citations": 76,
+    "pct_mentions_ungrounded": 89.4,
+    "avg_citations_per_trace": 0.04,
+    "avg_retrieved_pmids_per_trace": 0.63
+  }
+}
