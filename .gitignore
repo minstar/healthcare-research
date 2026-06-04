@@ -24,3 +24,6 @@ serving/logs/
 
 # stray root scratch file
 /extracted_questions.jsonl
+
+# local paper draft — not published to GitHub
+paper_writing/
