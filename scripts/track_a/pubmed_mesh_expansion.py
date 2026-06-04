@@ -31,7 +31,7 @@ EXISTING_PUBMED = BASE_DIR / "data" / "raw" / "pubmed" / "documents.jsonl"
 CHECKPOINT_PATH = OUTPUT_DIR / ".checkpoint.json"
 OUTPUT_PATH = OUTPUT_DIR / "documents.jsonl"
 
-EMAIL = "minstar@upstage.ai"
+EMAIL = "research-bot@example.org"
 RATE_LIMIT_SEC = 0.4
 
 ESEARCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"

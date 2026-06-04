@@ -83,7 +83,7 @@ class WebCrawler(BaseCrawler):
 
     def _crawl_who_priorities(self) -> Iterator[RawDocument]:
         headers = {
-            "User-Agent": "ResearchMed-Crawler/1.0 (medical research; minstar@upstage.ai)"
+            "User-Agent": "ResearchMed-Crawler/1.0 (medical research; research-bot@example.org)"
         }
         for url in WHO_PRIORITY_URLS:
             logger.info(f"[web/WHO] Fetching {url}")
@@ -119,7 +119,7 @@ class WebCrawler(BaseCrawler):
     def _crawl_wikipedia_open_problems(self) -> Iterator[RawDocument]:
         wiki_api = "https://en.wikipedia.org/w/api.php"
         headers = {
-            "User-Agent": "ResearchMed-Crawler/1.0 (medical research; minstar@upstage.ai)"
+            "User-Agent": "ResearchMed-Crawler/1.0 (medical research; research-bot@example.org)"
         }
         search_titles = [
             "List of unsolved problems in medicine",

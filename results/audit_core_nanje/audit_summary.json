@@ -1,0 +1,30 @@
+{
+  "total": 657,
+  "by_source_type": {
+    "pubmed": 541,
+    "trial": 83,
+    "unknown": 3,
+    "arxiv": 30
+  },
+  "by_method": {
+    "retrieval": 624,
+    "none": 33
+  },
+  "by_flag": {
+    "heavy_followup_recheck": 415,
+    "ok": 124,
+    "no_followup_evidence": 27,
+    "trial_completed": 58,
+    "unverifiable_source": 3,
+    "arxiv_citation_check_needed": 30
+  },
+  "headline": {
+    "hard_contamination": 0,
+    "hard_contamination_pct": 0.0,
+    "verification_impossible": 33,
+    "verification_impossible_pct": 5.0,
+    "pubmed_no_followup": 27,
+    "pubmed_recheck_candidates": 415,
+    "verifiable_pct": 95.0
+  }
+}

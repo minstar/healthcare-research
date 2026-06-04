@@ -1,0 +1,23 @@
+{
+  "total": 483,
+  "by_source_type": {
+    "pubmed": 483
+  },
+  "by_method": {
+    "retrieval": 483
+  },
+  "by_flag": {
+    "heavy_followup_recheck": 438,
+    "ok": 12,
+    "no_followup_evidence": 33
+  },
+  "headline": {
+    "hard_contamination": 0,
+    "hard_contamination_pct": 0.0,
+    "verification_impossible": 0,
+    "verification_impossible_pct": 0.0,
+    "pubmed_no_followup": 33,
+    "pubmed_recheck_candidates": 438,
+    "verifiable_pct": 100.0
+  }
+}

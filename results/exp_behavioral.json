@@ -1,0 +1,98 @@
+{
+  "1969": {
+    "GLM-5.1": {
+      "n": 1969,
+      "non_attempt": 0.262,
+      "  empty": 388,
+      "  refuse": 127,
+      "zero_tool": 0.208,
+      "avg_tools": 12.6,
+      "cite_rate": 0.039,
+      "mean_ans_len": 1535
+    },
+    "Qwen3.6": {
+      "n": 1969,
+      "non_attempt": 0.195,
+      "  empty": 371,
+      "  refuse": 12,
+      "zero_tool": 0.196,
+      "avg_tools": 6.1,
+      "cite_rate": 0.239,
+      "mean_ans_len": 1618
+    },
+    "DeepSeek-V4": {
+      "n": 1969,
+      "non_attempt": 0.008,
+      "  empty": 1,
+      "  refuse": 15,
+      "zero_tool": 0.313,
+      "avg_tools": 8.3,
+      "cite_rate": 0.385,
+      "mean_ans_len": 1462
+    }
+  },
+  "priority": {
+    "GLM-5.1": {
+      "n": 525,
+      "non_attempt": 0.691,
+      "  empty": 348,
+      "  refuse": 15,
+      "zero_tool": 0.653,
+      "avg_tools": 5.4,
+      "cite_rate": 0.01,
+      "mean_ans_len": 644
+    },
+    "Qwen3.6": {
+      "n": 525,
+      "non_attempt": 0.263,
+      "  empty": 135,
+      "  refuse": 3,
+      "zero_tool": 0.221,
+      "avg_tools": 5.4,
+      "cite_rate": 0.244,
+      "mean_ans_len": 1484
+    },
+    "DeepSeek-V4": {
+      "n": 525,
+      "non_attempt": 0.623,
+      "  empty": 327,
+      "  refuse": 0,
+      "zero_tool": 0.623,
+      "avg_tools": 5.1,
+      "cite_rate": 0.25,
+      "mean_ans_len": 534
+    }
+  },
+  "expand": {
+    "GLM-5.1": {
+      "n": 483,
+      "non_attempt": 0.114,
+      "  empty": 4,
+      "  refuse": 51,
+      "zero_tool": 0.0,
+      "avg_tools": 15.7,
+      "cite_rate": 0.037,
+      "mean_ans_len": 1947
+    },
+    "Qwen3.6": {
+      "n": 483,
+      "non_attempt": 0.186,
+      "  empty": 89,
+      "  refuse": 1,
+      "zero_tool": 0.149,
+      "avg_tools": 6.2,
+      "cite_rate": 0.222,
+      "mean_ans_len": 1630
+    },
+    "DeepSeek-V4": {
+      "n": 483,
+      "non_attempt": 0.002,
+      "  empty": 0,
+      "  refuse": 1,
+      "zero_tool": 0.014,
+      "avg_tools": 13.7,
+      "cite_rate": 0.702,
+      "mean_ans_len": 1518
+    }
+  }
+}

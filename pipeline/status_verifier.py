@@ -105,7 +105,7 @@ class StatusVerifier:
         ncbi_api_key: str | None = None,
         cache_path: str | Path | None = None,
         citing_top_k: int = 6,
-        email: str = "minstar@upstage.ai",
+        email: str = "research-bot@example.org",
         min_interval: float | None = None,
     ):
         self.api_key = ncbi_api_key

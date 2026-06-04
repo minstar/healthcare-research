@@ -1,0 +1,25 @@
+{
+  "set": "final_core_nanje",
+  "n_questions": 657,
+  "source": "subset of baseline_*_1969 agentic eval",
+  "models": {
+    "GLM-5.1": {
+      "n": 657,
+      "avg_checklist": 0.3027,
+      "pass_at_0.5": 0.0,
+      "pass_at_0.6": 0.0
+    },
+    "Qwen3.6": {
+      "n": 657,
+      "avg_checklist": 0.295,
+      "pass_at_0.5": 0.0,
+      "pass_at_0.6": 0.0
+    },
+    "DeepSeek-V4-Flash": {
+      "n": 656,
+      "avg_checklist": 0.2719,
+      "pass_at_0.5": 0.0259,
+      "pass_at_0.6": 0.003
+    }
+  }
+}
