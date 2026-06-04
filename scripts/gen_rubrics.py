@@ -85,16 +85,37 @@ def main():
         for i, c in enumerate(crit, 1):
             if c.get("text") and c.get("type") in ("must_mention", "must_acknowledge", "must_ground", "must_avoid"):
                 clean.append({"id": i, "text": c["text"], "type": c["type"], "weight": int(c.get("weight", 2))})
-        return {"task_id": str(r.get("source_id", "")), "question": q, "criteria": clean}
+        tid = str(r.get("task_id") or r.get("source_id", ""))   # prefer unique task_id
+        return {"task_id": tid, "question": q, "criteria": clean}
 
+    # resume: skip task_ids already written with >=1 criterion; append+fsync (preempt-safe)
+    import os, threading
+    done = set()
+    if os.path.exists(args.out):
+        for l in open(args.out):
+            try:
+                o = json.loads(l)
+                if o.get("criteria"):
+                    done.add(o["task_id"])
+            except Exception:
+                pass
+    todo = [r for r in rows if str(r.get("task_id") or r.get("source_id", "")) not in done]
+    print(f"gen_rubrics: {len(rows)} rows, {len(done)} done, {len(todo)} to gen", flush=True)
+    lock = threading.Lock()
+    fh = open(args.out, "a")
+    ncrit = []
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
-        out = list(ex.map(gen, rows))
-    with open(args.out, "w") as f:
-        for o in out:
-            f.write(json.dumps(o, ensure_ascii=False) + "\n")
-    ncrit = [len(o["criteria"]) for o in out]
-    print(f"wrote {len(out)} rubrics → {args.out} | criteria/q: "
-          f"min {min(ncrit)} avg {sum(ncrit)/len(ncrit):.1f} max {max(ncrit)} | empty {sum(1 for n in ncrit if n==0)}")
+        for i, o in enumerate(ex.map(gen, todo), 1):
+            with lock:
+                fh.write(json.dumps(o, ensure_ascii=False) + "\n")
+                fh.flush(); os.fsync(fh.fileno())
+            ncrit.append(len(o["criteria"]))
+            if i % 25 == 0 or i == len(todo):
+                print(f"  {i}/{len(todo)} rubrics", flush=True)
+    fh.close()
+    if ncrit:
+        print(f"wrote +{len(ncrit)} rubrics → {args.out} | criteria/q: "
+              f"min {min(ncrit)} avg {sum(ncrit)/len(ncrit):.1f} max {max(ncrit)} | empty {sum(1 for n in ncrit if n==0)}")
 
 
 if __name__ == "__main__":

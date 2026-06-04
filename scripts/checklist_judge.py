@@ -17,11 +17,32 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
-from concurrent.futures import ThreadPoolExecutor
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from openai import OpenAI
+
+
+def _ts() -> str:
+    return time.strftime("%H:%M:%S")
+
+
+def _load_done(path: str) -> set:
+    """task_ids already scored OK in a prior (possibly preempted) run — skip on resume."""
+    done = set()
+    if path and os.path.exists(path):
+        for l in open(path):
+            try:
+                r = json.loads(l)
+                if r.get("checklist_score") is not None:
+                    done.add(r["task_id"])
+            except Exception:
+                pass
+    return done
 
 V = {"met": 1.0, "yes": 1.0, "partial": 0.5, "not_met": 0.0, "no": 0.0}
 
@@ -100,16 +121,33 @@ def main():
         return {"task_id": tid, "checklist_score": round(s, 3), "n_criteria": len(rub["criteria"]),
                 "verdicts": verdicts}
 
+    # resume: skip task_ids already scored OK; append so a preemption keeps progress
+    done = _load_done(args.out)
+    todo = [t for t in traces if t.get("task_id") not in done]
+    print(f"{_ts()} checklist_judge: {len(traces)} traces, {len(done)} already done, {len(todo)} to judge",
+          flush=True)
+
+    lock = threading.Lock()
+    fh = open(args.out, "a")
+    n_ok = n_err = 0
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
-        out = [r for r in ex.map(judge, traces) if r]
-    with open(args.out, "w") as f:
-        for o in out:
-            f.write(json.dumps(o, ensure_ascii=False) + "\n")
-    ok = [o for o in out if "checklist_score" in o]
-    import statistics as st
-    if ok:
-        print(f"judged {len(ok)} (errs {len(out)-len(ok)}) | avg={st.mean(o['checklist_score'] for o in ok):.3f}")
-    print(f"→ {args.out}")
+        futs = {ex.submit(judge, t): t for t in todo}
+        for i, fut in enumerate(as_completed(futs), 1):
+            o = fut.result()
+            if not o:
+                continue
+            with lock:
+                fh.write(json.dumps(o, ensure_ascii=False) + "\n")
+                fh.flush()
+                os.fsync(fh.fileno())          # survive node loss on preemption
+            if "checklist_score" in o:
+                n_ok += 1
+            else:
+                n_err += 1
+            if i % 25 == 0 or i == len(todo):
+                print(f"{_ts()}   {i}/{len(todo)} judged (ok={n_ok} err={n_err})", flush=True)
+    fh.close()
+    print(f"{_ts()} done: +{n_ok} scored, {n_err} errors this run → {args.out}", flush=True)
 
 
 if __name__ == "__main__":

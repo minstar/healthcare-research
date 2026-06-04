@@ -14,6 +14,13 @@ data/final/
 
 .checkpoints/
 .build/
-results/*.log
-results/_qwen_check/
-results/baseline_*_smoke/
+
+# eval artifacts are large (traces ~100s of MB) — keep out of git
+results/
+
+# transient serving state (job ids, node names, logs)
+serving/.*
+serving/logs/
+
+# stray root scratch file
+/extracted_questions.jsonl

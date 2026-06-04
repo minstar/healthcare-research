@@ -1,271 +1,289 @@
-# Healthcare Research: Open Medical Questions Benchmark
+# Healthcare Research: Open Medical Questions Benchmark (난제)
 
-A pipeline for systematically collecting, curating, and benchmarking unsolved medical/biomedical/clinical questions from the scientific literature.
+A pipeline for collecting, curating, and benchmarking **unsolved** medical / biomedical /
+clinical research questions ("난제") from authoritative literature, and evaluating LLMs on
+them with **agentic tool use** and **per-question checklist rubrics**.
 
-## Overview
+The benchmark is designed around two ideas the early version lacked:
 
-1. **Crawl** — Harvest documents from PubMed, MedRxiv, arXiv, Cochrane, Nature, OpenFDA, and biomedical APIs
-2. **Extract** — LLM-based extraction of open research questions from harvested documents
-3. **Filter** — 15-rule quality filter removing garbled text, templates, non-questions, and answered items
-4. **Refine** — Taxonomy classification, difficulty scoring (3-axis), MCP tool mapping
-5. **Status Verification** — *Retrieval-grounded* open/answered judgment: gather real follow-up evidence (citing papers, trial results) per source, then judge status from that evidence (not model memory)
-6. **Contamination Audit** — Full-corpus scan that flags synthetic templates, dead/completed trials, and mislabeled items against real evidence
-7. **Gold Answers** — Reference answer generation with citation verification
-8. **Benchmark Harness** — Standalone evaluation framework with 10 medical MCP tool wrappers and LLM-as-judge
+1. **Retrieval-grounded openness.** A question's `open_status` is judged from real
+   follow-up evidence (citing papers, trial results), not from a model's memory of the
+   source's framing.
+2. **Empirical difficulty.** Difficulty is not self-rated. Each question is run through
+   **three strong models** with full tool access; the pass/fail pattern defines the
+   difficulty bucket. Self-rated difficulty was measured to be uncorrelated with model
+   performance and is deprecated.
 
-## Dataset Statistics
-
-| Metric | Value |
-|--------|-------|
-| Total curated questions | 1,969 |
-| Taxonomy L1 categories | 12 |
-| Unique clinical domains | 200+ |
-| Difficulty distribution | 96% at level 3-5 |
-| Gold answer coverage | 150 (expanding) |
-| PMID existence (gold citations) | 100% real IDs / 0.0% invalid (NCBI) |
-| PMID correctness (gold citations) | ⚠️ ~74% point to the WRONG paper (LLM-judge, n=360; 12/12 sampled mismatches verified) — existence ≠ correctness; gold PMIDs are NOT used as ground truth |
-
-## Project Structure
+## Pipeline
 
 ```
-├── crawlers/                  # Document harvesters
-│   ├── pubmed_crawler.py      #   PubMed (NCBI E-utils)
-│   ├── medrxiv_crawler.py     #   MedRxiv preprints
-│   ├── arxiv_crawler.py       #   arXiv biomedical
-│   ├── cochrane_crawler.py    #   Cochrane systematic reviews
-│   ├── nature_crawler.py      #   Nature journals
-│   ├── biomedical_api_crawler.py  # OpenTargets, ChEMBL, UniProt, etc.
-│   └── web_crawler.py         #   General web sources
-│
-├── pipeline/                  # Core processing
-│   ├── extractor.py           #   LLM question extraction
-│   ├── dedup.py               #   Embedding-based deduplication (MiniLM, cosine ≥ 0.90)
-│   ├── refiner.py             #   Taxonomy & metadata refinement
-│   ├── status_verifier.py     #   Retrieval-grounded evidence gathering (Europe PMC / CT.gov / S2)
-│   └── taxonomy.py            #   12-category taxonomy definitions
-│
-├── scripts/
-│   ├── filter_quality.py      # 15-rule quality filter
-│   ├── audit_contamination.py # Full-corpus retrieval-grounded contamination audit (no LLM)
-│   ├── cleanup_v2.py          # Deterministic cleanup: normalize labels, quarantine, relabel
-│   ├── refine_batch.py        # Batch refinement via Claude CLI
-│   ├── track_a/               # Data expansion
-│   │   ├── pubmed_mesh_expansion.py   # 112 MeSH terms × 3 query templates
-│   │   └── incremental_pipeline.py    # Extract → filter → dedup → refine → merge
-│   └── track_b/               # Gold answer generation
-│       ├── prepare_gold_batches.py    # Split into batches of 3
-│       ├── generate_gold_answers.py   # Claude CLI batch generation (Opus)
-│       ├── merge_gold_answers.py      # Merge + auto-validation
-│       └── validate_gold_answers.py   # PMID/NCT verification + completeness criteria
-│
-├── harness/                   # Standalone benchmark evaluation
-│   ├── task_loader.py         #   JSONL loader with taxonomy/difficulty/tool filters
-│   ├── mcp_tools.py           #   10 medical API wrappers (direct REST, no Docker)
-│   ├── completion_runner.py   #   Multi-turn tool-use runner (OpenAI/LiteLLM/Claude)
-│   ├── judge.py               #   5-dimension LLM-as-judge scoring
-│   ├── metrics.py             #   Aggregation by taxonomy, difficulty, tool usage
-│   └── run.py                 #   CLI entry point
-│
-├── data/
-│   ├── raw/                   # Crawled documents
-│   ├── extracted/             # Extracted questions (pre-filter)
-│   ├── refined/               # Refined batches with taxonomy
-│   ├── gold_batches/          # Input batches for gold answer generation
-│   ├── gold_answers/          # Generated gold answers with citations
-│   └── export/                # Final benchmark files
-│       ├── mcp_benchmark.jsonl
-│       ├── mcp_benchmark_with_gold.jsonl
-│       └── validation_report.json
-│
-└── run.py                     # Main CLI (crawl, extract, filter, refine)
+crawl ─▶ extract ─▶ refine ─▶ dedup ─▶ export        (build the question corpus)
+                                  │
+        status-verify ◀───────────┤                  (retrieval-grounded open/answered)
+        contamination-audit ◀──────┤                  (LLM-free screen vs real evidence)
+                                  │
+   gen-rubrics ─▶ agentic-eval ─▶ checklist-judge ─▶ difficulty-buckets   (empirical labels)
 ```
 
-## Gold Answer Schema
+1. **Crawl** — harvest documents from authoritative sources (see *Tracks* below).
+2. **Extract** — Claude-CLI extraction of open research questions from each document
+   (one document can raise several distinct questions).
+3. **Refine** — taxonomy (12 L1 categories), 3-axis difficulty hints, MCP-tool mapping,
+   `open_status` + reasoning.
+4. **Dedup** — exact-question-text dedup (a paper's multiple questions are *kept*; only
+   identical text collapses).
+5. **Status verification** — `pipeline/status_verifier.py` gathers real follow-up evidence;
+   `scripts/stage2_judge.py` re-judges `open_status` constrained to that evidence.
+6. **Contamination audit** — `scripts/audit_contamination.py` (no LLM) flags synthetic
+   templates, completed/dead trials, and items with no follow-up.
+7. **Rubric generation** — `scripts/gen_rubrics.py` writes a frozen per-question checklist
+   (`must_mention / must_acknowledge / must_ground / must_avoid`, 5-8 criteria).
+8. **Agentic eval** — `harness/run.py` runs a model against each question with real MCP
+   tools (multi-round tool use), producing answer traces.
+9. **Checklist judging** — `scripts/checklist_judge.py` grades each answer against its
+   frozen rubric (met / partial / not_met → weighted score).
+10. **Difficulty buckets** — `scripts/compute_buckets.py` turns the 3-model scores into
+    difficulty labels.
 
-Each question has a reference answer with the following structure:
+## Corpus versions
 
-```json
-{
-  "current_knowledge": "2-3 paragraphs on what IS currently known",
-  "unknown_aspects": "1-2 paragraphs on what remains unknown or debated",
-  "evidence_landscape": "Brief description of evidence quality (RCTs, preclinical, etc.)",
-  "key_citations": [
-    {"type": "PMID", "id": "12345678", "relevance": "one sentence"}
-  ],
-  "mcp_tool_plan": [
-    {"tool": "pubmed", "query": "search query", "purpose": "what this retrieves"}
-  ],
-  "answer_summary": "2-4 paragraph synthesis for a researcher",
-  "self_completeness": 0.45
-}
-```
+The corpus is built additively; each version layers empirical labels and new tracks onto
+the text-deduped v3 base.
 
-> **Note**: `self_completeness` is the model's self-assessed epistemic difficulty score — how completely the question can be answered with current evidence. This is distinct from the judge's `completeness` dimension (which evaluates a model's response thoroughness). Values are useful for relative comparison between questions, not as absolute measures.
+| Version | Rows | What it adds |
+|---------|------|--------------|
+| `mcp_benchmark_v3` | 12,553 | Clean base: `retrieval_verified` (6,648) + `expert_consensus` (5,905, JLA/NICE) |
+| `mcp_benchmark_v3.2` | 12,553 | 3-model empirical labels on the gold-bearing subset; all-pass audit; still-open audit |
+| `mcp_benchmark_v3.3` | 13,078 | + **priority_setting** track (525 questions) with empirical labels |
+| `mcp_benchmark_v3.4` | 13,561 | + **expand** track (483); **question-granular** relabel of the whole corpus *(being finalized)* |
 
-## Gold Answer Validation
+`mcp_benchmark_with_gold.jsonl` (1,969) is the gold-answer-bearing slice used for rubric
+generation and agentic eval.
 
-Post-generation validation runs automatically via `validate_gold_answers.py`:
+### Tracks (`corpus_track`)
 
-### Structural Checks
-- **PMID verification**: Batch lookup against NCBI efetch (existence check)
-- **NCT verification**: ClinicalTrials.gov API check
-- **Completeness criteria**:
-  - `current_knowledge` >= 200 chars
-  - `unknown_aspects` >= 100 chars
-  - `answer_summary` >= 200 chars
-  - `key_citations` >= 2 entries
-  - `mcp_tool_plan` >= 1 entry
-  - `self_completeness` in [0.0, 1.0]
+| Track | Source | Openness grounding |
+|-------|--------|--------------------|
+| `retrieval_verified` | PubMed / trials / arXiv | Retrieval-based status (citing papers, trial results) |
+| `expert_consensus` | JLA Priority Setting Partnerships, NICE research recs | Open by expert/consensus declaration |
+| `priority_setting` | Society agendas, WHO/CHNRI/NASEM/PCORI, Delphi/consensus "research priorities" (Europe PMC) | Authoritative priority-setting documents |
+| `expand_priority_lit` | Additional priority-setting + Cochrane research-gap literature | Same as above |
 
-### Semantic Checks
-- **Type-Token Ratio (TTR)**: Flags answers with TTR < 0.3 (highly repetitive text)
-- **Question-Answer Entity Overlap**: Flags answers where < 20% of question entities appear in the answer
-- **Citation-Content Alignment**: Flags answers where < 50% of citations have keyword overlap with the answer text
+> **Note on preprints:** medRxiv abstracts were trialed as a source and **rejected** — they
+> report results rather than frame open questions, so extraction yields ~nothing. Crawling
+> is focused on priority-setting / research-gap documents.
 
-### Citation Relevance Verification (`--check-relevance`)
-- Fetches paper title/abstract from NCBI for each PMID
-- Computes Jaccard keyword similarity between citation `relevance` text and actual paper content
-- Flags citations with score < 0.1 as "weak citations"
+## Empirical difficulty (3-model buckets)
 
-```bash
-# Standalone validation
-python scripts/track_b/validate_gold_answers.py --report data/export/validation_report.json
+Each question is answered, with tools, by **GLM-5.1**, **Qwen3.6**, and **DeepSeek-V4-Flash**,
+then graded by the GLM-5.1 checklist judge. A model "fails" a question if its checklist
+score `< 0.5`. The pass/fail pattern across the three models gives:
 
-# With auto-fix (removes invalid citations)
-python scripts/track_b/validate_gold_answers.py --fix
+| Bucket | `empirical_difficulty` | Meaning |
+|--------|------------------------|---------|
+| all-3-fail | `core_nanje` (`nanje_core=true`) | Genuine open problem — no strong model can answer it |
+| split | `discriminating` | Discriminating question |
+| all-3-pass | `easy` | Not a real 난제 — quarantined unless a per-item audit keeps it |
 
-# Merge triggers validation automatically
-python scripts/track_b/merge_gold_answers.py
-python scripts/track_b/merge_gold_answers.py --fix-citations   # merge + fix
-python scripts/track_b/merge_gold_answers.py --skip-validation  # merge only
-```
+Observed distribution is stable across scales (~50 % core / ~45 % split / ~5 % easy at the
+1969, 525, and 300-item scales). On the finalized core set, all three strong models score
+~0.27-0.30 average with **≈0 % pass@0.5** — i.e. the core set is genuinely hard
+(`results/core_nanje_baseline.json`).
 
-## Status Verification & Contamination Audit
+All-3-pass questions are individually audited (`scripts/classify_allpass.py`) into
+`vague_aspirational / already_resolved / broad_goal / genuine_hard`; only `genuine_hard` is
+kept, the rest are `quarantine=true`.
 
-The original refiner assigned `open_status` from a single tool-less LLM call, so labels were
-ungrounded (the corpus had **zero** `answered`/`unknown` items — confirmation bias toward the
-source's framing). The verification stage replaces this with retrieval-grounded evidence,
-mirroring ResearchMath-14K's refiner (which reads up to 10 citing papers to determine status).
+### Question granularity (`task_id`)
 
-### Stage 1 — Evidence gathering (`pipeline/status_verifier.py`, no LLM)
+`task_id` is **unique per question** (`{source_id}#{k}`). This matters because extraction
+produces several questions per source paper; keying eval/rubrics/judging on `source_id`
+alone would silently collapse them to source-paper granularity. v3.4 re-keys the whole
+corpus (including the 1969 gold slice) to question granularity.
 
-Dispatched by source type; all calls are free REST endpoints:
+## Status verification & contamination audit
+
+The original refiner assigned `open_status` from a single tool-less LLM call (the corpus had
+**zero** `answered`/`unknown` items — confirmation bias toward the source). The verification
+stage replaces this with retrieval-grounded evidence.
+
+### Stage 1 — evidence gathering (`pipeline/status_verifier.py`, no LLM)
 
 | Source | Evidence | Resolution signal |
 |--------|----------|-------------------|
-| PubMed (PMID) | Europe PMC citations API → citing papers + abstracts (NCBI elink as fallback) | Later papers that resolve the question |
-| Trial (NCT) | ClinicalTrials.gov v2 → `OverallStatus`, completion date, results posted | COMPLETED + results ⇒ no longer open |
+| PubMed (PMID) | Europe PMC citations → citing papers + abstracts | Later papers resolving the question |
+| Trial (NCT) | ClinicalTrials.gov v2 status / completion / results | COMPLETED + results ⇒ likely no longer fully open |
 | arXiv | Semantic Scholar citations | Follow-up work |
-| KEGG/UniProt | none | Flagged `synthetic` (templated, not literature-extracted) |
+| KEGG / UniProt | none | Flagged `synthetic` |
 
-> NCBI `elink` citedin proved unreliable (intermittent empty/500 responses); Europe PMC's
-> citation index is used as the primary follow-up source for PMIDs.
+> NCBI `elink` citedin proved unreliable; Europe PMC's citation index is the primary
+> follow-up source for PMIDs.
 
-### Stage 2 — Grounded judgment (LLM, evidence-constrained)
+### Stage 2 — grounded judgment (`scripts/stage2_judge.py`, Claude CLI)
 
 The LLM judges `open_status` **only** from the gathered evidence and must cite evidence IDs
-that exist in the bundle (`status_evidence_ids ⊆ retrieved IDs`); hallucinated citations are
-rejected and the item falls back to `unknown`. `answered`/`unknown` are now reachable.
+that exist in the bundle; hallucinated citations are rejected and the item falls back to
+`unknown`. On the still-open audit of the 657 core_nanje (the trial-completed / no-followup
+flagged subset), **0 were confirmed-resolved** — the core set survives grounded re-judgment.
 
-### Contamination Audit (`scripts/audit_contamination.py`)
-
-Runs the fast, LLM-free `screen()` over the full corpus and categorizes each item:
-
-```bash
-python scripts/audit_contamination.py \
-  --data data/expanded/all_questions_combined.jsonl \
-  --out data/audit_full --workers 12
-```
-
-Flags: `trial_resolved_but_open`, `trial_dead` (terminated/withdrawn), `trial_completed`,
-`synthetic_template`, `heavy_followup_recheck` (re-judge candidate), `no_followup_evidence`.
-
-### Deterministic Cleanup → v2 (`scripts/cleanup_v2.py`)
-
-Applies auditable, non-judgment fixes (nothing deleted in place — removals are quarantined):
-
-1. **Label normalization** — 11 observed `open_status` strings (`partially_resolved`,
-   `mostly_resolved`, `partially resolved`, `closed`, …) → 4 canonical
-   (`open`, `partially_answered`, `answered`, `unknown`)
-2. **Quarantine** — synthetic templates + dead trials → `data/export/quarantine_v2.jsonl`
-3. **Relabel** — completed-with-results trials labeled `open` → `partially_answered`
-4. **Provenance** — attach `status_method`, `audit_flag`, `n_followups`, `src_year`
+### Contamination audit (`scripts/audit_contamination.py`, no LLM)
 
 ```bash
-python scripts/cleanup_v2.py \
-  --data data/expanded/all_questions_combined.jsonl \
-  --audit data/audit_full/audit_per_item.jsonl \
-  --out-dir data/export
-# → data/export/mcp_benchmark_v2.jsonl + quarantine_v2.jsonl + cleanup_v2_report.json
+python scripts/audit_contamination.py --data data/export/expand_questions.jsonl \
+  --out results/audit_expand --workers 12
 ```
 
-## Benchmark Harness
+Reports `hard_contamination` (synthetic templates / dead trials) and flags
+`trial_completed`, `heavy_followup_recheck`, `no_followup_evidence`. The core and expand
+sets audit at **0 % hard contamination**.
+
+## Benchmark harness
 
 Evaluate any LLM's ability to answer open medical questions using real biomedical APIs.
 
-### MCP Tools (10 medical APIs)
+### MCP tools (10 medical APIs, direct REST — no Docker)
 
-| Tool | API | Description |
-|------|-----|-------------|
-| pubmed | NCBI E-utils | Literature search |
-| clinicaltrialsgov | ClinicalTrials.gov v2 | Trial search |
-| openfda | OpenFDA | Drug adverse events |
-| opentargets | Open Targets GraphQL | Drug-target associations |
-| chembl | ChEMBL REST | Compound/target data |
-| uniprot | UniProt REST | Protein information |
-| pubchem | PubChem PUG REST | Chemical properties |
-| kegg | KEGG REST | Pathway data |
-| ncbi_datasets | NCBI Datasets v2 | Gene/genome data |
-| biomcp | BioMCP composite | Multi-source biomedical |
+`pubmed` · `clinicaltrialsgov` · `openfda` · `opentargets` · `chembl` · `uniprot` ·
+`pubchem` · `kegg` · `ncbi_datasets` · `biomcp`
 
-### Judge Dimensions
+### Scoring — per-question checklist rubric (current method)
 
-| Dimension | Weight | Description |
-|-----------|--------|-------------|
-| Coverage | 0.25 | How much of the gold answer is addressed |
-| Evidence Quality | 0.20 | Citation accuracy and evidence level |
-| Tool Usage | 0.25 | Appropriate tool selection and query quality |
-| Reasoning | 0.15 | Logical consistency, uncertainty acknowledgment |
-| Completeness | 0.15 | Overall answer thoroughness |
+The free-form 5-dimension judge (`harness/judge.py`) was found to have high variance on open
+questions (the same answer scored 0.50 by one judge and 0.30 by another). It is superseded by
+**checklist judging**: a frozen per-question rubric is graded criterion-by-criterion, which
+raised judge agreement from Spearman ~0.35 to ~0.82.
 
-Pass threshold: `main_score >= 0.60`
+```
+score = Σ(weight · v) / Σ(weight),   v ∈ {met:1.0, partial:0.5, not_met:0.0}
+```
 
 ### Usage
 
 ```bash
-python harness/run.py \
-  --data data/export/mcp_benchmark_with_gold.jsonl \
-  --model "openai::http://localhost:8000/v1::my-model" \
-  --judge "gemini/gemini-2.5-pro" \
-  --taxonomy-filter "Oncology" \
-  --difficulty-min 3 \
-  --limit 50 \
-  --output results/
+# 1. Generate frozen rubrics (once per dataset)
+python scripts/gen_rubrics.py --data data/export/mcp_benchmark_with_gold.jsonl \
+  --model glm-5.1 --base http://<glm-node>:8000/v1 --out data/eval_samples/rubrics_1969_uid.jsonl
 
-# Model spec format: backend::base_url::model_name
-# Backends: openai, litellm, claude
-
-# Multi-judge ensemble (comma-separated) — computes median scores + Cohen's kappa
-python harness/run.py \
+# 2. Agentic completion (real tool use; resumable checkpoint to <output>/traces.jsonl)
+OPENAI_API_BASE=http://<node>:8000/v1 python harness/run.py \
   --data data/export/mcp_benchmark_with_gold.jsonl \
-  --model "openai::http://localhost:8000/v1::my-model" \
-  --judge "gemini/gemini-2.5-pro,gpt-4o,claude-opus-4-20250514" \
-  --output results/
+  --model "openai::http://<node>:8000/v1::my-model" --no-judge \
+  --workers 12 --output results/my_model_run
+
+# 3. Checklist judge (resumable; appends + fsync per item)
+python scripts/checklist_judge.py --traces results/my_model_run/traces.jsonl \
+  --rubrics data/eval_samples/rubrics_1969_uid.jsonl \
+  --judge openai/glm-5.1 --base http://<glm-node>:8000/v1 \
+  --out results/my_model_run/checklist_glm.jsonl
+
+# Model spec format: backend::base_url::model_name  (backends: openai, litellm, claude)
 ```
 
-## Data Expansion
+## Serving & orchestration
 
-```bash
-# PubMed MeSH expansion (112 disease terms × 3 templates)
-python scripts/track_a/pubmed_mesh_expansion.py --max-per-query 50
+The three judge/eval models run as vLLM OpenAI-compatible endpoints on **B200 (Blackwell)**:
 
-# Incremental pipeline (new docs → extract → filter → dedup → refine → merge)
-python scripts/track_a/incremental_pipeline.py \
-  --input data/raw/pubmed_mesh/documents.jsonl \
-  --existing data/extracted/all_questions_refined.jsonl \
-  --workers 10
+| Model | Script | Notes |
+|-------|--------|-------|
+| GLM-5.1-FP8 | `serving/serve_glm51.slurm` | TP8; arch needs source-built DeepGEMM in the `kimi` env |
+| Qwen3.6 | `serving/serve_qwen36.slurm` | `qwen3_xml` tool parser |
+| DeepSeek-V4-Flash | `settings/serving/deepseek_v4_flash_vllm.sh` | docker image `vllm-openai:deepseekv4-cu130`, DP4 |
+
+**Preemptible orchestration.** Serving runs on the `preemptible` partition and is scancelled
+when done. Because an 8-GPU job can be preempted mid-run, every long step is **resumable**
+(append + `os.fsync`, skip already-done `task_id`s): `gen_rubrics.py`, `checklist_judge.py`,
+and the harness completion loop (`harness/completion_runner.py`, checkpoint = `traces.jsonl`).
+`scripts/run_nextbatch.sh` wraps this in an outer loop that re-establishes endpoints and
+re-runs resumable steps until both tracks complete — so a preemption is just another
+iteration. Submit-once-and-wait is preferred over cancel+resubmit (which resets queue
+priority).
+
+## Project structure
+
+```
+├── crawlers/                       # Document harvesters
+│   ├── priority_sources_crawler.py #   Authoritative priority-setting (Europe PMC)
+│   ├── jla_crawler.py / nice_crawler.py   # Expert-consensus open questions
+│   ├── cochrane_crawler.py         #   Systematic-review research gaps
+│   ├── pubmed_crawler.py / arxiv_crawler.py / medrxiv_crawler.py / nature_crawler.py
+│   └── biomedical_api_crawler.py   #   OpenTargets, ChEMBL, UniProt, …
+│
+├── pipeline/
+│   ├── extractor.py / refiner.py / dedup.py / taxonomy.py
+│   └── status_verifier.py          #   Retrieval-grounded evidence (Europe PMC / CT.gov / S2)
+│
+├── scripts/
+│   ├── extract_batch.py / refine_batch.py        # Claude-CLI batch extract & refine
+│   ├── export_priority.py / export_expand.py     # Track export (dedup vs existing)
+│   ├── gen_rubrics.py                            # Per-question checklist rubrics (resumable)
+│   ├── checklist_judge.py                        # Rubric-based judge (resumable)
+│   ├── compute_buckets.py                        # 3-model difficulty buckets
+│   ├── classify_allpass.py                       # Audit all-3-pass questions
+│   ├── stage2_judge.py                           # Grounded open_status re-judgment
+│   ├── audit_contamination.py                    # LLM-free contamination screen
+│   ├── apply_still_open_flags.py                 # Attach still-open audit flags
+│   ├── build_v3_3.py / build_v3_4.py             # Version assembly (question-granular)
+│   ├── run_nextbatch.sh / wait_and_judge_priority.sh  # Preempt-tolerant orchestrators
+│   └── track_b/                                  # Gold answer generation + validation
+│
+├── harness/                        # Standalone benchmark eval
+│   ├── task_loader.py / mcp_tools.py / completion_runner.py
+│   ├── judge.py                    #   (legacy 5-dim judge; superseded by checklist_judge)
+│   ├── metrics.py / run.py
+│
+├── data/
+│   ├── raw/                        # Crawled documents (per-track subdirs)
+│   ├── extracted/ , refined/       # Pipeline intermediates
+│   └── export/                     # Benchmark files (mcp_benchmark_v3*.jsonl, *_questions.jsonl)
+│
+├── serving/                        # vLLM serve scripts + job-id / node state
+└── results/                        # Eval traces, checklist scores, audits, run logs
 ```
 
-## Taxonomy (12 L1 Categories)
+## Question record (key fields)
 
-Clinical Medicine, Oncology, Neuroscience & Psychiatry, Infectious Disease & Immunology, Cardiovascular Medicine, Genomics & Precision Medicine, Pharmacology & Drug Discovery, Public Health & Epidemiology, Rare & Orphan Diseases, Surgical Sciences, Medical AI & Informatics, Other
+```json
+{
+  "task_id": "PMID:38345416#0",
+  "source_id": "PMID:38345416",
+  "self_contained_question": "…",
+  "corpus_track": "retrieval_verified",
+  "taxonomy_l1": "Neuroscience & Psychiatry",
+  "open_status": "open",
+  "empirical_difficulty": "core_nanje",
+  "nanje_core": true,
+  "model_scores_glmjudge": {"glm": 0.30, "qwen": 0.29, "deepseek_v4": 0.27},
+  "n_models_fail": 3,
+  "difficulty_source": "3model_empirical_1969_uid",
+  "still_open_flag": "confirmed_open",
+  "quarantine": false
+}
+```
+
+## Gold answer schema
+
+```json
+{
+  "current_knowledge": "what IS currently known",
+  "unknown_aspects": "what remains unknown / debated",
+  "evidence_landscape": "evidence quality (RCTs, preclinical, …)",
+  "key_citations": [{"type": "PMID", "id": "12345678", "relevance": "…"}],
+  "mcp_tool_plan": [{"tool": "pubmed", "query": "…", "purpose": "…"}],
+  "answer_summary": "synthesis for a researcher",
+  "self_completeness": 0.45
+}
+```
+
+> `self_completeness` is the model's self-assessed answerability of the question — useful for
+> relative comparison, not as an absolute measure, and distinct from the empirical difficulty.
+
+> Gold PMIDs are verified to **exist** (NCBI) but were measured to often point to the wrong
+> paper (~74 % mismatch, LLM-judge n=360). Gold citations are therefore **not** used as
+> ground truth; scoring relies on the per-question checklist rubric.
+
+## Taxonomy (12 L1 categories)
+
+Clinical Medicine · Oncology · Neuroscience & Psychiatry · Infectious Disease & Immunology ·
+Cardiovascular Medicine · Genomics & Precision Medicine · Pharmacology & Drug Discovery ·
+Public Health & Epidemiology · Rare & Orphan Diseases · Surgical Sciences ·
+Medical AI & Informatics · Other

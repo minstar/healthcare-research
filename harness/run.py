@@ -142,7 +142,11 @@ async def main_async(args: argparse.Namespace) -> None:
     # ---- 2. Run completions ----
     logger.info("Running completions with model: %s (workers=%d)", args.model, args.workers)
     registry = MCPToolRegistry()
-    completion_results = await run_tasks(tasks, args.model, workers=args.workers, registry=registry)
+    # incremental checkpoint = the same traces.jsonl metrics will consolidate at the end;
+    # lets a preempted run resume instead of redoing completions.
+    ckpt = str(Path(args.output) / "traces.jsonl")
+    completion_results = await run_tasks(tasks, args.model, workers=args.workers,
+                                         registry=registry, checkpoint_path=ckpt)
     logger.info("Completed %d/%d tasks", len(completion_results), len(tasks))
 
     # ---- 3. Judge (if gold answers available and not skipped) ----

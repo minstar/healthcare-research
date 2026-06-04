@@ -36,6 +36,21 @@ QUERIES = [
     '"future research" AND "Grand Rounds"',
     '"research recommendations" AND guideline AND (NICE OR WHO OR NIH OR ESMO OR ASCO OR AHA)',
     '"knowledge gaps" AND "systematic review" AND "implications for research"',
+    # --- added: broaden authoritative venues/instruments for OPEN questions ---
+    '"R&D Blueprint" AND WHO AND ("research priorities" OR "priority pathogens" OR roadmap)',
+    'CHNRI AND ("global health" OR "child health" OR "newborn") AND "research priorities"',
+    '("National Academies" OR NASEM OR "Institute of Medicine") AND "research agenda" AND ("consensus" OR committee)',
+    'PCORI AND ("research priorities" OR "research agenda" OR "priority topics")',
+    '("ESMO" OR "ASCO" OR "American Society of Clinical Oncology") AND ("research priorities" OR "research agenda" OR "unmet needs")',
+    '("AHA" OR "American Heart Association" OR "American College of Cardiology") AND "scientific statement" AND ("research priorities" OR "knowledge gaps")',
+    '("IDSA" OR "Infectious Diseases Society") AND ("research agenda" OR "research priorities" OR "unmet needs")',
+    '("American Thoracic Society" OR "European Respiratory Society" OR ERS OR ATS) AND ("research statement" OR "research priorities")',
+    '("EASL" OR "AASLD" OR "American College of Rheumatology" OR ACR) AND ("research agenda" OR "research priorities")',
+    '("research priorities" OR "research agenda") AND (Lancet OR "New England Journal" OR NEJM OR JAMA)',
+    'Delphi AND consensus AND ("unanswered questions" OR "research uncertainties" OR "priority questions")',
+    '"uncertainties" AND review AND ("future research" OR "research needed") AND clinical',
+    '"research gaps" AND ("expert consensus" OR "working group" OR "task force") AND (treatment OR diagnosis OR management)',
+    '"priority research questions" AND (consensus OR Delphi OR "expert panel")',
 ]
 
 
