@@ -66,29 +66,49 @@ def extract_cites(answer: str):
     return uniq
 
 
+# Existence fetch returns a TRISTATE so a transient API failure is NOT mislabeled as
+# fabrication: ("found", meta) | ("notfound", None) | ("error", None). Only a clean HTTP-200
+# empty result counts as not-found; exceptions/non-200 are retried, then surfaced as "error"
+# (exists=None -> re-checked on the next resumable pass, never counted as fabricated).
+import time as _time
+
+
+def _get(url, params, tries=4):
+    for i in range(tries):
+        try:
+            r = requests.get(url, params=params, timeout=30)
+            if r.status_code == 200:
+                return r.json()
+            if r.status_code == 404:
+                return {}
+            # 429 / 5xx -> backoff and retry
+        except Exception:
+            pass
+        _time.sleep(0.6 * (i + 1))
+    return None  # exhausted -> error
+
+
 def fetch_pmid(pmid):
-    try:
-        r = requests.get(EPMC, params={"query": f"EXT_ID:{pmid} AND SRC:MED", "format": "json",
-                                       "resultType": "core", "pageSize": 1}, timeout=30)
-        res = r.json().get("resultList", {}).get("result", [])
-        if not res:
-            return None
-        x = res[0]
-        return {"title": x.get("title", ""), "abstract": (x.get("abstractText") or "")[:1500]}
-    except Exception:
-        return None
+    j = _get(EPMC, {"query": f"EXT_ID:{pmid} AND SRC:MED", "format": "json",
+                    "resultType": "core", "pageSize": 1})
+    if j is None:
+        return ("error", None)
+    res = j.get("resultList", {}).get("result", [])
+    if not res:
+        return ("notfound", None)
+    x = res[0]
+    return ("found", {"title": x.get("title", ""), "abstract": (x.get("abstractText") or "")[:1500]})
 
 
 def fetch_nct(nct):
-    try:
-        r = requests.get(CTG + nct, params={"format": "json"}, timeout=30)
-        if r.status_code != 200:
-            return None
-        p = r.json().get("protocolSection", {})
-        idm = p.get("identificationModule", {}); dm = p.get("descriptionModule", {})
-        return {"title": idm.get("briefTitle", ""), "abstract": (dm.get("briefSummary") or "")[:1500]}
-    except Exception:
-        return None
+    j = _get(CTG + nct, {"format": "json"})
+    if j is None:
+        return ("error", None)
+    p = j.get("protocolSection")
+    if not p:
+        return ("notfound", None)
+    idm = p.get("identificationModule", {}); dm = p.get("descriptionModule", {})
+    return ("found", {"title": idm.get("briefTitle", ""), "abstract": (dm.get("briefSummary") or "")[:1500]})
 
 
 def collect_records():
@@ -150,16 +170,21 @@ def main():
     fh = open(args.out, "a")
     cnt = [0]
 
+    def fetch(r):
+        return fetch_pmid(r["id"]) if r["id_type"] == "PMID" else fetch_nct(r["id"])
+
     def work(r):
         meta = None
         if r.get("exists") is None:
-            meta = fetch_pmid(r["id"]) if r["id_type"] == "PMID" else fetch_nct(r["id"])
-            r["exists"] = bool(meta)
+            status, meta = fetch(r)
+            # error -> exists stays None (re-checked next pass; NEVER counted as fabricated)
+            r["exists"] = True if status == "found" else (False if status == "notfound" else None)
+            r["fetch_status"] = status
             r["title"] = (meta or {}).get("title", "")
         # L2 support
         if cli is not None and r["exists"] and r.get("supports") in (None, "error"):
             if meta is None:
-                meta = fetch_pmid(r["id"]) if r["id_type"] == "PMID" else fetch_nct(r["id"])
+                _, meta = fetch(r)
             if meta and meta.get("abstract"):
                 user = (f"PAPER TITLE: {meta['title']}\nABSTRACT: {meta['abstract']}\n\n"
                         f"ASSISTANT CLAIM (cites this paper): {r['claim']}\n\nDoes the paper support the claim?")
