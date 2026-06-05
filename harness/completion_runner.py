@@ -102,7 +102,7 @@ class _OpenAIBackend(_Backend):
                     messages=messages,
                     tools=self.tool_schemas if self.tool_schemas else None,
                     tool_choice="auto" if self.tool_schemas else None,
-                    temperature=0.3,
+                    temperature=float(os.environ.get("EVAL_TEMPERATURE", "0.0")),
                     max_tokens=4096,
                 )
             except Exception as exc:
@@ -216,15 +216,29 @@ class _LiteLLMBackend(_Backend):
         t0 = time.monotonic()
 
         for round_idx in range(_MAX_TOOL_ROUNDS):
+            # On the final allowed round, DROP tools so the model must emit a text
+            # answer instead of calling yet another tool. Reasoning models (gpt-5.x,
+            # gemini-3) otherwise burn all rounds on tool calls and return an EMPTY
+            # answer while still billing full price. The answer round needs more
+            # output headroom (reasoning tokens), so widen max_tokens there.
+            is_last = round_idx == _MAX_TOOL_ROUNDS - 1
+            _kw = dict(
+                model=self.model,
+                messages=messages,
+                tools=None if is_last else (self.tool_schemas if self.tool_schemas else None),
+                tool_choice=None if is_last else ("auto" if self.tool_schemas else None),
+                max_tokens=16384 if is_last else 4096,
+            )
             try:
-                resp = await litellm.acompletion(
-                    model=self.model,
-                    messages=messages,
-                    tools=self.tool_schemas if self.tool_schemas else None,
-                    tool_choice="auto" if self.tool_schemas else None,
-                    temperature=0.3,
-                    max_tokens=4096,
-                )
+                # deterministic eval; reasoning models (e.g. gpt-5.x) only accept the
+                # default temperature -> on a temperature rejection, retry without it.
+                try:
+                    resp = await litellm.acompletion(temperature=0.0, **_kw)
+                except Exception as exc:
+                    if "temperature" in str(exc).lower():
+                        resp = await litellm.acompletion(**_kw)
+                    else:
+                        raise
             except Exception as exc:
                 logger.error("LiteLLM API error (round %d): %s", round_idx, exc)
                 trace.append({"round": round_idx, "error": str(exc)})
@@ -288,13 +302,43 @@ class _LiteLLMBackend(_Backend):
                     }
                 )
 
-        wall_time = time.monotonic() - t0
-
         model_answer = ""
         for entry in reversed(trace):
             if entry.get("role") == "assistant" and entry.get("content"):
                 model_answer = entry["content"]
                 break
+
+        # Last-resort: still no text answer (e.g. a length-truncated final round).
+        # One explicit forced-answer call, tools disabled, so we never pay for a full
+        # agentic run and then store an empty answer.
+        if not model_answer.strip() and not any(e.get("error") for e in trace):
+            try:
+                fkw = dict(
+                    model=self.model,
+                    messages=messages + [{"role": "user", "content":
+                        "You have gathered enough evidence. Give your final answer now, "
+                        "with citations. Do not call any tools."}],
+                    max_tokens=16384,
+                )
+                try:
+                    fresp = await litellm.acompletion(temperature=0.0, **fkw)
+                except Exception as exc:
+                    if "temperature" in str(exc).lower():
+                        fresp = await litellm.acompletion(**fkw)
+                    else:
+                        raise
+                if fresp.usage:
+                    total_prompt += fresp.usage.prompt_tokens or 0
+                    total_completion += fresp.usage.completion_tokens or 0
+                fc = fresp.choices[0].message.content or ""
+                if fc.strip():
+                    model_answer = fc
+                    trace.append({"round": "forced_final", "role": "assistant",
+                                  "content": fc, "finish_reason": fresp.choices[0].finish_reason})
+            except Exception as exc:
+                logger.error("forced-final-answer error: %s", exc)
+
+        wall_time = time.monotonic() - t0
 
         return CompletionResult(
             task_id="",
@@ -497,8 +541,9 @@ async def run_task(
 def _ckpt_load(path: str | None) -> dict[str, CompletionResult]:
     """Load completed tasks from an incremental checkpoint (for resume after preemption).
 
-    A task counts as done only if it produced a non-[ERROR] answer, so errored items
-    are retried on resume.
+    A task counts as done only if it produced a non-[ERROR], non-empty answer, so
+    errored OR empty items (e.g. a reasoning model that burned all tool rounds) are
+    retried on resume instead of being locked in as paid-for garbage.
     """
     done: dict[str, CompletionResult] = {}
     if not path or not os.path.exists(path):
@@ -509,7 +554,7 @@ def _ckpt_load(path: str | None) -> dict[str, CompletionResult]:
         except Exception:
             continue
         tid, ans = r.get("task_id"), r.get("model_answer", "")
-        if not tid or str(ans).startswith("[ERROR]"):
+        if not tid or str(ans).startswith("[ERROR]") or not str(ans).strip():
             continue
         done[tid] = CompletionResult(
             task_id=tid, model_answer=ans, tool_calls=r.get("tool_calls", []),

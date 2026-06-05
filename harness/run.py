@@ -99,6 +99,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42, help="Random seed for sampling (default: 42)")
 
     # Execution
+    parser.add_argument("--no-tools", action="store_true",
+                        help="Disable MCP tools (parametric closed-book baseline)")
     parser.add_argument("--workers", type=int, default=4, help="Max concurrent tasks (default: 4)")
     parser.add_argument("--judge-workers", type=int, default=4, help="Max concurrent judge calls (default: 4)")
     parser.add_argument("--pass-threshold", type=float, default=0.60, help="Pass/fail score threshold (default: 0.60)")
@@ -142,6 +144,9 @@ async def main_async(args: argparse.Namespace) -> None:
     # ---- 2. Run completions ----
     logger.info("Running completions with model: %s (workers=%d)", args.model, args.workers)
     registry = MCPToolRegistry()
+    if getattr(args, "no_tools", False):
+        registry.get_tool_schemas = lambda *a, **k: []   # parametric closed-book baseline
+        logger.info("--no-tools: MCP tools disabled (parametric baseline)")
     # incremental checkpoint = the same traces.jsonl metrics will consolidate at the end;
     # lets a preempted run resume instead of redoing completions.
     ckpt = str(Path(args.output) / "traces.jsonl")
