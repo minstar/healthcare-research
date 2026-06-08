@@ -32,6 +32,13 @@ mkdir -p /data/project/private/minstar/workspace/healthcare-research/serving/log
 source "${CONDA}/etc/profile.d/conda.sh"
 conda activate "${ENV}"
 
+# Isolate flashinfer JIT cache from the polluted shared ~/.cache/flashinfer (other venvs leave
+# stale .cu source paths there, breaking the ninja fmha build; see job 23019/24492).
+export FLASHINFER_WORKSPACE_BASE=/data/project/private/minstar/.cache/flashinfer_hc
+mkdir -p "$FLASHINFER_WORKSPACE_BASE/.cache/flashinfer"
+export CUDA_HOME="${CUDA_HOME:-/usr/local/cuda}"
+export PATH="${CUDA_HOME}/bin:${PATH}"
+
 # GLM-5.1 DSA needs DeepGEMM (copied into the kimi env from eval_sglang, abi3).
 # Its JIT compiler needs a CUDA toolkit on PATH.
 export CUDA_HOME=/usr/local/cuda
