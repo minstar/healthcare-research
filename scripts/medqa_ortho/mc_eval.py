@@ -43,20 +43,32 @@ def extract(text, n_choices):
             return cand.upper()
     return None
 
-async def one(client, model, rec, sem, retries=2):
+async def one(client, model, rec, sem, think_off=True, retries=2):
     user = build_user(rec)
     msgs = [{"role": "system", "content": SYS}, {"role": "user", "content": user}]
     async with sem:
         for attempt in range(retries + 1):
             try:
-                kw = dict(model=model, messages=msgs, max_tokens=4096)
+                kw = dict(model=model, messages=msgs, max_tokens=1024)
+                # Disable the model's thinking channel: GLM-5.1/Qwen3.x reasoning otherwise burns the
+                # whole budget and returns empty content (32s, finish=length). think-off -> 0.6s, clean
+                # "Answer: X". Applied uniformly so every model is graded under the same protocol.
+                if think_off:
+                    kw["extra_body"] = {"chat_template_kwargs": {"enable_thinking": False}}
                 # T=0 to match OpenBioRQ; some reasoning models reject temperature -> retry without
                 if attempt == 0:
                     kw["temperature"] = 0.0
                 r = await client.chat.completions.create(**kw)
-                txt = r.choices[0].message.content or ""
+                msg = r.choices[0].message
+                txt = msg.content or ""
+                # reasoning models (GLM-5.1) put the chain in reasoning_content; if they exhaust
+                # max_tokens before emitting a final answer, content is empty -> fall back to it
+                reasoning = getattr(msg, "reasoning_content", None) or ""
+                nc = len(rec["choices"])
+                pred = extract(txt, nc) or extract(reasoning, nc)
                 return {"id": rec["id"], "dataset": rec["dataset"], "gold": rec["answer"],
-                        "pred": extract(txt, len(rec["choices"])), "raw_tail": txt[-160:]}
+                        "pred": pred, "from_reasoning": bool(pred and not extract(txt, nc)),
+                        "raw_tail": (txt or reasoning)[-160:]}
             except Exception as e:
                 if attempt == retries:
                     return {"id": rec["id"], "dataset": rec["dataset"], "gold": rec["answer"],
@@ -72,6 +84,8 @@ async def main():
     ap.add_argument("--limit", type=int, default=0, help="subsample per dataset (0=all)")
     ap.add_argument("--workers", type=int, default=16)
     ap.add_argument("--api-key", default=os.environ.get("OPENAI_API_KEY", "dummy"))
+    ap.add_argument("--keep-thinking", action="store_true",
+                    help="do NOT disable the model thinking channel (for providers without enable_thinking)")
     a = ap.parse_args()
 
     keep = set(a.datasets.split(","))
@@ -86,7 +100,8 @@ async def main():
 
     client = AsyncOpenAI(base_url=a.base, api_key=a.api_key, timeout=120, max_retries=0)
     sem = asyncio.Semaphore(a.workers)
-    results = await asyncio.gather(*(one(client, a.model, r, sem) for r in recs))
+    think_off = not a.keep_thinking
+    results = await asyncio.gather(*(one(client, a.model, r, sem, think_off=think_off) for r in recs))
 
     outdir = f"{ROOT}/results/medqa_ortho"
     os.makedirs(outdir, exist_ok=True)
