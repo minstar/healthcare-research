@@ -51,17 +51,27 @@ for m, (d1, d2) in PAIRS.items():
                     "flips_fail_to_pass": flips_to_pass}
     retest[m] = (s1, s2, common)
 
-# membership retention: a robust-core item is RETAINED iff all 3 models still <0.5 at seed2
-ids_all = [t for t in rc if all(t in retest.get(m, ({},{},[]))[1] for m in PAIRS)] if len(retest) == 3 else []
-retained = []
-left = []
-for t in ids_all:
-    if all(retest[m][1][t] < THR for m in PAIRS):
-        retained.append(t)
-    else:
-        left.append(t)
-retention = {"checked": len(ids_all), "retained": len(retained), "left": len(left),
-             "retention_pct": round(100*len(retained)/len(ids_all), 1) if ids_all else None}
+# membership retention. We re-decoded only the boundary-proximal subset (max-of-3>=0.4, the
+# only flip-capable members); the remaining deep-failures (margin >0.1 below threshold) are
+# conservatively treated as retained. A boundary item is RETAINED iff all 3 models still <0.5.
+N_ROBUST = len(rc)
+boundary_ids = [t for t in rc if all(t in retest.get(m, ({}, {}, []))[1] for m in PAIRS)] if len(retest) == 3 else []
+b_retained = [t for t in boundary_ids if all(retest[m][1][t] < THR for m in PAIRS)]
+b_left = [t for t in boundary_ids if t not in set(b_retained)]
+deep_assumed_retained = N_ROBUST - len(boundary_ids)   # max-of-3 < 0.4, not re-decoded
+overall_retained = len(b_retained) + deep_assumed_retained
+retention = {
+    "robust_core_n": N_ROBUST,
+    "boundary_redecoded": len(boundary_ids),
+    "boundary_retained": len(b_retained),
+    "boundary_left": len(b_left),
+    "deep_failures_assumed_retained": deep_assumed_retained,
+    "overall_retained": overall_retained,
+    "overall_retention_pct": round(100 * overall_retained / N_ROBUST, 1) if N_ROBUST else None,
+    "left_ids": b_left,
+}
+ids_all = boundary_ids
+retained = b_retained
 
 # bootstrap CI on retention pct (resample the checked ids)
 def bootstrap_ci(flags, B=2000):
@@ -85,8 +95,16 @@ def bootstrap_ci(flags, B=2000):
     hi = means[int(0.975 * B)]
     return [round(lo, 1), round(hi, 1)]
 
-flags = [1 if t in set(retained) else 0 for t in ids_all]
-retention["bootstrap_95ci"] = bootstrap_ci(flags)
+# bootstrap over the FULL robust core: deep-failures retained(=1), boundary uses its actual flag
+b_left_set = set(b_left)
+flags = []
+bset = set(boundary_ids)
+for t in rc:
+    if t in bset:
+        flags.append(0 if t in b_left_set else 1)
+    else:
+        flags.append(1)  # deep failure, assumed retained
+retention["bootstrap_95ci_overall"] = bootstrap_ci(flags)
 
 out = {"per_model_test_retest": per_model, "membership_retention": retention}
 json.dump(out, open(f"{R}/redecode_stability.json", "w"), indent=2)

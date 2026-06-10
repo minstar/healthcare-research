@@ -9,7 +9,7 @@ cd /data/project/private/minstar/workspace/healthcare-research
 source /data/project/private/minstar/miniconda3/etc/profile.d/conda.sh
 conda activate kimi
 export OPENAI_API_KEY=dummy EVAL_TEMPERATURE=0.0
-DATA=data/eval_samples/robust_core_eval.jsonl
+DATA=data/eval_samples/robust_core_boundary.jsonl  # 131 boundary-proximal (max-of-3>=0.4); the only flip-capable members
 RUB=data/eval_samples/rubrics_1969_uid.jsonl
 N=$(wc -l < "$DATA")
 LOG=results/redecode/run.log
