@@ -14,7 +14,8 @@ import argparse, json, os, re, time
 import requests, litellm
 
 EPMC = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
-PRICE = {"openrouter/anthropic/claude-opus-4.7": (5e-6, 25e-6)}
+PRICE = {"openrouter/anthropic/claude-opus-4.7": (5e-6, 25e-6),
+         "openrouter/google/gemini-3.1-pro-preview": (1.25e-6, 5e-6)}
 STRICT_SYS = """You verify a CITATION strictly. Given a paper's title+abstract and a claim the \
 citation is attached to, decide if the paper DIRECTLY supports that specific claim. Be strict: \
 merely related-topic, tangential, wrong-population, wrong-direction, or wrong-endpoint support \
