@@ -95,16 +95,26 @@ def bootstrap_ci(flags, B=2000):
     hi = means[int(0.975 * B)]
     return [round(lo, 1), round(hi, 1)]
 
-# bootstrap over the FULL robust core: deep-failures retained(=1), boundary uses its actual flag
-b_left_set = set(b_left)
-flags = []
-bset = set(boundary_ids)
-for t in rc:
-    if t in bset:
-        flags.append(0 if t in b_left_set else 1)
-    else:
-        flags.append(1)  # deep failure, assumed retained
-retention["bootstrap_95ci_overall"] = bootstrap_ci(flags)
+# CORRECT bootstrap: resample ONLY the re-decoded boundary items (the only sampling variance);
+# the deep-failures are an assumed-fixed count, not observed draws -- including them as constant
+# 1s would falsely shrink the CI. Overall retention = (bootstrapped boundary-retained + deep) / N.
+boundary_flags = [1 if t not in set(b_left) else 0 for t in boundary_ids]
+def bootstrap_overall(flags, fixed_retained, N, B=2000):
+    if not flags:
+        return None
+    n = len(flags); means = []
+    for b in range(B):
+        seed = (b * 2654435761) & 0xFFFFFFFF
+        acc = 0
+        for _ in range(n):
+            seed = (1103515245 * seed + 12345) & 0x7FFFFFFF
+            acc += flags[seed % n]
+        means.append(100 * (acc + fixed_retained) / N)
+    means.sort()
+    return [round(means[int(0.025 * B)], 1), round(means[int(0.975 * B)], 1)]
+retention["boundary_retention_pct"] = round(100 * len(b_retained) / len(boundary_ids), 1) if boundary_ids else None
+retention["bootstrap_95ci_overall"] = bootstrap_overall(boundary_flags, deep_assumed_retained, N_ROBUST)
+retention["bootstrap_95ci_boundary"] = bootstrap_ci(boundary_flags)
 
 out = {"per_model_test_retest": per_model, "membership_retention": retention}
 json.dump(out, open(f"{R}/redecode_stability.json", "w"), indent=2)
