@@ -49,7 +49,9 @@ async def one(client, model, rec, sem, think_off=True, retries=2):
     async with sem:
         for attempt in range(retries + 1):
             try:
-                kw = dict(model=model, messages=msgs, max_tokens=1024)
+                # think-off models answer directly (1024 ample); keep-thinking reasoning models
+                # (frontier via OpenRouter) count reasoning toward output -> need ample budget
+                kw = dict(model=model, messages=msgs, max_tokens=1024 if think_off else 8192)
                 # Disable the model's thinking channel: GLM-5.1/Qwen3.x reasoning otherwise burns the
                 # whole budget and returns empty content (32s, finish=length). think-off -> 0.6s, clean
                 # "Answer: X". Applied uniformly so every model is graded under the same protocol.

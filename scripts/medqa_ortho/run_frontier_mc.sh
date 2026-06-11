@@ -13,7 +13,7 @@ LIMIT="${1:-0}"      # pass an integer to subsample per dataset (0 = full); defa
 DS="${2:-MedQA,PubMedQA,MedMCQA}"
 
 # OpenRouter unified OpenAI-compatible endpoint + key (do NOT echo the key)
-set -a; source /data/project/private/minstar/settings/.env 2>/dev/null; set +a
+set -a; source /data/project/private/minstar/.env 2>/dev/null; set +a  # the funded key the OpenBioRQ frontier used
 : "${OPENROUTER_API_KEY:?OPENROUTER_API_KEY not set}"
 BASE="https://openrouter.ai/api/v1"
 
