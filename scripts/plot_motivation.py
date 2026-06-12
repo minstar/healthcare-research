@@ -41,9 +41,9 @@ COL = {"closed": "#9aa0a6", "agentic_known": "#e8821a", "open": "#d62728"}
 MARK = {"closed": "o", "agentic_known": "s", "open": "*"}
 
 fig, ax = plt.subplots(figsize=(6.4, 5.0))
-# quadrant guides
-ax.axhline(5, color="black", lw=1.0, ls="--", alpha=0.6)
-ax.axvline(5, color="black", lw=0.8, ls=":", alpha=0.4)
+# quadrant guides (canonical muted reference-line style, consistent across all figures)
+ax.axhline(5, color="#999999", lw=0.9, ls=(0, (4, 2)), zorder=1)
+ax.axvline(5, color="#999999", lw=0.9, ls=(0, (4, 2)), zorder=1)
 # highlight the open+agentic quadrant
 ax.add_patch(plt.Rectangle((5, 5), 5, 5, color="#d62728", alpha=0.06, zorder=0))
 ax.text(7.5, 9.55, "agentic  +  no answer key", ha="center", fontsize=8.5,
