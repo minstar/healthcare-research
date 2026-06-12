@@ -28,6 +28,7 @@ litellm.request_timeout = 120  # no indefinite hang
 PRICE = {
     "openrouter/anthropic/claude-opus-4.7": (5e-6, 25e-6),
     "openrouter/anthropic/claude-haiku-4.5": (1e-6, 5e-6),
+    "openrouter/z-ai/glm-5.1": (0.98e-6, 3.08e-6),   # primary-judge family, for fragment re-judge
 }
 EPMC_SEARCH = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
 EPMC_FT = "https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML"
@@ -78,9 +79,14 @@ def judge(model, sysprompt, title, body, claim):
     last = ""
     for attempt in range(5):
         try:
+            kw = {}
+            if "glm" in model.lower():
+                # GLM-5.1 is a reasoning model; disable thinking so the 120-token budget
+                # yields the JSON verdict (matches the original thinking-off GLM judge).
+                kw["extra_body"] = {"reasoning": {"enabled": False}}
             r = litellm.completion(model=model, temperature=0.0, max_tokens=120,
                                    messages=[{"role": "system", "content": sysprompt},
-                                             {"role": "user", "content": user}])
+                                             {"role": "user", "content": user}], **kw)
             txt = r.choices[0].message.content or ""
             u = r.usage
             pin = (u.prompt_tokens or 0) if u else 0
