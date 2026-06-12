@@ -6,7 +6,7 @@ GLM-vs-Claude cross-family kappa (kappa=0.755), so human-vs-LLM kappa is directl
 Outputs a BLIND annotator CSV (no LLM verdicts shown) + a hidden KEY CSV for the later join.
 GPU-free, no API. Deterministic (no RNG) for reproducibility.
 """
-import json, csv, os
+import json, csv, os, re
 SRC = "results/cite_kappa/pairs.jsonl"
 OUT = "results/cite_kappa/human_annotation_50.csv"
 KEY = "results/cite_kappa/human_annotation_50_KEY.csv"
@@ -20,7 +20,16 @@ def id_type_and_url(idv):
         return "PMID", f"https://pubmed.ncbi.nlm.nih.gov/{s}/"
     return "other", ""
 
+def _evaluable(c):
+    # exclude bare citation-fragment claim snippets (extraction artifact; see
+    # scripts/wrongpaper_evaluable.py). Annotators only judge real, evaluable claims.
+    c = (c or "").strip()
+    w = len(re.sub(r"[^a-zA-Z ]", " ", c).split())
+    frag = (w < 6) or bool(re.match(r"^[\s,.;:\)\(*#\]]*((19|20)\d\d|PMID|NCT|et al|doi|Source)", c, re.I))
+    return not frag
+
 rows = [json.loads(l) for l in open(SRC)]
+rows = [r for r in rows if _evaluable(r.get("claim"))]  # drop fragment-claim citations
 for i, r in enumerate(rows):
     r["_orig"] = i
     r["_disagree"] = (r.get("glm") != r.get("claude"))
