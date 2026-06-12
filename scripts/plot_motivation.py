@@ -12,6 +12,19 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
 
+# Shared house style (consistent with the other OpenBioRQ figures; fonttype 42 avoids
+# Type-3 fonts that AAAI rejects).
+plt.rcParams.update({
+    "pdf.fonttype": 42, "ps.fonttype": 42,
+    "font.family": "sans-serif", "font.sans-serif": ["DejaVu Sans"],
+    "mathtext.fontset": "dejavusans",
+    "font.size": 9, "axes.titlesize": 9.5, "axes.labelsize": 9,
+    "axes.linewidth": 0.8, "axes.edgecolor": "#444444",
+    "axes.spines.top": False, "axes.spines.right": False,
+    "xtick.labelsize": 8.5, "ytick.labelsize": 8.5,
+    "legend.fontsize": 8, "legend.frameon": False, "figure.dpi": 150,
+})
+
 # (name, x agentic 0-10, y answer-open 0-10, group)
 PTS = [
     ("MedQA", 0.9, 1.7, "closed"),

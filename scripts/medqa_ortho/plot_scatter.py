@@ -10,6 +10,19 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+# Shared house style (consistent with the other OpenBioRQ figures; fonttype 42 avoids
+# Type-3 fonts that AAAI rejects).
+plt.rcParams.update({
+    "pdf.fonttype": 42, "ps.fonttype": 42,
+    "font.family": "sans-serif", "font.sans-serif": ["DejaVu Sans"],
+    "mathtext.fontset": "dejavusans",
+    "font.size": 9, "axes.titlesize": 9.5, "axes.labelsize": 9,
+    "axes.linewidth": 0.8, "axes.edgecolor": "#444444",
+    "axes.spines.top": False, "axes.spines.right": False,
+    "xtick.labelsize": 8.5, "ytick.labelsize": 8.5,
+    "legend.fontsize": 8, "legend.frameon": False, "figure.dpi": 150,
+})
+
 R = "/data/project/private/minstar/workspace/healthcare-research/results"
 MO = f"{R}/medqa_ortho"
 
@@ -68,7 +81,7 @@ ax.text((lo + hi) / 2, 62, f"MedQA band\n{lo:.0f}-{hi:.0f}% ({hi-lo:.0f} pt)", h
         fontsize=7, color="darkorange")
 
 ax.set_xlabel("MedQA-USMLE accuracy (%)")
-ax.set_ylabel("OpenBioRQ robust-core pass@0.5 (%)")
+ax.set_ylabel("OpenBioRQ frozen-core solve rate (%)")
 ax.set_ylim(-4, 68)
 ax.set_xlim(lo - 2.5, hi + 2.5)
 ax.legend(fontsize=6.5, loc="upper left", framealpha=0.9)
