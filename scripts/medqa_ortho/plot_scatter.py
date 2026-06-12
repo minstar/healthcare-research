@@ -20,8 +20,14 @@ lb = {e["model"]: e for e in json.load(open(f"{R}/leaderboard_core_t0.json"))["l
 def robust(name):
     return round(100 * lb[name]["robust_core"]["solve@0.5"], 1)
 
-fr = json.load(open(f"{R}/frontier_robust_leaderboard.json")) if False else None
-FRONTIER_ROBUST = {"Gemini-3-Pro": 28.8, "Opus-4.7": 37.8, "GPT-5.5": 59.6}
+# Frontier robust-core pass@0.5 sourced from committed JSON (no hardcoded literals).
+# Keys are api_<model>_robust; solve@0.5 is already stored as a percent.
+_fr = json.load(open(f"{R}/frontier_robust_leaderboard.json"))
+FRONTIER_ROBUST = {
+    "Gemini-3-Pro": _fr["api_gemini3pro_robust"]["solve@0.5"],
+    "Opus-4.7": _fr["api_opus47_robust"]["solve@0.5"],
+    "GPT-5.5": _fr["api_gpt55_robust"]["solve@0.5"],
+}
 
 # tier -> [(model, medqa_tag, y_robust)]
 tiers = {
