@@ -43,12 +43,29 @@ actually SUPPORTS that claim. Output ONLY JSON: {"supports":"yes|partial|no","wh
 V = {"yes": 1.0, "partial": 0.5, "no": 0.0}
 
 
+def _is_fragment(c: str) -> bool:
+    """A claim snippet that is a bare citation fragment (no evaluable claim)."""
+    c = (c or "").strip()
+    w = len(re.sub(r"[^a-zA-Z ]", " ", c).split())
+    return (w < 6) or bool(re.match(r"^[\s,.;:\)\(*#\]]*((19|20)\d\d|PMID|NCT|et al|doi|Source)", c, re.I))
+
+
 def claim_snippet(answer: str, span: tuple[int, int]) -> str:
-    """The sentence containing the citation (the model's local claim)."""
+    """The model's local claim around a citation. Normally the sentence containing the citation,
+    but the abbreviation-period split (``et al.''/``vs.'') can leave only a bare reference fragment
+    when the citation sits at a sentence end; in that case the claim almost always PRECEDES the
+    citation, so we fall back to a window ending at the citation (its last few sentences)."""
+    cand = None
     for m in SENT.finditer(answer):
         if m.start() <= span[0] < m.end():
-            return m.group(0).strip()[:400]
-    return answer[max(0, span[0] - 200):span[1] + 100].strip()[:400]
+            cand = m.group(0).strip()
+            break
+    if cand and not _is_fragment(cand):
+        return cand[:400]
+    pre = answer[max(0, span[0] - 360):span[1]].strip()
+    sents = SENT.findall(pre)
+    tail = "".join(sents[-3:]).strip() if sents else pre
+    return (tail or pre)[-400:]
 
 
 def extract_cites(answer: str):
