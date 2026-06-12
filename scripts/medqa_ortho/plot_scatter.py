@@ -85,7 +85,7 @@ ax.set_ylabel("OpenBioRQ frozen-core solve rate (%)")
 ax.set_ylim(-4, 68)
 ax.set_xlim(lo - 2.5, hi + 2.5)
 ax.legend(fontsize=6.5, loc="upper left", frameon=False)
-ax.grid(True, alpha=0.13, linewidth=0.6, zorder=0)
+ax.grid(True, color="#dddddd", linewidth=0.6, zorder=0)  # canonical light-gray grid (matches other figures)
 ax.set_title("Closed-form MedQA saturates; OpenBioRQ spreads", fontsize=9)
 fig.tight_layout()
 out = "/data/project/private/minstar/workspace/healthcare-research/paper_writing/figures/fig_orthogonality.pdf"
