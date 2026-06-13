@@ -87,6 +87,30 @@ def dline(x1, y1, x2, y2, color=GRID, w=0.9, dash="4,2"):
             f'stroke-width="{w}" stroke-dasharray="{dash}"/>')
 
 
+def header(x, w, fill, ic, title):
+    # colored panel-header band (echoes Fig 4 stage headers) + white icon + white title
+    s = f'<rect x="{x}" y="6" width="{w}" height="26" rx="7" fill="{fill}"/>'
+    s += ic(x + 18, 19)
+    s += txt(x + 32, 23, title, 11, "#FFFFFF", "bold")
+    return s
+
+
+def ic_cite(cx, cy, c="#fff"):
+    # citation audit: small document + magnifier
+    return (f'<path d="M{cx-7},{cy-8} h8 l3,3 v11 h-11 z" fill="none" stroke="{c}" '
+            f'stroke-width="1.4" stroke-linejoin="round"/>'
+            f'<line x1="{cx-4}" y1="{cy-3}" x2="{cx+1}" y2="{cy-3}" stroke="{c}" stroke-width="1.1"/>'
+            f'<circle cx="{cx+4}" cy="{cy+4}" r="3.8" fill="none" stroke="{c}" stroke-width="1.5"/>'
+            f'<line x1="{cx+6.8}" y1="{cy+6.8}" x2="{cx+9.5}" y2="{cy+9.5}" stroke="{c}" stroke-width="1.6"/>')
+
+
+def ic_target(cx, cy, c="#fff"):
+    # bullseye: "saturate the core"
+    return (f'<circle cx="{cx}" cy="{cy}" r="8" fill="none" stroke="{c}" stroke-width="1.5"/>'
+            f'<circle cx="{cx}" cy="{cy}" r="4.4" fill="none" stroke="{c}" stroke-width="1.4"/>'
+            f'<circle cx="{cx}" cy="{cy}" r="1.5" fill="{c}"/>')
+
+
 p.append('<defs>')
 p.append('<filter id="blur" x="-40%" y="-40%" width="180%" height="180%">'
          '<feGaussianBlur stdDeviation="2.0"/></filter>')
@@ -96,8 +120,8 @@ p.append(f'<marker id="ah" markerWidth="9" markerHeight="9" refX="6.5" refY="3" 
 p.append('</defs>')
 
 # ============================ PANEL (a) ============================
-p.append(txt(186, 20, "(a)  Existence is not correctness", 12.5, INK, "bold", "middle"))
-PAL, PAR, PAT, PAB = 48, 348, 44, 232
+p.append(header(6, 350, "#CC6F44", ic_cite, "(a)  Existence is not correctness"))
+PAL, PAR, PAT, PAB = 48, 348, 52, 234
 VMAX = 112
 
 
@@ -147,8 +171,8 @@ p.append(rect(PAL + 120, ly, 12, 9, TEAL, rx=2))
 p.append(txt(PAL + 137, ly + 8, "Supports the claim (L2 floor)", 7.6, INK2))
 
 # ============================ PANEL (b) ============================
-p.append(txt(548, 20, "(b)  No frontier agent saturates the core", 12.5, INK, "bold", "middle"))
-PBL, PBR, PBT, PBB = 462, 702, 50, 206
+p.append(header(378, 336, "#4A86C2", ic_target, "(b)  No frontier agent saturates the core"))
+PBL, PBR, PBT, PBB = 462, 702, 58, 210
 XMAX = 80
 
 
