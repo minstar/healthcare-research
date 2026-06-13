@@ -86,7 +86,9 @@ ax.set_ylim(-4, 68)
 ax.set_xlim(lo - 2.5, hi + 2.5)
 ax.legend(fontsize=6.5, loc="upper left", frameon=False)
 ax.grid(True, color="#dddddd", linewidth=0.6, zorder=0)  # canonical light-gray grid (matches other figures)
-ax.set_title("Closed-form MedQA saturates; OpenBioRQ spreads", fontsize=9)
+ax.set_title("Closed-form MedQA saturates; OpenBioRQ spreads", fontsize=9.5,
+             color="white", fontweight="bold", pad=7,
+             bbox=dict(boxstyle="round,pad=0.4", facecolor="#4A86C2", edgecolor="none"))
 fig.tight_layout()
 out = "/data/project/private/minstar/workspace/healthcare-research/paper_writing/figures/fig_orthogonality.pdf"
 fig.savefig(out, bbox_inches="tight")

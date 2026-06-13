@@ -16,7 +16,7 @@ FIG = f"{ROOT}/paper_writing/figures"
 
 # soft body palette + saturated header bands (white title/icon reads on the headers)
 BLUE, TEAL, GOLD, VERM = "#5A9BD4", "#46B08F", "#E8B85E", "#E0875A"
-HDR = ["#4A86C2", "#3C9E84", "#C99A3A", "#CC6F44", "#8E6FB8"]  # per-stage header colors
+HDR = ["#4A86C2", "#7A6FC0", "#A85FB0", "#C75397", "#D14E82"]  # blue -> magenta gradient
 CARD, BAND = "#FFFFFF", "#F5F8FB"
 INK, INK2, GRAY, LABEL = "#242424", "#5A5A5A", "#868C95", "#5A6473"
 FONT = "DejaVu Sans"
