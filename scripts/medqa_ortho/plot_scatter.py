@@ -53,8 +53,8 @@ tiers = {
                                        ("Opus-4.7", "opus47", FRONTIER_ROBUST["Opus-4.7"]),
                                        ("GPT-5.5", "gpt55", FRONTIER_ROBUST["GPT-5.5"])],
 }
-colors = {"Roster (defines the core)": "#888888", "Held-out (same lineage)": "#1f77b4",
-          "Frontier (independent lineage)": "#d62728"}
+colors = {"Roster (defines the core)": "#888888", "Held-out (same lineage)": "#5A9BD4",
+          "Frontier (independent lineage)": "#E0875A"}
 markers = {"Roster (defines the core)": "s", "Held-out (same lineage)": "o",
            "Frontier (independent lineage)": "^"}
 
@@ -76,9 +76,9 @@ for tier, items in tiers.items():
 
 # MedQA band shading
 lo, hi = min(xs_all), max(xs_all)
-ax.axvspan(lo, hi, color="orange", alpha=0.08, zorder=0)
+ax.axvspan(lo, hi, color="#E8B85E", alpha=0.12, zorder=0)
 ax.text((lo + hi) / 2, 62, f"MedQA band\n{lo:.0f}-{hi:.0f}% ({hi-lo:.0f} pt)", ha="center",
-        fontsize=7, color="darkorange")
+        fontsize=7, color="#C08A3E")
 
 ax.set_xlabel("MedQA-USMLE accuracy (%)")
 ax.set_ylabel("OpenBioRQ frozen-core solve rate (%)")

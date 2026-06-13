@@ -37,7 +37,7 @@ PTS = [
     ("BioMysteryBench\n(Anthropic '26)", 8.1, 3.3, "agentic_known"),
     ("OpenBioRQ\n(ours)", 8.6, 8.4, "open"),
 ]
-COL = {"closed": "#9aa0a6", "agentic_known": "#e8821a", "open": "#d62728"}
+COL = {"closed": "#9aa0a6", "agentic_known": "#E8B85E", "open": "#E0875A"}
 MARK = {"closed": "o", "agentic_known": "s", "open": "*"}
 
 fig, ax = plt.subplots(figsize=(6.4, 5.0))
@@ -45,10 +45,10 @@ fig, ax = plt.subplots(figsize=(6.4, 5.0))
 ax.axhline(5, color="#999999", lw=0.9, ls=(0, (4, 2)), zorder=1)
 ax.axvline(5, color="#999999", lw=0.9, ls=(0, (4, 2)), zorder=1)
 # highlight the open+agentic quadrant
-ax.add_patch(plt.Rectangle((5, 5), 5, 5, color="#d62728", alpha=0.06, zorder=0))
+ax.add_patch(plt.Rectangle((5, 5), 5, 5, color="#E0875A", alpha=0.06, zorder=0))
 ax.text(7.5, 9.55, "agentic  +  no answer key", ha="center", fontsize=8.5,
-        color="#d62728", weight="bold")
-ax.text(7.5, 4.35, "agentic, objective/verifiable answer", ha="center", fontsize=7.5, color="#b5660a")
+        color="#E0875A", weight="bold")
+ax.text(7.5, 4.35, "agentic, objective/verifiable answer", ha="center", fontsize=7.5, color="#C08A3E")
 ax.text(2.6, 4.35, "static closed-form QA", ha="center", fontsize=7.5, color="#666666")
 
 for name, x, y, g in PTS:
@@ -62,9 +62,9 @@ for name, x, y, g in PTS:
 
 # callout: what becomes measurable only in the open+agentic regime
 ax.annotate("wrong-paper citation,\nagentic collapse, abstention\nmeasurable only here",
-            xy=(8.6, 8.4), xytext=(5.4, 6.5), fontsize=7.2, color="#d62728",
+            xy=(8.6, 8.4), xytext=(5.4, 6.5), fontsize=7.2, color="#E0875A",
             ha="left", va="center",
-            arrowprops=dict(arrowstyle="->", color="#d62728", lw=1.0))
+            arrowprops=dict(arrowstyle="->", color="#E0875A", lw=1.0))
 
 ax.set_xlim(0, 10); ax.set_ylim(0, 10)
 ax.set_xlabel("Tool-using / agentic  $\\rightarrow$", fontsize=10)
