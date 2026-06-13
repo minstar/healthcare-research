@@ -71,7 +71,8 @@ ax.set_xlabel("Tool-using / agentic  $\\rightarrow$", fontsize=10)
 ax.set_ylabel("Answer status:  objective/known  $\\rightarrow$  genuinely open", fontsize=10)
 ax.set_xticks([]); ax.set_yticks([])
 ax.set_title("Even agentic biomedical benchmarks keep a known answer;\nOpenBioRQ targets unsolved questions",
-             fontsize=10.5)
+             fontsize=10.5, color="white", fontweight="bold", pad=7,
+             bbox=dict(boxstyle="round,pad=0.4", facecolor="#8A5CB0", edgecolor="none"))
 # legend
 from matplotlib.lines import Line2D
 leg = [Line2D([0],[0],marker='o',color='w',markerfacecolor=COL['closed'],markeredgecolor='k',markersize=8,label='closed-form medical QA'),
