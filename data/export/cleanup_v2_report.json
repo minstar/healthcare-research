@@ -1,0 +1,31 @@
+{
+  "input": 6733,
+  "kept": 6648,
+  "quarantined": 85,
+  "actions": {
+    "relabeled_trial_resolved": 13,
+    "removed_dead_trial": 21,
+    "flagged_trial_completed_review": 84,
+    "removed_synthetic": 64
+  },
+  "label_normalizations": {
+    "resolved -> answered": 32,
+    "partially_resolved -> partially_answered": 1348,
+    "partially resolved -> partially_answered": 39,
+    "mostly_resolved -> partially_answered": 91,
+    "largely_resolved -> partially_answered": 4,
+    "partially_addressed -> partially_answered": 2,
+    "partially_open -> open": 7,
+    "closed -> answered": 3
+  },
+  "final_status_distribution": {
+    "open": 4432,
+    "partially_answered": 2179,
+    "answered": 37
+  },
+  "verification_method_coverage": {
+    "retrieval": 6549,
+    "none": 99
+  },
+  "stage2_needed": 4646
+}

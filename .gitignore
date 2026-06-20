@@ -1,0 +1,29 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+data/raw/
+data/extracted/
+data/refined/
+data/final/
+
+.checkpoints/
+.build/
+
+# eval artifacts are large (traces ~100s of MB) — keep out of git
+results/
+
+# transient serving state (job ids, node names, logs)
+serving/.*
+serving/logs/
+
+# stray root scratch file
+/extracted_questions.jsonl
+
+# local paper draft — not published to GitHub
+paper_writing/

@@ -1,0 +1,227 @@
+## ResearchMed — Unsolved Medical Question Collection Pipeline
+## Adapted from ResearchMath-14K (arxiv:2605.28003) methodology
+
+paths:
+  data_root: /data/project/private/minstar/workspace/healthcare-research/data
+  raw_dir: /data/project/private/minstar/workspace/healthcare-research/data/raw
+  extracted_dir: /data/project/private/minstar/workspace/healthcare-research/data/extracted
+  refined_dir: /data/project/private/minstar/workspace/healthcare-research/data/refined
+  final_dir: /data/project/private/minstar/workspace/healthcare-research/data/final
+
+crawlers:
+  pubmed:
+    enabled: true
+    max_results: 5000
+    queries:
+      - '"open questions" AND (medicine OR clinical OR biomedical)'
+      - '"unsolved problems" AND (medicine OR clinical OR biomedical)'
+      - '"unresolved questions" AND (diagnosis OR treatment OR prognosis)'
+      - '"knowledge gaps" AND (clinical OR medical) AND review[pt]'
+      - '"future directions" AND (unmet needs) AND review[pt]'
+      - '"unanswered questions" AND (healthcare OR clinical trials)'
+      - '"research priorities" AND (WHO OR NIH) AND (disease OR health)'
+      - '"evidence gaps" AND systematic review[pt]'
+      - '"grand challenges" AND (health OR medicine OR biomedical)'
+      - '"open problems" AND (pharmacology OR drug discovery)'
+    email: minstar@upstage.ai
+    rate_limit_sec: 0.4
+
+  arxiv:
+    enabled: true
+    max_results: 3000
+    categories:
+      - q-bio.QM   # Quantitative Methods
+      - q-bio.GN   # Genomics
+      - q-bio.NC   # Neurons and Cognition
+      - q-bio.CB   # Cell Behavior
+      - q-bio.MN   # Molecular Networks
+      - q-bio.BM   # Biomolecules
+      - q-bio.PE   # Populations and Evolution
+      - cs.AI       # filtered for medical
+      - cs.CL       # filtered for medical NLP
+      - stat.AP     # filtered for biostatistics
+    queries:
+      - 'ti:"open questions" AND (medical OR clinical OR biomedical)'
+      - 'ti:"unsolved" AND (biology OR medicine OR health)'
+      - 'ti:"open problems" AND (computational biology OR bioinformatics)'
+      - 'ti:"grand challenges" AND (health OR genomics OR neuroscience)'
+      - 'abs:"remains unsolved" AND (disease OR clinical)'
+      - 'abs:"open question" AND (diagnosis OR treatment OR drug)'
+
+  medrxiv:
+    enabled: true
+    max_results: 2000
+    queries:
+      - "open questions medicine"
+      - "unsolved clinical problems"
+      - "knowledge gaps diagnosis"
+      - "unresolved treatment questions"
+      - "evidence gaps systematic review"
+
+  cochrane:
+    enabled: true
+    max_results: 2000
+    queries:
+      - "insufficient evidence"
+      - "no clear evidence"
+      - "uncertain effectiveness"
+      - "further research needed"
+      - "evidence gap"
+
+  who:
+    enabled: true
+    priority_documents:
+      - "WHO Research Priorities"
+      - "WHO Blueprint priority diseases"
+      - "Global Health Observatory"
+
+  stackexchange:
+    enabled: true
+    max_results: 1000
+    sites:
+      - medicalsciences
+      - biology
+      - bioinformatics
+
+  nature:
+    enabled: true
+    max_results: 3000
+    queries: []  # uses built-in incurable disease + top journal queries
+
+  biomedical_api:
+    enabled: true
+    max_results: 500
+    queries: []  # uses built-in queries for ClinicalTrials, OpenFDA, OpenTargets, KEGG, UniProt, PubChem
+
+  google_scholar:
+    enabled: true
+    max_results: 2000
+    queries:
+      - 'intitle:"open questions" medicine'
+      - 'intitle:"unsolved problems" clinical'
+      - 'intitle:"unresolved" diagnosis treatment'
+      - 'intitle:"grand challenges" health biomedical'
+      - 'intitle:"knowledge gaps" medical'
+      - '"open medical questions" review'
+
+pipeline:
+  extractor:
+    model: openai/gpt-4.1      # or local vllm endpoint
+    temperature: 0.3
+    max_tokens: 8192
+
+  refiner:
+    model: openai/gpt-4.1
+    temperature: 0.2
+    max_tokens: 8192
+    max_citing_papers: 10
+
+  dedup:
+    embedding_model: sentence-transformers/all-MiniLM-L6-v2
+    similarity_threshold: 0.90
+
+  batch_size: 50
+
+taxonomy:
+  level_1:
+    - Clinical Medicine
+    - Oncology
+    - Neuroscience & Psychiatry
+    - Infectious Disease & Immunology
+    - Cardiovascular Medicine
+    - Genomics & Precision Medicine
+    - Pharmacology & Drug Discovery
+    - Public Health & Epidemiology
+    - Rare & Orphan Diseases
+    - Surgical Sciences
+    - Medical AI & Informatics
+    - Other / Cross-disciplinary
+
+  level_2:
+    Clinical Medicine:
+      - Diagnosis & Screening
+      - Treatment & Therapeutics
+      - Prognosis & Outcomes
+      - Patient Safety
+      - Pediatrics
+      - Geriatrics
+    Oncology:
+      - Cancer Biology
+      - Cancer Diagnosis
+      - Cancer Therapeutics
+      - Cancer Immunotherapy
+      - Cancer Epidemiology
+    Neuroscience & Psychiatry:
+      - Neurodegeneration
+      - Mental Health
+      - Neurodevelopment
+      - Pain & Anesthesia
+      - Brain-Computer Interfaces
+    Infectious Disease & Immunology:
+      - Antimicrobial Resistance
+      - Emerging Pathogens
+      - Vaccine Development
+      - Autoimmune Disorders
+      - HIV/AIDS
+    Cardiovascular Medicine:
+      - Heart Failure
+      - Atherosclerosis
+      - Arrhythmia
+      - Hypertension
+      - Stroke
+    Genomics & Precision Medicine:
+      - Genetic Variants & Disease
+      - Pharmacogenomics
+      - Gene Therapy
+      - Multi-omics Integration
+      - Epigenetics
+    Pharmacology & Drug Discovery:
+      - Drug Repurposing
+      - Target Identification
+      - ADMET & Toxicology
+      - Clinical Trials Design
+      - Biologics & Biosimilars
+    Public Health & Epidemiology:
+      - Health Disparities
+      - Environmental Health
+      - Nutrition & Metabolism
+      - Global Health
+      - Pandemic Preparedness
+    Rare & Orphan Diseases:
+      - Diagnosis & Classification
+      - Therapeutic Development
+      - Patient Registries
+    Surgical Sciences:
+      - Minimally Invasive Surgery
+      - Transplantation
+      - Surgical Outcomes
+    Medical AI & Informatics:
+      - Clinical Decision Support
+      - Medical NLP & LLM
+      - Medical Imaging AI
+      - EHR & Data Integration
+      - Telemedicine
+
+open_status_labels:
+  - open            # explicitly stated as unresolved
+  - partially_answered  # partial progress, incomplete answer
+  - answered        # resolved in subsequent literature
+  - unknown         # status unclear after search
+
+difficulty_axes:
+  - clinical_knowledge    # specialized medical knowledge required
+  - research_depth        # requires reading multiple papers/trials
+  - multi_step_reasoning  # requires integrating multiple data sources
+
+mcp_benchmark:
+  tools_mapping:
+    pubmed: ["literature search", "evidence retrieval"]
+    clinicaltrialsgov: ["trial search", "intervention comparison"]
+    openfda: ["drug safety", "adverse events"]
+    opentargets: ["drug-target-disease associations"]
+    chembl: ["compound data", "bioactivity"]
+    uniprot: ["protein function", "sequence analysis"]
+    pubchem: ["molecular properties", "compound search"]
+    kegg: ["pathway analysis", "metabolic networks"]
+    ncbi-datasets: ["genomic data", "gene information"]
+    biomcp: ["integrated biomedical queries"]

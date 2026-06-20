@@ -1,0 +1,20 @@
+{
+  "judged": 85,
+  "changed": 47,
+  "new_status_dist": {
+    "unknown": 28,
+    "open": 46,
+    "partially_answered": 11
+  },
+  "transitions": {
+    "open -> unknown": 22,
+    "partially_answered -> unknown": 6,
+    "partially_answered -> open": 19,
+    "open -> open": 27,
+    "partially_answered -> partially_answered": 11
+  },
+  "guardrail_triggers": {
+    "no_evidence": 24,
+    "llm_fail": 2
+  }
+}
