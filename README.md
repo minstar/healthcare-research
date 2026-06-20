@@ -1,5 +1,8 @@
 # OpenBioRQ — Open Biomedical Research Questions
 
+📄 **Paper:** *OpenBioRQ: Unsolved Biomedical Research Questions for Agents* (Minbyul Jeong, 2026) ·
+🤗 **Dataset:** [Minbyul/OpenBioRQ](https://huggingface.co/datasets/Minbyul/OpenBioRQ)
+
 A pipeline for collecting, curating, and benchmarking **open (currently-unresolved)**
 biomedical / clinical research questions from authoritative literature and trial records,
 and evaluating LLMs on them with **agentic tool use** and **per-question checklist rubrics**.
@@ -56,17 +59,11 @@ crawl ─▶ extract ─▶ refine ─▶ dedup ─▶ export        (build the 
 10. **Leaderboard / buckets** — `scripts/build_leaderboard_t0.py` (T=0 leaderboard) and
     `scripts/compute_buckets.py` (3-model difficulty buckets) turn scores into labels.
 
-## Corpus versions
+## Corpus
 
-The corpus is built additively; each version layers empirical labels and new tracks onto
-the text-deduped v3 base.
-
-| Version | Rows | What it adds |
-|---------|------|--------------|
-| `mcp_benchmark_v3` | 12,553 | **Paper base.** `retrieval_verified` (6,648) + `expert_consensus` (5,905, JLA/NICE) |
-| `mcp_benchmark_v3.2` | 12,553 | 3-model empirical labels on the gold-bearing subset; all-pass + still-open audits |
-| `mcp_benchmark_v3.3` | 13,078 | + **priority_setting** track (525 questions) with empirical labels |
-| `mcp_benchmark_v3.4` | 13,561 | + **expand** track (483); question-granular whole-corpus relabel — **NOT ADOPTED** (kept unused; paper stays on the v3 base + frozen core) |
+| File | Rows | What it is |
+|------|------|------------|
+| `mcp_benchmark_v3` | 12,553 | **Paper base / current corpus.** `retrieval_verified` (6,648) + `expert_consensus` (5,905, JLA/NICE), text-deduped, with 3-model empirical labels on the gold-bearing subset. |
 
 `mcp_benchmark_with_gold.jsonl` (**1,969**) is the gold-answer-bearing slice used for rubric
 generation and agentic eval. The **657-question core** (`data/eval_samples/core_eval.jsonl`)
@@ -371,3 +368,17 @@ Clinical Medicine · Oncology · Neuroscience & Psychiatry · Infectious Disease
 Cardiovascular Medicine · Genomics & Precision Medicine · Pharmacology & Drug Discovery ·
 Public Health & Epidemiology · Rare & Orphan Diseases · Surgical Sciences ·
 Medical AI & Informatics · Other
+
+## Citation
+
+If you use OpenBioRQ, please cite:
+
+```bibtex
+@misc{jeong2026openbiorq,
+  title         = {OpenBioRQ: Unsolved Biomedical Research Questions for Agents},
+  author        = {Minbyul Jeong},
+  year          = {2026},
+  howpublished  = {\url{https://huggingface.co/datasets/Minbyul/OpenBioRQ}},
+  note          = {Dataset and benchmark}
+}
+```
