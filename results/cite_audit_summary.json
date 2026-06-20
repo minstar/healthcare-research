@@ -1,37 +1,39 @@
 {
   "total_citations": 4863,
+  "note": "L2 DEFINITIVE: fragment claims re-extracted + re-judged under both judges; see scripts/{reextract_fragment_claims,l2_claude_judge}.py",
   "overall": {
-    "real_citations_judged": 4671,
-    "wrong_paper": 931,
-    "wrong_paper_pct": 19.9
+    "real_citations_judged": 4649,
+    "wrong_paper_pct": 15.9,
+    "yes_pct": 37.4,
+    "partial_pct": 46.7
   },
   "by_model": {
     "GLM-5.1": {
       "citations": 157,
       "exist_pct": 84.7,
       "fabricated": 24,
-      "L2_judged": 98,
-      "yes_pct": 6.1,
-      "partial_pct": 35.7,
-      "wrong_paper_pct": 58.2
+      "L2_judged": 97,
+      "yes_pct": 4.1,
+      "partial_pct": 39.2,
+      "wrong_paper_pct": 56.7
     },
     "Qwen3.6": {
       "citations": 1264,
       "exist_pct": 99.6,
       "fabricated": 5,
-      "L2_judged": 1213,
-      "yes_pct": 31.5,
-      "partial_pct": 46.9,
-      "wrong_paper_pct": 21.6
+      "L2_judged": 1210,
+      "yes_pct": 29.8,
+      "partial_pct": 49.9,
+      "wrong_paper_pct": 20.2
     },
     "DeepSeek-V4": {
       "citations": 3442,
       "exist_pct": 99.8,
       "fabricated": 6,
-      "L2_judged": 3360,
-      "yes_pct": 39.4,
-      "partial_pct": 42.4,
-      "wrong_paper_pct": 18.2
+      "L2_judged": 3342,
+      "yes_pct": 41.2,
+      "partial_pct": 45.8,
+      "wrong_paper_pct": 13.1
     }
   }
 }

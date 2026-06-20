@@ -195,6 +195,23 @@ class _OpenAIBackend(_Backend):
 # ===================================================================
 
 
+# OpenRouter multiplexes closed models across upstreams (verified 2026-06-19:
+# openai/gpt-5.5 -> OpenAI OR Azure; google/gemini-3.1-pro-preview -> Google OR
+# Google AI Studio). The frozen-423 frontier traces were generated on the first-party
+# upstreams (gpt-5.5=OpenAI-direct, gemini/=Google AI Studio). To keep the full-core(657)
+# combine single-provider, pin OpenRouter to the SAME upstream for these two slugs and
+# forbid fallback. No-op for every other model, so other experiments are unaffected.
+_OPENROUTER_PROVIDER_PIN = {
+    "openrouter/openai/gpt-5.5": ["OpenAI"],
+    "openrouter/google/gemini-3.1-pro-preview": ["Google AI Studio"],
+}
+
+
+def _provider_extra_body(model: str) -> dict:
+    order = _OPENROUTER_PROVIDER_PIN.get(model)
+    return {"provider": {"order": order, "allow_fallbacks": False}} if order else {}
+
+
 class _LiteLLMBackend(_Backend):
     """Uses litellm for model calls — supports any provider."""
 
@@ -229,6 +246,9 @@ class _LiteLLMBackend(_Backend):
                 tool_choice=None if is_last else ("auto" if self.tool_schemas else None),
                 max_tokens=16384 if is_last else 4096,
             )
+            _pin = _provider_extra_body(self.model)
+            if _pin:
+                _kw["extra_body"] = _pin
             try:
                 # deterministic eval; reasoning models (e.g. gpt-5.x) only accept the
                 # default temperature -> on a temperature rejection, retry without it.
@@ -320,6 +340,9 @@ class _LiteLLMBackend(_Backend):
                         "with citations. Do not call any tools."}],
                     max_tokens=16384,
                 )
+                _pin = _provider_extra_body(self.model)
+                if _pin:
+                    fkw["extra_body"] = _pin
                 try:
                     fresp = await litellm.acompletion(temperature=0.0, **fkw)
                 except Exception as exc:
