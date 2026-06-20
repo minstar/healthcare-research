@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 """Fig 4 (data-construction pipeline) as a hand-authored SVG -> vector PDF via cairosvg.
 
 Infographic style (design ref: Gemini mockups in paper_writing/figure_ref): per-stage colored
@@ -11,14 +12,14 @@ Run with the torchtitan env python; writes paper_writing/figures/fig_pipeline.pd
 """
 import cairosvg
 
-ROOT = "/data/project/private/minstar/workspace/healthcare-research"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIG = f"{ROOT}/paper_writing/figures"
 
-# soft body palette + saturated header bands (white title/icon reads on the headers)
-BLUE, TEAL, GOLD, VERM = "#5A9BD4", "#46B08F", "#E8B85E", "#E0875A"
-HDR = ["#4A86C2", "#7A6FC0", "#A85FB0", "#C75397", "#D14E82"]  # blue -> magenta gradient
-CARD, BAND = "#FFFFFF", "#F5F8FB"
-INK, INK2, GRAY, LABEL = "#242424", "#5A5A5A", "#868C95", "#5A6473"
+# clean v2 palette (matches figstyle.py): calm uniform slate headers, no rainbow
+BLUE, TEAL, GOLD, VERM = "#3B7DD8", "#2BA89B", "#E8A33D", "#E2683C"
+HDR = ["#566187"] * 5                       # calm uniform slate header band for all 5 stages
+CARD, BAND = "#FFFFFF", "#F6F8FB"
+INK, INK2, GRAY, LABEL = "#1A1A1A", "#6B7280", "#9AA1AB", "#566187"
 FONT = "DejaVu Sans"
 
 SC_BEFORE, SC_AFTER = 51.6, 85.4
@@ -47,8 +48,8 @@ def lines(x, y, rows, size, fill, lh, anchor="start", italic=False):
 def rrect(x, y, w, h, rx, fill, stroke=None, sw=1.4, shadow=False):
     s = ""
     if shadow:
-        s += (f'<rect x="{x+1.6}" y="{y+2.7}" width="{w}" height="{h}" rx="{rx}" '
-              f'fill="#26313B" opacity="0.15" filter="url(#blur)"/>')
+        s += (f'<rect x="{x+1.4}" y="{y+2.2}" width="{w}" height="{h}" rx="{rx}" '
+              f'fill="#26313B" opacity="0.07" filter="url(#blur)"/>')
     st = f' stroke="{stroke}" stroke-width="{sw}"' if stroke else ''
     s += f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{rx}" fill="{fill}"{st}/>'
     return s
@@ -105,7 +106,7 @@ p.append('</defs>')
 # ---- CONSTRUCTION band ----
 BX, BY, BW, BH = 6, 6, W - 12, 150
 p.append(rrect(BX, BY, BW, BH, 12, BAND))
-p.append(txt(20, 27, "CONSTRUCTION", 12.5, LABEL, "bold"))
+p.append(txt(20, 27, "Construction pipeline — 5 sequential stages", 11, LABEL, "bold"))
 
 # ---- 5 stage cards (colored header + icon + soft body) ----
 stages = [
@@ -176,8 +177,29 @@ p.append(lines(381, TBY + 33, [
     f"all three fail → core ({N_CORE})",
     f"→ frozen core ({N_ROBUST} at T=0)"], 8.8, INK, 11))
 
-svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{Hgt}" '
-       f'viewBox="0 0 {W} {Hgt}">' + "".join(p) + '</svg>')
+# ---- section header bar + bottom legend (match the difficulty figure's framing) ----
+OFF, LEGH = 38, 30
+TOTAL_H = Hgt + OFF + LEGH
+HDR_PURPLE = "#414B66"
+header = (rrect(6, 6, W - 12, 30, 9, HDR_PURPLE)
+          + txt(20, 26, "Construction & Evaluation Pipeline", 14, "#FFFFFF", "bold")
+          + txt(W - 20, 25, "crawl → extract → refine → dedup → export  +  additive labeling",
+                9.5, "#E7E3F4", "normal", "end"))
+leg_y = OFF + Hgt + 19
+legend = ""
+lx = 22
+for col, lab in [(HDR[0], "construction stage (sequential)"),
+                 (BLUE, "labeling (a): retrieval-grounded openness"),
+                 (TEAL, "labeling (b): empirical difficulty")]:
+    legend += f'<rect x="{lx}" y="{leg_y-9}" width="11" height="11" rx="2.5" fill="{col}"/>'
+    legend += txt(lx + 16, leg_y, lab, 9, INK2, "bold")
+    lx += 26 + len(lab) * 5.0
+svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{TOTAL_H}" '
+       f'viewBox="0 0 {W} {TOTAL_H}">'
+       f'<rect x="0" y="0" width="{W}" height="{TOTAL_H}" fill="#FFFFFF"/>'
+       + header
+       + f'<g transform="translate(0,{OFF})">' + "".join(p) + '</g>'
+       + legend + '</svg>')
 out = f"{FIG}/fig_pipeline.pdf"
 cairosvg.svg2pdf(bytestring=svg.encode(), write_to=out)
 print(f"wrote {out}")

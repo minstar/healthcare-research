@@ -1,29 +1,23 @@
 #!/usr/bin/env python3
-"""Scatter: MedQA accuracy vs OpenBioRQ robust-core pass@0.5 (Reviewer E figure).
+"""Scatter: MedQA accuracy vs OpenBioRQ frozen-core solve rate (v2, clean style).
 
-Shows closed-form MedQA saturating into a narrow band while OpenBioRQ spreads across the full
-range -- within the open-weight tier the axes are orthogonal; frontier agents climb both.
+Closed-form MedQA saturates into a narrow band while OpenBioRQ spreads across the full range;
+within the open-weight tier the axes barely track, and frontier agents climb both.
 Saved to paper_writing/figures/fig_orthogonality.pdf  (run with the torchtitan env's python).
 """
-import json
+import json, sys
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
-# Shared house style (consistent with the other OpenBioRQ figures; fonttype 42 avoids
-# Type-3 fonts that AAAI rejects).
-plt.rcParams.update({
-    "pdf.fonttype": 42, "ps.fonttype": 42,
-    "font.family": "sans-serif", "font.sans-serif": ["DejaVu Sans"],
-    "mathtext.fontset": "dejavusans",
-    "font.size": 9, "axes.titlesize": 9.5, "axes.labelsize": 9,
-    "axes.linewidth": 0.8, "axes.edgecolor": "#444444",
-    "axes.spines.top": False, "axes.spines.right": False,
-    "xtick.labelsize": 8.5, "ytick.labelsize": 8.5,
-    "legend.fontsize": 8, "legend.frameon": False, "figure.dpi": 150,
-})
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(ROOT, "paper_writing"))
+import figstyle as S
+S.apply()
 
-R = "/data/project/private/minstar/workspace/healthcare-research/results"
+R = os.path.join(ROOT, "results")
 MO = f"{R}/medqa_ortho"
 
 def medqa(tag):
@@ -33,8 +27,6 @@ lb = {e["model"]: e for e in json.load(open(f"{R}/leaderboard_core_t0.json"))["l
 def robust(name):
     return round(100 * lb[name]["robust_core"]["solve@0.5"], 1)
 
-# Frontier robust-core pass@0.5 sourced from committed JSON (no hardcoded literals).
-# Keys are api_<model>_robust; solve@0.5 is already stored as a percent.
 _fr = json.load(open(f"{R}/frontier_robust_leaderboard.json"))
 FRONTIER_ROBUST = {
     "Gemini-3-Pro": _fr["api_gemini3pro_robust"]["solve@0.5"],
@@ -42,7 +34,6 @@ FRONTIER_ROBUST = {
     "GPT-5.5": _fr["api_gpt55_robust"]["solve@0.5"],
 }
 
-# tier -> [(model, medqa_tag, y_robust)]
 tiers = {
     "Roster (defines the core)": [("GLM-5.1", "glm51", 0.0), ("Qwen3.6", "qwen36", 0.0),
                                   ("DeepSeek-V4", "dsv4", 0.0)],
@@ -53,12 +44,12 @@ tiers = {
                                        ("Opus-4.7", "opus47", FRONTIER_ROBUST["Opus-4.7"]),
                                        ("GPT-5.5", "gpt55", FRONTIER_ROBUST["GPT-5.5"])],
 }
-colors = {"Roster (defines the core)": "#888888", "Held-out (same lineage)": "#5A9BD4",
-          "Frontier (independent lineage)": "#E0875A"}
+colors = {"Roster (defines the core)": S.GREY, "Held-out (same lineage)": S.BLUE,
+          "Frontier (independent lineage)": S.CORAL}
 markers = {"Roster (defines the core)": "s", "Held-out (same lineage)": "o",
            "Frontier (independent lineage)": "^"}
 
-fig, ax = plt.subplots(figsize=(5.4, 3.8))
+fig, ax = plt.subplots(figsize=(5.6, 3.9))
 xs_all = []
 for tier, items in tiers.items():
     xs, ys = [], []
@@ -66,34 +57,33 @@ for tier, items in tiers.items():
     for name, tag, y in items:
         x = medqa(tag)
         xs.append(x); ys.append(y); xs_all.append(x)
-        if not is_roster:  # roster points collide at y=0; label the group once instead
-            ax.annotate(name, (x, y), fontsize=6.5, xytext=(3, 3), textcoords="offset points")
-    ax.scatter(xs, ys, c=colors[tier], marker=markers[tier], s=55, label=tier,
-               edgecolors="black", linewidths=0.4, zorder=3)
+        if not is_roster:
+            ax.annotate(name, (x, y), fontsize=6.8, xytext=(4, 4),
+                        textcoords="offset points", color=S.INK)
+    ax.scatter(xs, ys, c=colors[tier], marker=markers[tier], s=62,
+               edgecolors="#3A3F46", linewidths=0.5, zorder=3)
     if is_roster:
-        ax.annotate("roster (=0 by construction)", (sum(xs) / len(xs), 0), fontsize=6.5,
-                    xytext=(0, -12), textcoords="offset points", ha="center", color="#555555")
+        ax.annotate("roster (= 0 by construction)", (sum(xs) / len(xs), 0), fontsize=6.8,
+                    xytext=(0, -13), textcoords="offset points", ha="center", color=S.INK2)
 
-# MedQA band shading
+# MedQA band shading (the saturation story)
 lo, hi = min(xs_all), max(xs_all)
-ax.axvspan(lo, hi, color="#E8B85E", alpha=0.12, zorder=0)
-ax.text((lo + hi) / 2, 62, f"MedQA band\n{lo:.0f}-{hi:.0f}% ({hi-lo:.0f} pt)", ha="center",
-        fontsize=7, color="#C08A3E")
+ax.axvspan(lo, hi, color=S.AMBER, alpha=0.12, zorder=0)
+ax.text((lo + hi) / 2, 64, f"MedQA band: {lo:.0f}-{hi:.0f}%  ({hi-lo:.0f} pt)", ha="center",
+        va="top", fontsize=7.2, color="#B07E2E", fontweight="bold")
 
 ax.set_xlabel("MedQA-USMLE accuracy (%)")
 ax.set_ylabel("OpenBioRQ frozen-core solve rate (%)")
-ax.set_ylim(-4, 68)
-ax.set_xlim(lo - 2.5, hi + 2.5)
-ax.legend(fontsize=6.5, loc="upper left", frameon=False)
-ax.grid(True, color="#dddddd", linewidth=0.6, zorder=0)  # canonical light-gray grid (matches other figures)
-ax.set_title("Closed-form MedQA saturates; OpenBioRQ spreads", fontsize=9.5,
-             color="white", fontweight="bold", pad=7,
-             bbox=dict(boxstyle="round,pad=0.4", facecolor="#4A86C2", edgecolor="none"))
+ax.set_ylim(-5, 70); ax.set_xlim(lo - 2.5, hi + 2.5)
+ax.grid(True, color=S.HAIR, linewidth=0.9, zorder=0)
+S.title(ax, "Closed-form MedQA saturates; OpenBioRQ spreads")
+
+leg = [Line2D([0], [0], marker=markers[t], color="w", markerfacecolor=colors[t],
+              markeredgecolor="#3A3F46", markersize=8, label=t) for t in tiers]
+ax.legend(handles=leg, fontsize=7.0, loc="upper left", borderaxespad=0.6,
+          handletextpad=0.5, labelspacing=0.5)
+
 fig.tight_layout()
-out = "/data/project/private/minstar/workspace/healthcare-research/paper_writing/figures/fig_orthogonality.pdf"
+out = os.path.join(ROOT, "paper_writing/figures/fig_orthogonality.pdf")
 fig.savefig(out, bbox_inches="tight")
 print(f"wrote {out}")
-# also print the data used
-for tier, items in tiers.items():
-    for name, tag, y in items:
-        print(f"  {name:14s} MedQA={medqa(tag):.1f}  robust={y}")
